@@ -5,6 +5,7 @@
     <parent>
         <artifactId>novel_parent</artifactId>
         <groupId>com.yc</groupId>
+
         <version>1.0-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
@@ -13,6 +14,7 @@
     <packaging>war</packaging>
 
     <name>user Maven Webapp</name>
+<<<<<<< HEAD
     <dependencies>
 
         <dependency>
@@ -163,4 +165,8 @@
             </plugin>
         </plugins>
     </build>
+=======
+    <!-- FIXME change it to the project's website -->
+
+>>>>>>> fe526f0691aeb6e07bee23d8b912949830084c87
 </project>

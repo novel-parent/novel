@@ -16,6 +16,7 @@
   </modules>
 
   <!--对依赖的坐标的版本做集中的管理-->
+
   <properties>
 
     <servlet-version>3.1.0</servlet-version>
@@ -59,8 +60,6 @@
         <artifactId>slf4j-api</artifactId>
         <version>${slf4j-version}</version>
       </dependency>
-
-
 
       <dependency>
         <groupId>com.yc</groupId>
