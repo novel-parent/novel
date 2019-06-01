@@ -14,7 +14,6 @@
     <packaging>war</packaging>
 
     <name>user Maven Webapp</name>
-<<<<<<< HEAD
     <dependencies>
 
         <dependency>
