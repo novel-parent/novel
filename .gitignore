@@ -1,0 +1,14 @@
+.idea/
+*.iml
+/src
+*/target/
+/*/.project
+.settings/
+/*/.classpath
+.project
+.build
+/build/
+*.class
+/*/.class
+/*/build
+/**/README.md
