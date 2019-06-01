@@ -32,8 +32,6 @@ public class VipUserThriftClient extends UserThriftClient implements Runnable{
 
     private String nowUrl ;
 
-
-
     // vip用户  会走 另外一个 服务器 进行 数据 的交互
     private String host = "127.0.0.1";
 

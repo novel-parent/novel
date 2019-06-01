@@ -1,6 +1,6 @@
 package controller;
 
-import MyException.IntroductionException;
+import MyException.IntroductionNovelChaptersException;
 import com.yc.bean.IntroductionNovel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -33,7 +33,7 @@ public class NovelController {
         IntroductionNovel introductionNovel = null;
         try {
             introductionNovel = novelService.selNovelByNid(nid);
-        } catch (IntroductionException e) {
+        } catch (IntroductionNovelChaptersException e) {
             System.out.println(e.getMessage());
             e.printStackTrace();
         }

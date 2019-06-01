@@ -1,6 +1,6 @@
 package service.impl;
 
-import MyException.IntroductionException;
+import MyException.IntroductionNovelChaptersException;
 import com.yc.bean.IntroductionNovel;
 import mapper.NovelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,12 +18,12 @@ public class NovelServiceImpl implements NovelService {
     private NovelMapper novelMapper;
 
     @Override
-    public IntroductionNovel selNovelByNid(long nid) throws IntroductionException {
+    public IntroductionNovel selNovelByNid(long nid) throws IntroductionNovelChaptersException {
 
         IntroductionNovel introductionNovel = novelMapper.selNovelByNid(nid);
 
         if (introductionNovel == null){
-            throw new IntroductionException("暂无此小说");
+            throw new IntroductionNovelChaptersException("暂无此小说");
         }
 
         return introductionNovel;

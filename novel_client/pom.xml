@@ -20,11 +20,6 @@
 
         <dependency>
             <groupId>com.yc</groupId>
-            <artifactId>bean</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>com.yc</groupId>
             <artifactId>netty_py_client</artifactId>
         </dependency>
 
@@ -112,10 +107,10 @@
             <artifactId>jackson-databind</artifactId>
         </dependency>-->
         <!-- apache 图片上传 -->
-        <dependency>
+      <!--  <dependency>
             <groupId>commons-fileupload</groupId>
             <artifactId>commons-fileupload</artifactId>
-        </dependency>
+        </dependency>-->
         <dependency>
             <groupId>com.yc</groupId>
             <artifactId>bean</artifactId>
@@ -175,7 +170,7 @@
                 <!-- 项目发布到tomcat后的名称 -->
                 <!-- / 相当于把项目发布名称为ROOT -->
                 <!-- /abc -->
-                <path>/novel</path>
+                <path>/</path>
             </configuration>
         </plugin>
     </plugins>

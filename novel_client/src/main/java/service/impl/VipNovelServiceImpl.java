@@ -1,10 +1,10 @@
 package service.impl;
 
-import MyException.IntroductionException;
+import MyException.IntroductionNovelChaptersException;
+import MyException.ReadNovelChapterContextException;
 import com.yc.bean.IntroductionNovel;
 import com.yc.bean.ReadNovel;
 import com.yc.thrift.client.VipUserThriftClient;
-import com.yc.util.RedisPoolUtil;
 import mapper.NovelMapper;
 import mapper.VipNovelMapper;
 import org.apache.thrift.TException;
@@ -43,7 +43,7 @@ public class VipNovelServiceImpl implements VipNovelService {
      * @return
      */
     @Override
-    public ReadNovel getNovelChapterContext(long nid, long cid, String uid) {
+    public ReadNovel getNovelChapterContext(long nid, long cid, String uid) throws IntroductionNovelChaptersException {
 
         long start = System.currentTimeMillis();
 
@@ -59,7 +59,6 @@ public class VipNovelServiceImpl implements VipNovelService {
             //代表  vip用户登陆
             VipUserThriftClient vipUserThriftClient = VipUtil.vipUserThriftClientHashMap.get(uid);
 
-            try {
                 IntroductionNovel introductionNovel = novelMapper.selNovelByNid(nid);
 
                 String nowUrl = introductionNovel.getUrl()+cid+".html";
@@ -81,7 +80,12 @@ public class VipNovelServiceImpl implements VipNovelService {
                 if(! vipUserThriftClient.isFlag()){
 
                     // flag = false    vip用户通过  父类的client 方法的获取数据
-                    readNovel = vipUserThriftClient.getNovelChapterContextByChapterUrl(nowUrl);
+                    try {
+                        readNovel = vipUserThriftClient.getNovelChapterContextByChapterUrl(nowUrl);
+                    } catch (TException e) {
+                        throw new IntroductionNovelChaptersException
+                                ("service.impl.VipNovelServiceImpl.getNovelChapterContext vip用户获得小说章节内容失败 ");
+                    }
                     /**
                      * 进行 下一章节的获取
                      */
@@ -109,7 +113,13 @@ public class VipNovelServiceImpl implements VipNovelService {
 
                         nowUrl = introductionNovel.getUrl()+cid+".html";
                         // flag = false    vip用户通过  父类的client 方法的获取数据
-                        readNovel = vipUserThriftClient.getNovelChapterContextByChapterUrl(nowUrl);
+                        try {
+                            readNovel = vipUserThriftClient.getNovelChapterContextByChapterUrl(nowUrl);
+                        } catch (TException e) {
+
+                            throw new IntroductionNovelChaptersException
+                                    ("service.impl.VipNovelServiceImpl.getNovelChapterContext vip用户获得小说章节内容失败 ");
+                        }
 
                         vipUserThriftClient.setFlag(false);
                         /**
@@ -119,11 +129,6 @@ public class VipNovelServiceImpl implements VipNovelService {
                         executorService.execute(vipUserThriftClient);
                     }
                 }
-
-            } catch (TException e) {
-                e.printStackTrace();
-            }
-
         }else{
             // 用户信息已经过期或者还未登陆  提示用户重新登陆
             return null;
@@ -139,7 +144,7 @@ public class VipNovelServiceImpl implements VipNovelService {
      * @return
      */
     @Override
-    public String getIntroductionNovelChapters(long nid, String uid) {
+    public String getIntroductionNovelChapters(long nid, String uid) throws ReadNovelChapterContextException {
 
         long start = System.currentTimeMillis();
 
@@ -154,16 +159,15 @@ public class VipNovelServiceImpl implements VipNovelService {
             //代表  vip用户登陆
             VipUserThriftClient vipUserThriftClient = VipUtil.vipUserThriftClientHashMap.get(uid);
 
-            try {
                 IntroductionNovel introductionNovel = novelMapper.selNovelByNid(nid);
 
-                novelChapterListJson = vipUserThriftClient.getNovelChapterListByNovelUrl(introductionNovel.getUrl());
-            } catch (TException e) {
-
-                e.printStackTrace();
-            }
-
-        }else{
+             try {
+                 novelChapterListJson = vipUserThriftClient.getNovelChapterListByNovelUrl(introductionNovel.getUrl());
+             } catch (TException e) {
+                 throw new ReadNovelChapterContextException
+                         ("service.impl.VipNovelServiceImpl.getIntroductionNovelChapters  vip用户获得小说章节列表失败");
+             }
+         }else{
             // 用户信息已经过期或者还未登陆  提示用户重新登陆
             return null;
         }

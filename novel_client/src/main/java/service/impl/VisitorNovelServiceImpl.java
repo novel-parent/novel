@@ -1,6 +1,8 @@
 package service.impl;
 
 
+import MyException.IntroductionNovelChaptersException;
+import MyException.ReadNovelChapterContextException;
 import com.yc.bean.IntroductionNovel;
 import com.yc.bean.ReadNovel;
 import com.yc.thrift.IDL.NovelChapter;
@@ -47,13 +49,20 @@ public class VisitorNovelServiceImpl implements VisitorNovelService {
      * @return
      */
     @Override
-    public ReadNovel getNovelChapterContext(long nid, long cid) {
+    public ReadNovel getNovelChapterContext(long nid, long cid) throws ReadNovelChapterContextException {
 
         IntroductionNovel introductionNovel = novelMapper.selNovelByNid(nid);
 
         String novelChapterUrl = introductionNovel.getUrl()+cid+".html";
+        ReadNovel chapterContext = null;
+        try {
+            chapterContext = getNovelChapterContext(novelChapterUrl);
+        } catch (TException e) {
 
-        return getNovelChapterContext(novelChapterUrl);
+            throw new ReadNovelChapterContextException
+                    ("service.impl.VisitorNovelServiceImpl.getNovelChapterContext(long, long) 游客获得小说章节内容出错");
+        }
+        return chapterContext;
     }
 
     /**
@@ -62,22 +71,28 @@ public class VisitorNovelServiceImpl implements VisitorNovelService {
      * @return
      */
     @Override
-    public String getIntroductionNovelChapters(long nid) {
+    public String getIntroductionNovelChapters(long nid) throws IntroductionNovelChaptersException {
 
         IntroductionNovel introductionNovel = novelMapper.selNovelByNid(nid);
 
         String novelUrl = introductionNovel.getUrl();
+        String chapters = null;
+        try {
+            chapters = getNovelChapters(novelUrl);
+        } catch (TException e) {
 
-        return getNovelChapters(novelUrl);
+            throw new IntroductionNovelChaptersException
+                    ("service.impl.VisitorNovelServiceImpl.getIntroductionNovelChapters  游客获得章节列表出错");
+        }
+
+        return chapters;
     }
 
 
-    public ReadNovel getNovelChapterContext(String novelChapterUrl){
+    public ReadNovel getNovelChapterContext(String novelChapterUrl) throws TException {
 
         ReadNovel readNovel = null;
         TTransport transport = new TSocket("127.0.0.1",8899);
-
-        try {
 
             transport.open();
 
@@ -99,40 +114,28 @@ public class VisitorNovelServiceImpl implements VisitorNovelService {
 
             readNovel.setNovelChapterName(novelChapterContext.getNovelChapterName());
 
-        } catch (TTransportException e) {
-            e.printStackTrace();
-
-        } catch (TException e) {
-            e.printStackTrace();
-        }finally {
             transport.close();
-        }
         return readNovel;
     }
 
-    public String getNovelChapters(String novelUrl){
-        TTransport transport = new TSocket("127.0.0.1",8899);
+    public String getNovelChapters(String novelUrl) throws TException {
 
-        try {
+        TTransport transport = new TSocket("127.0.0.1",8899);
             transport.open();
 
             TProtocol tProtocol = new TBinaryProtocol(transport);
 
             NovelService.Client client = new NovelService.Client(tProtocol);
 
-            NovelChapter novelChapterList = client.getNovelChapterListByNovelUrl(novelUrl);
+        NovelChapter novelChapterList = null;
+            novelChapterList = client.getNovelChapterListByNovelUrl(novelUrl);
 
-            String novelChaptersJson = novelChapterList.getNovelChapterJson();
+
+        String novelChaptersJson = novelChapterList.getNovelChapterJson();
+
+            transport.close();
 
             return  novelChaptersJson;
-        } catch (TTransportException e) {
-            e.printStackTrace();
-        } catch (TException e) {
-            e.printStackTrace();
-        }finally {
-            transport.close();
-        }
-        return "出错了";
     }
 
 }

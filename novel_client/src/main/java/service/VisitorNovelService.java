@@ -1,7 +1,10 @@
 package service;
 
 
+import MyException.IntroductionNovelChaptersException;
+import MyException.ReadNovelChapterContextException;
 import com.yc.bean.ReadNovel;
+import org.apache.thrift.TException;
 
 /**
  * @author LX
@@ -9,7 +12,7 @@ import com.yc.bean.ReadNovel;
  */
 public interface VisitorNovelService {
 
-    String getIntroductionNovelChapters(long nid);
+    String getIntroductionNovelChapters(long nid) throws IntroductionNovelChaptersException;
 
-    ReadNovel getNovelChapterContext(long nid , long cid );
+    ReadNovel getNovelChapterContext(long nid , long cid ) throws ReadNovelChapterContextException;
 }

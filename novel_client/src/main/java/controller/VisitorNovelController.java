@@ -1,6 +1,9 @@
 package controller;
 
+import MyException.IntroductionNovelChaptersException;
+import MyException.ReadNovelChapterContextException;
 import com.yc.bean.ReadNovel;
+import org.apache.thrift.TException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,15 +25,31 @@ public class VisitorNovelController {
     @ResponseBody
     @RequestMapping("/readNovelChapter.n")
     public ReadNovel getNovelChapterContext(@RequestParam("nid") long nid, @RequestParam("cid") long cid){
+        ReadNovel novelChapterContext = null;
 
-        return visitorNovelService.getNovelChapterContext(nid, cid);
+        try {
+
+            novelChapterContext = visitorNovelService.getNovelChapterContext(nid, cid);
+        } catch (ReadNovelChapterContextException e) {
+
+            e.printStackTrace();
+        }
+        return novelChapterContext;
     }
 
     @ResponseBody
     @RequestMapping(value = "/novelChapters.n",produces = "text/html; charset=utf-8")
     public String getNovelChapterList(@RequestParam("nid") long nid){
 
-        return visitorNovelService.getIntroductionNovelChapters(nid);
+        String novelChapters = null;
+
+        try {
+            novelChapters = visitorNovelService.getIntroductionNovelChapters(nid);
+        } catch (IntroductionNovelChaptersException e) {
+
+            e.printStackTrace();
+        }
+        return novelChapters;
     }
 
 }

@@ -14,20 +14,20 @@
   <!--<meta name="keywords" content="嘿 ! 污,笔趣看">-->
     <meta name="description" content="嘿 ! 污(www.biqukan.cc)为您提供一个最舒适的小说阅读平台，为您推荐最好看的网络热门小说，找好看的热门的小说，就上嘿 ! 污。">
 
-    <link href="/novel/css/bootstrap.min.css" rel="stylesheet">
-    <link href="/novel/css/font-awesome.min.css" rel="stylesheet">
-    <link href="/novel/css/site.css" rel="stylesheet">
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/font-awesome.min.css" rel="stylesheet">
+    <link href="/css/site.css" rel="stylesheet">
 
 
     <link rel="apple-touch-icon-precomposed"
           href="https://www.biqukan.cc/novel/images/apple-touch-icon-precomposed.png">
     <meta name="apple-mobile-web-app-title" content="嘿 ! 污">
-    <script src="/novel/js/index.js"></script>
-    <script src="/novel/js/jquery-1.7.2.min.js"></script>
+    <script src="/js/index.js"></script>
+    <script src="/js/jquery-1.7.2.min.js"></script>
 
 
     <!--[if lt IE 9]>
-    <script src="/novel/js/respond.min.js"></script><![endif]-->
+    <script src="/js/respond.min.js"></script><![endif]-->
     <script type="text/javascript">
 
     var localUrl = window.location.search
@@ -36,9 +36,14 @@
 
     if (localUrl==null ||localUrl==''){
 
+
+        $('#login').append("<a href='/login.html' >登录</a>")
+        $('#register').append("<a href='/register.html' >登录</a>")
     }else{
         url = localUrl.substring(1)
         url = '&'+url
+         $('#login').append("<a href='/userbooks.html"+url.substring(1)+"' >我的书架</a>")
+         $('#register').append("<a href='#' ></a>")
     }
 
 
@@ -107,6 +112,15 @@
     	};
         
         $(function () {
+            if (localUrl==null ||localUrl==''){
+
+
+                    $('#login').append("<a href='/login.html' >登录</a>")
+                    $('#register').append("<a href='/register.html' >登录</a>")
+                }else{
+                     $('#login').append("<a href='/userbooks.html?"+url.substring(1)+"' >我的书架</a>")
+                     $('#register').append("<a href='#' ></a>")
+                }
 
             $('#titleLi').append(result)
             $.ajax({
@@ -182,8 +196,8 @@
 
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="/login.html">登录</a></li>
-                <li><a href="/register.html">免费注册</a></li>
+                <li id="login"></li>
+                <li id="register"></li>
             </ul>
         </nav>
     </div>
