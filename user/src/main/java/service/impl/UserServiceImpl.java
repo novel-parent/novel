@@ -17,7 +17,6 @@ public class UserServiceImpl implements UserService{
     @Autowired
     private UserMapper userMapper;
 
-    @Override
     public User selForLogin(String username, String password) throws LoginException {
 
         User user = userMapper.selByLogin(username, password);

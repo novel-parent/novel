@@ -23,7 +23,6 @@ public class UserCollectServiceImpl implements UserCollectService {
      * @param nid  小说id
      * @return
      */
-    @Override
     public int insCollectNovel(long uid, long nid) throws CollectException {
 
         int index = 0;
@@ -46,7 +45,6 @@ public class UserCollectServiceImpl implements UserCollectService {
      * @param novelChapterName
      * @return
      */
-    @Override
     public int insCollectNovelChapter(long uid, long nid, long cid, String novelChapterName) throws CollectException {
 
         int index = 0;
