@@ -15,7 +15,7 @@
       <module>user</module>
   </modules>
 
-  <!--对依赖的坐标的版本做集中的管理-->
+  <!--对依赖的坐标的版本做集中的管理 lx-->
 
   <properties>
 
