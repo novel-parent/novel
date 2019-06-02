@@ -27,7 +27,15 @@
     <script src="/js/jquery-1.7.2.min.js"></script>
     <!--[if lt IE 9]>
     <script src="/js/respond.min.js"></script><![endif]-->
+
+
     <script type="text/javascript">
+
+    
+
+
+    alert(window.location.href)
+
     var localUrl = window.location.search
 
     var url =''
@@ -162,7 +170,7 @@
 
         $('#titleLi').append(result)
         $.ajax({
-            url:'solr/collection1/select?q=*%3A*&sort=novel_updateTimes+desc&rows=30&wt=json&indent=true',
+            url:'/solr/collection1/select?q=*%3A*&sort=novel_updateTimes+desc&rows=30&wt=json&indent=true',
             error:function(){
                 alert("请求出错.")
             },
