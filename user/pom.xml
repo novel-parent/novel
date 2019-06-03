@@ -169,7 +169,7 @@
                     <!-- 项目发布到tomcat后的名称 -->
                     <!-- / 相当于把项目发布名称为ROOT -->
                     <!-- /abc -->
-                    <path>/user</path>
+                    <path>/</path>
                 </configuration>
             </plugin>
         </plugins>
