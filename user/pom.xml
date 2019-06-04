@@ -14,6 +14,16 @@
     <packaging>war</packaging>
 
     <name>user Maven Webapp</name>
+    
+    <properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<maven.compiler.source>1.8</maven.compiler.source>
+		<maven.compiler.target>1.8</maven.compiler.target>
+		<junit.version>4.12</junit.version>
+		<log4j.version>1.2.17</log4j.version>
+		<lombok.version>1.16.18</lombok.version>
+		
+	</properties>
     <dependencies>
 
         <dependency>
@@ -159,7 +169,7 @@
                     <!-- 项目发布到tomcat后的名称 -->
                     <!-- / 相当于把项目发布名称为ROOT -->
                     <!-- /abc -->
-                    <path>/user</path>
+                    <path>/</path>
                 </configuration>
             </plugin>
         </plugins>

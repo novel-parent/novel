@@ -48,7 +48,6 @@ public class VisitorNovelServiceImpl implements VisitorNovelService {
      * @param cid
      * @return
      */
-    @Override
     public ReadNovel getNovelChapterContext(long nid, long cid) throws ReadNovelChapterContextException {
 
         IntroductionNovel introductionNovel = novelMapper.selNovelByNid(nid);
@@ -70,7 +69,6 @@ public class VisitorNovelServiceImpl implements VisitorNovelService {
      * @param nid
      * @return
      */
-    @Override
     public String getIntroductionNovelChapters(long nid) throws IntroductionNovelChaptersException {
 
         IntroductionNovel introductionNovel = novelMapper.selNovelByNid(nid);

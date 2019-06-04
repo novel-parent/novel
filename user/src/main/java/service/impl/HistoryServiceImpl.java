@@ -28,7 +28,6 @@ public class HistoryServiceImpl implements HistoryService {
      * @param key
      * @return
      */
-    @Override
     public int insHistory(long uid, String key) {
 
         int index = historyMapper.insHistory(uid, key);
@@ -36,7 +35,6 @@ public class HistoryServiceImpl implements HistoryService {
         return index;
     }
 
-    @Override
     public List<HistorySearch> selForSearchHistory(long uid) throws SearchHistoryException {
 
         List<HistorySearch> searchList = historyMapper.selForHistorySearch(uid);

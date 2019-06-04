@@ -34,7 +34,6 @@ public class OrdinaryNovelServiceImpl implements OrdinaryNovelService {
      * @param uid
      * @return
      */
-    @Override
     public ReadNovel getNovelChapterContext(long nid, long cid, String uid) {
 
         Jedis jedis = RedisPoolUtil.getJedis();
@@ -55,7 +54,6 @@ public class OrdinaryNovelServiceImpl implements OrdinaryNovelService {
      * @param uid
      * @return
      */
-    @Override
     public String getIntroductionNovelChapters(long nid, String uid) {
         Jedis jedis = RedisPoolUtil.getJedis();
 

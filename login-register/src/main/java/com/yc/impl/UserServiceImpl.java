@@ -1,11 +1,15 @@
-package service.impl;
+package com.yc.impl;
 
-import bean.User;
-import mapper.UserMapper;
-import myexception.LoginException;
+
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import service.UserService;
+
+import com.yc.bean.User;
+import com.yc.mapper.UserMapper;
+import com.yc.myexception.LoginException;
+import com.yc.service.UserService;
+
 
 /**
  * @author LX

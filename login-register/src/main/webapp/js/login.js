@@ -20,13 +20,13 @@ function login(){
     }else{
 
         $.post(
-            "/login.u",
+            "login.l",
             data,
             function(data){
 
                 if(data != -1){
 
-                    window.location.href="http://localhost:8080/userbooks.html?"+data;
+                    window.location.href="http://localhost/index.html?"+data;
                 }else{
 
                     alert("账号或者密码错误");

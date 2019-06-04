@@ -35,30 +35,25 @@ public class NovelServiceImpl implements NovelService {
 	/**
 	 * 搜索模糊查询
 	 */
-	@Override
 	public List<Novel> findByName(String novelName) {
 		return nmapper.findByName(novelName);
 	}
 
-	@Override
 	public void insert(Novel novel) {
 		nmapper.insert(novel);
 		
 	}
 
-	@Override
 	public boolean update(Novel novel) {
 		
 		return nmapper.update(novel);
 	}
 
-	@Override
 	public Novel findById(int id) {
 		Novel novel = nmapper.findById(id);
 		return novel;
 	}
 
-	@Override
 	public boolean delete(int id) {
 		
 		return nmapper.delete(id);

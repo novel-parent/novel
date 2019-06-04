@@ -42,7 +42,6 @@ public class VipNovelServiceImpl implements VipNovelService {
      * @param uid
      * @return
      */
-    @Override
     public ReadNovel getNovelChapterContext(long nid, long cid, String uid) throws IntroductionNovelChaptersException {
 
         long start = System.currentTimeMillis();
@@ -143,7 +142,6 @@ public class VipNovelServiceImpl implements VipNovelService {
      * @param uid
      * @return
      */
-    @Override
     public String getIntroductionNovelChapters(long nid, String uid) throws ReadNovelChapterContextException {
 
         long start = System.currentTimeMillis();

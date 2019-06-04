@@ -13,9 +13,10 @@
     <module>netty_webSocket_server</module>
     <module>jedis</module>
       <module>user</module>
+      <module>login-register</module>
   </modules>
 
-  <!--对依赖的坐标的版本做集中的管理-->
+  <!--对依赖的坐标的版本做集中的管理 lx-->
 
   <properties>
 
@@ -49,11 +50,17 @@
     <dependencies>
 
       <dependency>
+       <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>1.5.22.BUILD-SNAPSHOT</version>
+      </dependency>
+
+      <dependency>
         <groupId>commons-logging</groupId>
         <artifactId>commons-logging</artifactId>
         <version>${commons-logging-version}</version>
       </dependency>
-
+      
 
       <dependency>
         <groupId>org.slf4j</groupId>
