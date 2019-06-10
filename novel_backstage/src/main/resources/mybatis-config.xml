@@ -10,7 +10,7 @@
     <typeAliases>  
         <typeAlias alias="IndexNovel" type="bean.IndexNovel" /> 
         <typeAlias alias="Novel" type="bean.Novel" /> 
-        <typeAlias alias="User" type="bean.User" /> 
+        <typeAlias alias="User" type="User" />
     </typeAliases>  
     <!-- 实体接口映射资源 -->  
     <!--  

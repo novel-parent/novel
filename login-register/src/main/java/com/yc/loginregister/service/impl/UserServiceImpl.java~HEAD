@@ -1,11 +1,15 @@
-package com.yc.user.impl;
+package com.yc.loginregister.service.impl;
 
-import com.yc.user.bean.User;
-import com.yc.user.mapper.UserMapper;
-import com.yc.user.myexception.LoginException;
+
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.yc.user.service.UserService;
+
+import com.yc.loginregister.bean.User;
+import com.yc.loginregister.mapper.UserMapper;
+import com.yc.loginregister.myexception.LoginException;
+import com.yc.loginregister.service.UserService;
+
 
 /**
  * @author LX
@@ -27,4 +31,10 @@ public class UserServiceImpl implements UserService{
 
         return user;
     }
+
+    public void changeUserEdit(long uid,String email,String sex,String qq){
+
+         userMapper.changeUserEdit(uid, email, sex, qq);
+    }
+
 }

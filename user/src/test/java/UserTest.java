@@ -1,7 +1,7 @@
+import com.yc.user.impl.UserServiceImpl;
+import com.yc.user.service.UserService;
 import org.junit.Test;
-import redis.clients.jedis.Jedis;
-import service.UserService;
-import service.impl.UserServiceImpl;
+import redis.clients.jedis;
 
 /*@RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration({"classpath:applicationContext.xml","classpath:springmvc.xml"})*/
@@ -30,14 +30,15 @@ public class UserTest {
 
     @Test
     public void testRedis(){
-        Jedis jd=new Jedis("106.14.162.109",6379,50000);
+        redis.clients.jedis.Jedis jd=new Jedis("106.14.162.109",6379,50000);
         jd.auth("lsx666");
 
+        jd.set("xxx","lisi");
         if(jd.exists("xxx")){
             System.out.println(jd.get("xxx"));
             jd.del("xxx");
         }
-     //   jd.set("xxx","lisi");
+
 
     }
 

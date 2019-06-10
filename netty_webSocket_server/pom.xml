@@ -19,27 +19,29 @@
         <groupId>junit</groupId>
         <artifactId>junit</artifactId>
       </dependency>
-    
-    
+
         <dependency>
             <groupId>org.apache.thrift</groupId>
             <artifactId>libthrift</artifactId>
+            <version>${thrift-version}</version>
         </dependency>
-
 
         <dependency>
             <groupId>com.google.protobuf</groupId>
             <artifactId>protobuf-java-util</artifactId>
+            <version>${protobuf-version}</version>
         </dependency>
 
         <dependency>
             <groupId>com.google.protobuf</groupId>
             <artifactId>protobuf-java</artifactId>
+            <version>${protobuf-version}</version>
         </dependency>
 
         <dependency>
             <groupId>io.netty</groupId>
             <artifactId>netty-all</artifactId>
+            <version>${netty-version}</version>
         </dependency>
 
     </dependencies>

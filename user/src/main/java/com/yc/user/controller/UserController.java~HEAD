@@ -1,16 +1,18 @@
 package com.yc.user.controller;
 
-import com.yc.user.bean.User;
-import com.yc.user.myexception.LoginException;
+import bean.User;
+import myexception.LoginException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import com.yc.user.service.UserService;
-import redis.clients.jedis;
-import java.util.Map;
+import redis.clients.jedis.Jedis;
+import service.UserService;
 
+import javax.servlet.http.HttpSession;
+import java.util.Collections;
+import java.util.Map;
 
 /**
  * @author LX
