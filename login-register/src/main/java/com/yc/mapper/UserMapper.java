@@ -2,6 +2,7 @@ package com.yc.mapper;
 
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
 import org.mybatis.spring.annotation.MapperScan;
@@ -20,4 +21,6 @@ public interface UserMapper {
 	int addUser(User user);
 
 	List<User> findUser(User user);
+
+	
 }
