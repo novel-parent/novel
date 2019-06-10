@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yc.user.mapper.UserMapper">
+
+<<<<<<< HEAD:user/src/main/java/mapper/UserMapper.xml
+	<resultMap id="FindmessageMap" type="bean.Message">
+			<association property="user" column="uid" select="mapper.UserMapper.findUsername"></association>
+	</resultMap>
+	
+	<select id="findUsername" resultType="bean.User">
+		select * from user where uid= #{uid}
+	</select>
+
+    <select id="selByLogin" resultType="User">
+=======
+    <select id="selByLogin" resultType="com.yc.user.bean.User">
+>>>>>>> 7cbcc8c1b613281e7f6b330daf7ec482042452f7:user/src/main/resources/mybatis/mapper/UserMapper.xml
+
+        SELECT * FROM user where username = #{username}
+        and password = #{password}
+
+    </select>
+    
+    <select id="findUserById" resultType="User">
+    	select * from user where uid = #{uid}
+    </select>
+    
+    <update id="upadateUser" parameterType="bean.User">
+    	update user 
+    	<set>
+	    	<if test="sex != null">
+	    	 	sex = #{sex} 
+	    	</if>
+	    	 <if test="email != null ">
+	    	 	email = #{email} 
+	    	 </if>
+    	</set> 
+    	where username = #{username}
+    </update>
+    
+    
+ 	<update id="changePwd" parameterType="bean.User">
+    	update user set password = #{password}  where uid = #{uid}
+    </update>
+    
+    
+    <select id="SerachPage" resultMap="FindmessageMap" parameterType="Integer">
+       select * from message where uid=#{uid} 
+    </select>
+    
+   <!--  <select id="SerachPage" resultMap="FindmessageMap" parameterType="Integer">
+       select * from message where uid=#{uid} limit #{pageNum},#{pageSize}
+    </select> -->
+    
+    
+</mapper>

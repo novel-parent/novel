@@ -1,5 +1,7 @@
 package bean;
 
+import com.yc.user.bean.User;
+
 import lombok.*;
 import lombok.experimental.Accessors;
 

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yc.novelclient.mapper.HotRecommendMapper">
+
+	<select id="selectHotMonths" resultType="com.yc.novelclient.bean.IntroductionNovel">
+		select * from (
+		select * from (
+		select nid,novelname,introduction,url,author,type,image,state,subStr(readCount,5) readCount from novel
+		) novels order by readCount+0 Desc
+		) novelSort limit 15
+	</select>
+</mapper>

@@ -1,7 +1,11 @@
+<<<<<<< HEAD
 import bean.History;
 import mapper.HistoryMapper;
 import mapper.UserMapper;
 
+=======
+import com.yc.user.mapper.HistoryMapper;
+>>>>>>> 7cbcc8c1b613281e7f6b330daf7ec482042452f7
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
