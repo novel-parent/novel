@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    <title id="novelTitle"></title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="applicable-device" content="pc,mobile">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+    <!--<meta name="keywords" content="极拳暴君,极拳暴君最新章节,极拳暴君全文阅读,极拳暴君无弹窗广告,夜与雪,玄幻魔法">
+    <meta name="description"
+          content="极拳暴君是夜与雪的经典玄幻魔法类作品，极拳暴君主要讲述了：黑暗笼罩，秩序崩溃，人性沦丧......哀嚎奏响死亡，绝望与恐怖降临！地狱空荡荡，魔鬼在人间。陈冲知道，在这崩坏的世界，拳即是权，唯有拳头在先，道理才能深入人心！，嘿 ! 污提供极拳暴君最新章节全文免费阅读和全集txt免费下载！">
+    &lt;!&ndash;必填&ndash;&gt;
+    <meta property="og:type" content="novel">
+    <meta property="og:title" content="极拳暴君">
+    <meta property="og:description"
+          content="黑暗笼罩，秩序崩溃，人性沦丧......哀嚎奏响死亡，绝望与恐怖降临！地狱空荡荡，魔鬼在人间。陈冲知道，在这崩坏的世界，拳即是权，唯有拳头在先，道理才能深入人心！">
+
+    &lt;%&ndash;<meta property="og:image" content="https://www.biqukan.cc/files/article/image/47/47612/47612s.jpg">&ndash;%&gt;
+
+    <meta property="og:novel:category" content="玄幻魔法">
+    <meta property="og:novel:author" content="夜与雪">
+    <meta property="og:novel:book_name" content="极拳暴君">
+
+    &lt;!&ndash;选填&ndash;&gt;
+    <meta property="og:url" content="https://www.biqukan.cc/book/47612/">
+    <meta property="og:novel:status" content="连载中">
+    <meta property="og:novel:author_link"
+          content="https://www.biqukan.cc/modules/article/authorarticle.php?author=%D2%B9%D3%EB%D1%A9">
+    <meta property="og:novel:update_time" content="2019-05-07 04:21:55">
+    <meta property="og:novel:latest_chapter_name" content="正文卷 496章 狼子野心">
+    <meta property="og:novel:latest_chapter_url" content="https://www.biqukan.cc/book/47612/32165014.html">
+    <meta name="apple-mobile-web-app-title" content="极拳暴君">-->
+
+
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/font-awesome.min.css" rel="stylesheet">
+    <link href="/css/site.css" rel="stylesheet">
+    <link rel="apple-touch-icon-precomposed"
+          href="https://www.biqukan.cc/novel/images/apple-touch-icon-precomposed.png">
+    <script src="/js/jquery-1.7.2.min.js"></script>
+    <script src="/js/introduction.js"></script>
+    <!--[if lt IE 9]>
+    <script src="/js/respond.min.js"></script><![endif]-->
+
+    <script type="text/javascript">
+
+     var localUrl = window.location.search
+
+    var tUrl = localUrl
+
+    localUrl = localUrl.substring(1)
+
+    var urlParams = localUrl.split('&')
+
+    var params = urlParams[0].split('=')
+
+    var nid = params[1]
+
+    var uid
+
+    var vip
+
+    var url=''
+
+    var introductionUrlMapping='/novel/novelChapters.n?nid='+nid
+
+     /*
+       在此判断   是否为  用户 访问  用户是否为  vip用户
+     */
+    var userIndex = localUrl.indexOf('uid')
+
+    if(userIndex>0){
+
+        // 代表用户登陆
+        var vipIndex = localUrl.indexOf('vip')
+
+        if(vipIndex>0){
+            // 代表 vip用户登陆
+
+            uid = urlParams[1].split('=')[1]
+            vip = urlParams[2].split('=')[1]
+            url ='&uid='+uid+'&vip='+vip
+            introductionUrlMapping='/novel/vipNovelChapters.n'+tUrl
+        }else{
+            // 代表 普通用户登陆
+            uid = urlParams[1].split('=')[1]
+            url = '&uid='+uid
+            introductionUrlMapping='/novel/userNovelChapters.n'+tUrl
+        }
+
+    }else{
+          // 游客登录
+    }
+
+               var result = ''
+               result+="<li><a href='/type.html?page=1&type=玄幻魔法"+url+"' title='玄幻魔法'>玄幻魔法</a></li>"
+                result+="<li><a href='/type.html?page=1&type=武侠修真"+url+"' title='武侠修真'>武侠修真</a></li>"
+                result+= "<li><a href='/type.html?page=1&type=都市言情"+url+"' title='都市言情'>都市言情</a></li>"
+                result+="<li><a href='/type.html?page=1&type=历史军事"+url+"' title='历史军事'>历史军事</a></li>"
+                result+="<li><a href='/type.html?page=1&type=侦探推理"+url+"' title='侦探推理'>侦探推理</a></li>"
+                result+="<li><a href='/type.html?page=1&type=网游动漫"+url+"' title='网游动漫'>网游动漫</a></li>"
+                result+="<li class='dropdown'>"
+                result+="<a class='dropdown-toggle' data-toggle='dropdown'>更多分类<span class='caret'></span></a>"
+                result+="<ul class='dropdown-menu' role='menu'>"
+                result+="<li><a href='/type.html?page=1&type=科幻小说"+url+"' title='科幻小说'>科幻小说</a></li>"
+                result+="<li><a href='/type.html?page=1&type=恐怖灵异"+url+"' title='恐怖灵异'>恐怖灵异</a></li>"
+                result+="<li><a href='/type.html?page=1&type=穿越小说"+url+"' title='穿越小说'>穿越小说</a></li>"
+                result+="<li><a href='/type.html?page=1&type=其他类型"+url+"' title='其他类型'>其他类型</a></li>"
+                result+="</ul>"
+                result+="</li>"
+                result+="<li><a href='/type.html?page=1&state=complete"+url+"' title='完本小说'>完本小说</a></li>"
+
+        $(function(){
+
+            $('#titleLi').append(result)
+
+            // var params1 = urlParams[1].split('=')
+
+                $.ajax({
+                    url:'/novel/introduction.n',
+                    data:{"nid":nid},
+                    error:function(){
+                        alert("请求出错.")
+                    },
+                    success:function(data){
+
+                        data = eval(data)
+                       $('#novelTitle').append(data.novelName)
+                       $('#lastNovel').append("《"+data.novelName+"》所有内容均来自互联网或网友上传，嘿 ! 污 只为原作者夜与雪的小说进行宣传。欢迎各位书友支持夜与雪并收藏《"+data.novelName+"》最新章节。")
+
+                        $('#novelNewChapter').append("<strong>《"+data.novelName+"》最新章节</strong>")
+                        var result =''
+                        result+="<li><a href='/' title='嘿 ! 污'><i class='fa fa-home fa-fw'></i>首页</a></li>"
+                        result+="<li><a href='/type.html?page=1&type="+data.type+url+"' target='_blank' title='"+data.type+"'>"+data.type+"</a></li>"
+                        result+="<li class='active'>"+data.novelName+"</li>"
+                        $('#introductionHead').append(result)
+
+                        result=''
+                        result+="<div class='col-md-2 col-xs-4 hidden-xs'>"
+                        result+="<img class='img-thumbnail' alt='"+data.novelName+"' src='"+data.image+"' title='"+data.novelName+"' width='140' height='180'>"
+                        result+="</div>"
+                        result+="<div class='col-md-10'>"
+                        result+="<h1 class='bookTitle'>"+data.novelName+"</h1>"
+                        result+="<p class='booktag'>"
+                        result+="<a class='red' href='/search.html?page=1&key="+data.author+url+"' target='_blank' title='作者："+data.author+"'>"+data.author+"</a>"
+                        result+="<a class='red' href='/type.html?page=1&type="+data.type+url+"' target='_blank' title='"+data.type+"'>"+data.type+"</a>"
+                        result+="<span class='blue'>阅读数："+data.readCount+"</span>"
+                        result+="<span class='blue'>"+data.state+"</span>"
+                        result+="</p>"
+                        result+="<p>"
+
+                        result+="</p>"
+                        result+="<div class='row'>"
+                        result+="<span class='col-md-8'>"
+                        result+="<button class='btn btn-sm btn-info' type='button'>"
+                        result+="<i class='fa fa-thumbs-up fa-fw'></i>投票推荐"
+                        result+="</button>"
+                        result+="<button class='btn btn-sm btn-success' type='button'>"
+                        result+="<i class='fa fa-plus fa-fw'></i>加入书架"
+                        result+="</button>"
+                        result+="<a class='errorlink btn btn-sm btn-warning' href='#' target='_blank' rel='nofollow'>"
+                        result+="<i class='fa fa-comments fa-fw'></i>留言反馈</a></span>"
+                        result+="<div class='clear'></div></div><hr>"
+                        result+="<p class='text-muted' id='bookIntro' style=''>"
+                        result+="<img class='img-thumbnail pull-left visible-xs' style='margin:0 5px 0 0' alt='"+data.novelName+"' src='"+data.image+"' title='"+data.novelName+"' width='80' height='120'>"
+                        result+=""+data.introduction+""
+                        result+="</p></div><div class='clear'><br></div>"
+                        $('#novelIntroduction').append(result)
+
+                    },
+                    type:'GET'
+                });
+
+            $.ajax({
+                    url:introductionUrlMapping,
+                    error:function(){
+                        alert("请求出错.")
+                    },
+                    success:function(data){
+
+                        var result =''
+                        data = eval('('+data+')')
+
+                        var chapters = data.chapters
+
+                        var chapterNumber = chapters.length
+
+                        var novelNewChapterList =$('#novelNewChapterList')
+
+                        if(chapterNumber<=12){
+                            // length 小于或者等于  显示0 - length-1
+                            for (var i =chapterNumber-1;i>=0;i--){
+
+                                result+= "<dd class='col-md-3'>"
+                                result+= "<a href='/read.html?nid="+nid+"&cid="+chapters[i].url+url+"' title='"+chapters[i].title+"'>"+chapters[i].title+"</a></dd>"
+                            }
+
+                        }else{
+                            // length  大于九 显示最后的 九条数据
+                            for (var i =chapterNumber-1;i>=chapterNumber-12;i--){
+
+                                result+= "<dd class='col-md-3'>"
+                                result+= "<a href='/read.html?nid="+nid+"&cid="+chapters[i].url+url+"' title='"+chapters[i].title+"'>"+chapters[i].title+"</a></dd>"
+                            }
+                        }
+                        novelNewChapterList.append(result)
+
+                        result=''
+
+                         $(chapters).each(function (index,ele) {
+
+                          result+="<dd class='col-md-3'>"
+                          result+="<a href='/read.html?nid="+nid+"&cid="+ele.url+url+"'  title='"+ele.title+"'>"+ele.title+"</a></dd>"
+                         })
+
+                        $('#chapterList').append(result)
+
+                    },
+                    type:'GET'
+                });
+
+        });
+
+    function indexUrl() {
+           if (url==''){
+               window.location.href = '/index.html'
+           }else{
+               window.location.href = '/index.html?'+url.substring(1)
+           }
+
+       }
+    </script>
+
+</head>
+<body>
+<div class="navbar navbar-inverse" id="header">
+    <div class="container">
+        <div class="navbar-header">
+            <button class="navbar-toggle collapsed" type="button" data-toggle="collapse"
+                    data-target=".bs-navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a onclick="indexUrl()" href="javascript:void(0)"  class="navbar-brand logo" title="嘿 ! 污">嘿 ! 污</a>
+        </div>
+        <nav class="collapse navbar-collapse bs-navbar-collapse" role="navigation" id="nav-header">
+            <ul class="nav navbar-nav" id="titleLi">
+
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="/login.html">登录</a></li>
+                <li><a href="/register.html">免费注册</a></li>
+
+            </ul>
+        </nav>
+    </div>
+</div>
+
+<div class="container body-content">
+    <ol class="breadcrumb hidden-xs" id="introductionHead">
+        <!--<li><a href="https://www.biqukan.cc/" title="嘿 ! 污"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li><a href="https://www.biqukan.cc/fenlei1/1.html" target="_blank" title="玄幻魔法">玄幻魔法</a></li>
+        <li class="active">极拳暴君</li>-->
+    </ol>
+
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <div class="row" id="novelIntroduction">
+
+            </div>
+            <!-- 自适应
+            <ins class="adsbygoogle" style="display: block; height: 90px;" data-ad-client="ca-pub-4699940173522722"
+                 data-ad-slot="5167881693" data-ad-format="auto" data-adsbygoogle-status="done">
+                <ins id="aswift_0_expand"
+                     style="display:inline-table;border:none;height:90px;margin:0;padding:0;position:relative;visibility:visible;width:1108px;background-color:transparent;">
+                    <ins id="aswift_0_anchor"
+                         style="display:block;border:none;height:90px;margin:0;padding:0;position:relative;visibility:visible;width:1108px;background-color:transparent;">
+                        <iframe width="1108" height="90" frameborder="0" marginwidth="0" marginheight="0" vspace="0"
+                                hspace="0" allowtransparency="true" scrolling="no" allowfullscreen="true" id="aswift_0"
+                                name="aswift_0"
+                                style="left:0;position:absolute;top:0;border:0px;width:1108px;height:90px;">
+
+                        </iframe>
+                    </ins>
+                </ins>
+            </ins>-->
+        </div>
+    </div>
+
+
+    <div class="panel panel-danger">
+
+
+
+        <div class="panel-heading" id="novelNewChapter">
+            <i class="fa fa-history fa-fw"></i>
+
+        </div>
+        <dl class="panel-body panel-chapterlist" id="novelNewChapterList">
+
+
+
+            <!--<dd class="col-md-4">
+                <a href="https://www.biqukan.cc/book/47612/32165014.html">496章 狼子野心</a>
+            </dd>-->
+             <!--九个-->
+
+
+            <dd class="col-md-12 visible-xs">
+                <a id="btn-All">
+                    <span class="text-danger">查看全部章节
+                    <i class="fa fa-angle-double-right fa-fw"></i>
+                    </span>
+                </a>
+            </dd>
+        </dl>
+    </div>
+    <div class="panel panel-default" >
+        <div class="panel-heading">
+            <i class="fa fa-list fa-fw"></i>
+             <!--<strong>《极拳暴君》全部章节目录</strong> -->
+        </div>
+        <dl class="panel-body panel-chapterlist" id="chapterList">
+            <dt class="col-md-12">
+                <i class="fa fa-bookmark fa-fw"></i>正文
+            </dt>
+            <!--<dd class="col-md-3">
+                <a href="#" title="第1章 危局，生机！">第1章危局，生机！</a></dd>-->
+
+        </dl>
+    </div>
+    <div class="panel panel-default hidden-xs">
+        <div class="panel-heading">
+            <span class="text-muted"><i class="fa fa-fire fa-fw"></i>玄幻魔法推荐阅读</span>
+        </div>
+        <div class="panel-body panel-friendlink">
+            <a href="https://www.biqukan.cc/book/5350/" title="阴人勿扰" target="_blank">阴人勿扰</a><a
+                href="https://www.biqukan.cc/book/36095/" title="医后倾天" target="_blank">医后倾天</a><a
+                href="https://www.biqukan.cc/book/33948/" title="魅医倾城：逆天宝宝腹黑爹" target="_blank">魅医倾城：逆天宝宝腹黑爹</a><a
+                href="https://www.biqukan.cc/book/20860/" title="万古神帝" target="_blank">万古神帝</a><a
+                href="https://www.biqukan.cc/book/11051/" title="元尊" target="_blank">元尊</a><a
+                href="https://www.biqukan.cc/book/4671/" title="逆战仙魔" target="_blank">逆战仙魔</a><a
+                href="https://www.biqukan.cc/book/624/" title="无敌圣帝" target="_blank">无敌圣帝</a><a
+                href="https://www.biqukan.cc/book/38570/" title="腹黑娘亲爆萌宝：九王，太凶猛" target="_blank">腹黑娘亲爆萌宝：九王，太凶猛</a><a
+                href="https://www.biqukan.cc/book/97/" title="百炼成神" target="_blank">百炼成神</a><a
+                href="https://www.biqukan.cc/book/36065/" title="妖帝撩人：逆天邪妃太嚣张" target="_blank">妖帝撩人：逆天邪妃太嚣张</a>
+        </div>
+    </div>
+    <p id="lastNovel"></p>
+    <footer>
+        <p>本站所有小说为转载作品，所有章节均由网友上传，转载至本站只是为了宣传本书让更多读者欣赏，如有侵权请 <a href="#"
+                                                                style="text-decoration: underline;">联系我们</a>，我们会尽快处理。
+        </p>
+        <p>Copyright &#169; 2019 <a onclick="indexUrl()" href="javascript:void(0)" >嘿 ! 污</a>(www.XXXXX.cc) All Rights Reserved.
+            沪ICP备19819998号</p>
+    </footer>
+    <div class="back-to-top" id="back-to-top" title="返回顶部" style="left: 1254.5px; display: none;"><i
+            class="fa fa-chevron-up"></i></div>
+
+</div>
+
+<iframe id="google_osd_static_frame_7055972293457" name="google_osd_static_frame"
+        style="display: none; width: 0px; height: 0px;">
+</iframe>
+</body>
+<iframe id="google_shimpl" style="display: none;"></iframe>
+<iframe id="google_esf" name="google_esf" src="cid:frame-4EAB187E5C7091265C4FB333BB1D070F@mhtml.blink"
+        data-ad-client="ca-pub-4699940173522722" style="display: none;"></iframe>
+</html>
+
+
