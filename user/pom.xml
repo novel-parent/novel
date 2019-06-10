@@ -63,39 +63,5 @@
 
     </dependencies>
 
-    <build>
 
-        <!--配置资源拷贝插件-->
-        <resources>
-            <resource>
-                <directory>src/main/java</directory>
-                <includes>
-                    <include>**/*.xml</include>
-                </includes>
-            </resource>
-
-            <resource>
-                <directory>src/main/resources</directory>
-                <includes>
-                    <include>**/*.xml</include>
-                    <include>**/*.properties</include>
-                </includes>
-            </resource>
-        </resources>
-
-        <plugins>
-            <plugin>
-                <groupId>org.apache.tomcat.maven</groupId>
-                <artifactId>tomcat7-maven-plugin</artifactId>
-                <configuration>
-                    <!-- 控制tomcat端口号 -->
-                    <port>8080</port>
-                    <!-- 项目发布到tomcat后的名称 -->
-                    <!-- / 相当于把项目发布名称为ROOT -->
-                    <!-- /abc -->
-                    <path>/</path>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
 </project>

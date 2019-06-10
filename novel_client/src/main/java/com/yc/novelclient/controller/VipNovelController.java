@@ -2,7 +2,6 @@ package com.yc.novelclient.controller;
 
 import com.yc.novelclient.MyException.IntroductionNovelChaptersException;
 import com.yc.novelclient.MyException.ReadNovelChapterContextException;
-import com.yc.bean.ReadNovel;
 import com.yc.novelclient.service.VipNovelService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -38,10 +37,10 @@ public class VipNovelController {
 
     @ResponseBody
     @RequestMapping("/vipReadNovelChapter.n")
-    public ReadNovel getNovelChapterContext(@RequestParam("nid") long nid,
-                                            @RequestParam("cid") long cid, @RequestParam("uid") String uid,@RequestParam(value = "vip") boolean vip){
+    public com.yc.bean.ReadNovel getNovelChapterContext(@RequestParam("nid") long nid,
+                                                        @RequestParam("cid") long cid, @RequestParam("uid") String uid, @RequestParam(value = "vip") boolean vip){
 
-        ReadNovel chapterContext = null;
+        com.yc.bean.ReadNovel chapterContext = null;
 
         try {
 

@@ -49,22 +49,26 @@
         <dependency>
             <groupId>com.yc</groupId>
             <artifactId>netty_py_client</artifactId>
+            <version>1.0-SNAPSHOT</version>
         </dependency>
 
-        <dependency>
+       <!-- <dependency>
             <groupId>com.yc</groupId>
             <artifactId>jedis</artifactId>
-        </dependency>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>-->
 
         <dependency>
             <groupId>redis.clients</groupId>
             <artifactId>jedis</artifactId>
+            <version>${redis-version}</version>
         </dependency>
 
 
         <dependency>
             <groupId>org.apache.solr</groupId>
             <artifactId>solr-solrj</artifactId>
+            <version>${solr-version}</version>
         </dependency>
 
         <dependency>
@@ -92,42 +96,5 @@
         </dependency>
 
     </dependencies>
-
-
-<build>
-
-    <!--配置资源拷贝插件-->
-    <resources>
-        <resource>
-            <directory>src/main/java</directory>
-            <includes>
-                <include>**/*.xml</include>
-            </includes>
-        </resource>
-
-        <resource>
-            <directory>src/main/resources</directory>
-            <includes>
-                <include>**/*.xml</include>
-                <include>**/*.properties</include>
-            </includes>
-        </resource>
-    </resources>
-
-    <plugins>
-        <plugin>
-            <groupId>org.apache.tomcat.maven</groupId>
-            <artifactId>tomcat7-maven-plugin</artifactId>
-            <configuration>
-                <!-- 控制tomcat端口号 -->
-                <port>80</port>
-                <!-- 项目发布到tomcat后的名称 -->
-                <!-- / 相当于把项目发布名称为ROOT -->
-                <!-- /abc -->
-                <path>/</path>
-            </configuration>
-        </plugin>
-    </plugins>
-</build>
 
 </project>

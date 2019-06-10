@@ -2,9 +2,9 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.yc.user.NovelMapper">
+<mapper namespace="com.yc.user.mapper.NovelMapper">
 
-    <select id="selForSearchHistoryNovel" resultType="SearchHistoryNovel">
+    <select id="selForSearchHistoryNovel" resultType="com.yc.user.bean.SearchHistoryNovel">
 
         SELECT nid ,novelName FROM novel WHERE nid = #{nid}
     </select>

@@ -17,6 +17,7 @@ public class NovelServiceImpl implements NovelService {
     @Autowired
     private NovelMapper novelMapper;
 
+    @Override
     public IntroductionNovel selNovelByNid(long nid) throws IntroductionNovelChaptersException {
 
         IntroductionNovel introductionNovel = novelMapper.selNovelByNid(nid);

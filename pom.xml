@@ -33,40 +33,12 @@
     <netty-version>4.1.10.Final</netty-version>
     <protobuf-version>3.5.1</protobuf-version>
     <thrift-version>0.12.0</thrift-version>
+    <redis-version>2.6.0</redis-version>
+    <solr-version>4.10.4</solr-version>
+    <spring-data-redis-version>1.4.2.RELEASE</spring-data-redis-version>
 
   </properties>
 
-  <build>
-
-    <!--配置资源拷贝插件-->
-    <resources>
-      <resource>
-        <directory>src/main/java</directory>
-        <includes>
-          <include>**/*.xml</include>
-        </includes>
-      </resource>
-
-      <resource>
-        <directory>src/main/resources</directory>
-        <includes>
-          <include>**/*.xml</include>
-          <include>**/*.properties</include>
-        </includes>
-      </resource>
-    </resources>
-
-    <!--配置tomcat插件-->
-    <pluginManagement>
-      <plugins>
-        <plugin>
-          <groupId>org.apache.tomcat.maven</groupId>
-          <artifactId>tomcat7-maven-pluginm</artifactId>
-          <version>${tomcat.version}</version>
-        </plugin>
-      </plugins>
-    </pluginManagement>
-  </build>
   <name>Maven</name>
 
 </project>

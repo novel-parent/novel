@@ -20,9 +20,13 @@ public class HotRecommendServiceImpl implements HotRecommendService{
 	
 	@Autowired
 	private HotRecommendMapper hotRecommendMapper;
-	
-	
-	//获取到小说表中的所有数据
+
+
+	/**
+	 * 获取到小说表中的所有数据
+	 */
+
+	@Override
 	public List<IntroductionNovel> selectHotMonths() throws BizException {
 		// TODO Auto-generated method stub
 		List<IntroductionNovel> inNovels = hotRecommendMapper.selectHotMonths();

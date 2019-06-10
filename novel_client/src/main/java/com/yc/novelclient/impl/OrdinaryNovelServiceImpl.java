@@ -5,7 +5,6 @@ import com.yc.novelclient.mapper.NovelMapper;
 import com.yc.novelclient.mapper.OrdinaryNovelMapper;
 import com.yc.novelclient.service.OrdinaryNovelService;
 import com.yc.thrift.client.OrdinaryUserThriftClient;
-import com.yc.util.RedisPoolUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import redis.clients.jedis.Jedis;
@@ -34,9 +33,13 @@ public class OrdinaryNovelServiceImpl implements OrdinaryNovelService {
      * @param uid
      * @return
      */
+    @Override
     public ReadNovel getNovelChapterContext(long nid, long cid, String uid) {
 
-        Jedis jedis = RedisPoolUtil.getJedis();
+        Jedis jedis = new Jedis("47.106.110.16",6379);
+//      密码
+//        jedis.auth("li157922018");
+        jedis.auth("li157922018");
 
         if(jedis.exists("user:"+uid)){
             // 如果用户登陆 了
@@ -54,8 +57,12 @@ public class OrdinaryNovelServiceImpl implements OrdinaryNovelService {
      * @param uid
      * @return
      */
+    @Override
     public String getIntroductionNovelChapters(long nid, String uid) {
-        Jedis jedis = RedisPoolUtil.getJedis();
+        Jedis jedis = new Jedis("47.106.110.16",6379);
+//      密码
+//        jedis.auth("li157922018");
+        jedis.auth("li157922018");
 
         if(jedis.exists("user:"+uid)){
             // 如果用户登陆 了

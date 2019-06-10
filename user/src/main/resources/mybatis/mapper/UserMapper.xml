@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.yc.user.mapper.UserMapper">
 
-    <select id="selByLogin" resultType="User">
+    <select id="selByLogin" resultType="com.yc.user.bean.User">
 
         SELECT * FROM user where username = #{username}
         and password = #{password}
