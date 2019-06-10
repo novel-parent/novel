@@ -27,4 +27,10 @@ public class UserServiceImpl implements UserService{
 
         return user;
     }
+
+    public void changeUserEdit(long uid,String email,String sex,String qq){
+
+         userMapper.changeUserEdit(uid, email, sex, qq);
+    }
+
 }

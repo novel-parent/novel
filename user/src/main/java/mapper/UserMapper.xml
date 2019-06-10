@@ -11,4 +11,21 @@
 
     </select>
 
+    <update id="changeUserEdit" >
+       update user
+        <set>
+            <if test="email!=null">
+                email = #{email},
+            </if>
+            <if test="sex!=null">
+              sex=#{sex},
+            </if>
+            <if test="qq!=null">
+              qq=#{qq}
+            </if>
+        </set>
+            WHERE
+            uid=#{uid}
+    </update>
+
 </mapper>

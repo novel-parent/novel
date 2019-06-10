@@ -10,4 +10,6 @@ import myexception.LoginException;
 public interface UserService {
 
     User selForLogin(String username , String password) throws LoginException;
+
+    void changeUserEdit( long uid, String email, String sex, String qq);
 }
