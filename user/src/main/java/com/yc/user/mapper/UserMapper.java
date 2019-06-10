@@ -1,16 +1,10 @@
 package com.yc.user.mapper;
 
-<<<<<<< HEAD:user/src/main/java/mapper/UserMapper.java
-import bean.Message;
-import bean.PageBean;
-import bean.User;
+import com.yc.user.bean.Message;
+import com.yc.user.bean.User;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
-
-=======
-import com.yc.user.bean.User;
->>>>>>> 7cbcc8c1b613281e7f6b330daf7ec482042452f7:user/src/main/java/com/yc/user/mapper/UserMapper.java
-import org.apache.ibatis.annotations.Param;
 
 /**
  * @author LX

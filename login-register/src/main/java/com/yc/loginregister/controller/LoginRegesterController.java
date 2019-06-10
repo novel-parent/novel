@@ -1,7 +1,6 @@
 package com.yc.loginregister.controller;
 
 import java.lang.reflect.InvocationTargetException;
-import java.util.HashMap;
 import java.util.Map;
 
 import com.yc.loginregister.bean.JsonModel;
@@ -46,7 +45,7 @@ public class LoginRegesterController {
 		
 		Map<String,String> um=userSer.getUserMap(user);
 		
-		jedis.hmset("user:"+user.getUid(),um);
+//		jedis.hmset("user:"+user.getUid(),um);
 		
 
 		message = "uid =" + user.getUid();

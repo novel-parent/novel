@@ -1,6 +1,5 @@
 package com.yc.user.bean;
 
-import java.util.Date;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -10,7 +9,6 @@ import lombok.experimental.Accessors;
  * @author LX
  * @date 2019/5/1 - 18:24
  */
-
 @AllArgsConstructor
 @Data
 @NoArgsConstructor

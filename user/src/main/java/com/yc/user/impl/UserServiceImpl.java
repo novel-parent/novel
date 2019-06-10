@@ -7,7 +7,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.yc.user.service.UserService;
 
-import bean.PageBean;
+import com.yc.user.bean.PageBean;
+import redis.clients.jedis.Jedis;
+
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 /**
  * @author LX
@@ -20,6 +27,7 @@ public class UserServiceImpl implements UserService{
     private UserMapper userMapper;
     
 
+    @Override
     public User selForLogin(String username, String password) throws LoginException {
 
         User user = userMapper.selByLogin(username, password);
@@ -52,7 +60,6 @@ public class UserServiceImpl implements UserService{
     }
 
 
-	@Override
 	public Map<String, String> getUserMap(User user) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException {
 		
 		Map<String,String> map=new LinkedHashMap<String,String>();

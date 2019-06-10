@@ -4,30 +4,26 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.yc.user.mapper.UserMapper">
 
-<<<<<<< HEAD:user/src/main/java/mapper/UserMapper.xml
-	<resultMap id="FindmessageMap" type="bean.Message">
+	<resultMap id="FindmessageMap" type="com.yc.user.bean.Message">
 			<association property="user" column="uid" select="mapper.UserMapper.findUsername"></association>
 	</resultMap>
-	
-	<select id="findUsername" resultType="bean.User">
-		select * from user where uid= #{uid}
-	</select>
 
-    <select id="selByLogin" resultType="User">
-=======
+	<!--<select id="findUsername" resultType="com.yc.user.bean.User">
+		select * from user where uid= #{uid}
+	</select>-->
+
     <select id="selByLogin" resultType="com.yc.user.bean.User">
->>>>>>> 7cbcc8c1b613281e7f6b330daf7ec482042452f7:user/src/main/resources/mybatis/mapper/UserMapper.xml
 
         SELECT * FROM user where username = #{username}
         and password = #{password}
 
     </select>
     
-    <select id="findUserById" resultType="User">
+    <select id="findUserById" resultType="com.yc.user.bean.User">
     	select * from user where uid = #{uid}
     </select>
     
-    <update id="upadateUser" parameterType="bean.User">
+    <update id="upadateUser" parameterType="com.yc.user.bean.User">
     	update user 
     	<set>
 	    	<if test="sex != null">
@@ -41,7 +37,7 @@
     </update>
     
     
- 	<update id="changePwd" parameterType="bean.User">
+ 	<update id="changePwd" parameterType="com.yc.user.bean.User">
     	update user set password = #{password}  where uid = #{uid}
     </update>
     

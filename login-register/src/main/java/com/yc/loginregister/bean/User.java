@@ -13,7 +13,6 @@ import lombok.experimental.Accessors;
 
 @AllArgsConstructor
 @Data
-@NoArgsConstructor
 @Accessors(chain=true)
 public class User {
 
