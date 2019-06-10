@@ -10,7 +10,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>user</artifactId>
-    <packaging>war</packaging>
+    <packaging>jar</packaging>
 
     <name>user Maven Webapp</name>
     
@@ -60,118 +60,6 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
-
-
-        <!-- <dependency>
-             <groupId>redis.clients</groupId>
-             <artifactId>jedis</artifactId>
-         </dependency>
-
-         <dependency>
-             <groupId>org.json</groupId>
-             <artifactId>json</artifactId>
-         </dependency>
-         <dependency>
-             <groupId>junit</groupId>
-             <artifactId>junit</artifactId>
-         </dependency>
-
-         <dependency>
-             <groupId>org.springframework</groupId>
-             <artifactId>spring-webmvc</artifactId>
-         </dependency>
-         &lt;!&ndash;
-         <dependency>
-             <groupId>com.auth0</groupId>
-             <artifactId>java-jwt</artifactId>
-             <version>3.3.0</version>
-         </dependency>
-
-         <dependency>
-             <groupId>io.jsonwebtoken</groupId>
-             <artifactId>jjwt</artifactId>
-             <version>0.9.0</version>
-         </dependency>&ndash;&gt;
-
-
-         <dependency>
-             <groupId>javax.servlet</groupId>
-             <artifactId>javax.servlet-api</artifactId>
-             <scope>provided</scope>
-         </dependency>
-         <dependency>
-             <groupId>javax.servlet.jsp</groupId>
-             <artifactId>jsp-api</artifactId>
-             <scope>provided</scope>
-         </dependency>
-
-         <dependency>
-             <groupId>javax.servlet</groupId>
-             <artifactId>jstl</artifactId>
-         </dependency>
-
-
-         <dependency>
-             <groupId>org.json</groupId>
-             <artifactId>json</artifactId>
-         </dependency>
-
-         <dependency>
-             <groupId>org.springframework</groupId>
-             <artifactId>spring-jdbc</artifactId>
-         </dependency>
-
-         <dependency>
-             <groupId>org.aspectj</groupId>
-             <artifactId>aspectjweaver</artifactId>
-         </dependency>
-
-
-         &lt;!&ndash; mybatis &ndash;&gt;
-         <dependency>
-             <groupId>org.mybatis</groupId>
-             <artifactId>mybatis</artifactId>
-         </dependency>
-         &lt;!&ndash; mybatis和spring整合 &ndash;&gt;
-         <dependency>
-             <groupId>org.mybatis</groupId>
-             <artifactId>mybatis-spring</artifactId>
-         </dependency>
-         &lt;!&ndash; log4j 日志 &ndash;&gt;
-         <dependency>
-             <groupId>log4j</groupId>
-             <artifactId>log4j</artifactId>
-         </dependency>
-         &lt;!&ndash; mysql 驱动类 &ndash;&gt;
-         <dependency>
-             <groupId>mysql</groupId>
-             <artifactId>mysql-connector-java</artifactId>
-         </dependency>
-         &lt;!&ndash; jackson &ndash;&gt;
-         &lt;!&ndash;<dependency>
-             <groupId>com.fasterxml.jackson.core</groupId>
-             <artifactId>jackson-databind</artifactId>
-         </dependency>&ndash;&gt;
-         &lt;!&ndash; apache 图片上传 &ndash;&gt;
-         <dependency>
-             <groupId>commons-fileupload</groupId>
-             <artifactId>commons-fileupload</artifactId>
-         </dependency>
-
-         <dependency>
-             <groupId>com.fasterxml.jackson.core</groupId>
-             <artifactId>jackson-databind</artifactId>
-         </dependency>
-
-         <dependency>
-             <groupId>com.fasterxml.jackson.core</groupId>
-             <artifactId>jackson-core</artifactId>
-         </dependency>
-
-         <dependency>
-             <groupId>com.fasterxml.jackson.core</groupId>
-             <artifactId>jackson-annotations</artifactId>
-         </dependency>-->
 
     </dependencies>
 

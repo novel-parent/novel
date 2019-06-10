@@ -1,5 +1,4 @@
-import bean.History;
-import mapper.HistoryMapper;
+import com.yc.user.mapper.HistoryMapper;
 import org.junit.Test;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
