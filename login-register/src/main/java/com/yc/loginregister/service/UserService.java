@@ -15,4 +15,6 @@ public interface UserService {
     User selForLogin(String username , String password) throws LoginException;
 
 	Map<String, String> getUserMap(User user) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException;
+
+	User findUserById(Integer uid);
 }
