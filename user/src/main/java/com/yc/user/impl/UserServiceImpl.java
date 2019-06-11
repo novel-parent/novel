@@ -1,5 +1,6 @@
 package com.yc.user.impl;
 
+import com.yc.user.bean.PageBean;
 import com.yc.user.bean.User;
 import com.yc.user.mapper.UserMapper;
 import com.yc.user.myexception.LoginException;
@@ -13,7 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.yc.user.service.UserService;
 
-import bean.PageBean;
 
 /**
  * @author LX
