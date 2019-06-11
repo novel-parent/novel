@@ -1,5 +1,8 @@
 package com.yc.loginregister.service;
 
+import java.lang.reflect.InvocationTargetException;
+import java.util.Map;
+
 import com.yc.loginregister.bean.User;
 import com.yc.loginregister.myexception.LoginException;
 
@@ -10,4 +13,6 @@ import com.yc.loginregister.myexception.LoginException;
 public interface UserService {
 
     User selForLogin(String username , String password) throws LoginException;
+
+	Map<String, String> getUserMap(User user) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException;
 }

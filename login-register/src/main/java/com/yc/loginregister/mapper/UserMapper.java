@@ -2,6 +2,7 @@ package com.yc.loginregister.mapper;
 
 
 import java.util.List;
+import java.util.Map;
 
 import com.yc.loginregister.bean.User;
 import org.apache.ibatis.annotations.Param;
@@ -18,4 +19,6 @@ public interface UserMapper {
 	int addUser(User user);
 
 	List<User> findUser(User user);
+
+	
 }

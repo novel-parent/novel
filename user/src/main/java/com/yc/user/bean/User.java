@@ -1,102 +1,44 @@
 package com.yc.user.bean;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.experimental.Accessors;
+
 /**
  * @author LX
  * @date 2019/5/1 - 18:24
  */
+@AllArgsConstructor
+@Data
+@NoArgsConstructor
+@Accessors(chain=true)
 public class User {
 
-    private long uid;
+	private long uid;
 
-    private String username;
+	private String username;
 
-    private String password;
+	private String password;
 
-    private double money;
+	private double money;
 
-    private String tel;
+	private String tel;
 
-    private String email;
+	private String email;
 
-    private int age;
-    
-    private String sex;
+	private int age;
 
-    public long getUid() {
-        return uid;
-    }
+	private String sex;
 
-    public void setUid(long uid) {
-        this.uid = uid;
-    }
+	private String qq;
+	
+	private Integer integral;
+	
+	private String title;
+	
+	private String regtime;
+	
+	private String level;
 
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public double getMoney() {
-        return money;
-    }
-
-    public void setMoney(double money) {
-        this.money = money;
-    }
-
-    public String getTel() {
-        return tel;
-    }
-
-    public void setTel(String tel) {
-        this.tel = tel;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public int getAge() {
-        return age;
-    }
-
-    public void setAge(int age) {
-        this.age = age;
-    }
-
-    public String getSex() {
-        return sex;
-    }
-
-    public void setSex(String sex) {
-        this.sex = sex;
-    }
-
-    @Override
-    public String toString() {
-        return "User{" +
-                "uid=" + uid +
-                ", username='" + username + '\'' +
-                ", password='" + password + '\'' +
-                ", money=" + money +
-                ", tel='" + tel + '\'' +
-                ", email='" + email + '\'' +
-                ", age=" + age +
-                ", sex='" + sex + '\'' +
-                '}';
-    }
 }

@@ -1,7 +1,7 @@
 import com.yc.user.impl.UserServiceImpl;
 import com.yc.user.service.UserService;
 import org.junit.Test;
-import redis.clients.jedis;
+import redis.clients.jedis.Jedis;
 
 /*@RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration({"classpath:applicationContext.xml","classpath:springmvc.xml"})*/

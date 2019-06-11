@@ -1,7 +1,9 @@
 package com.yc.user.service;
 
+import com.yc.user.bean.PageBean;
 import com.yc.user.bean.User;
 import com.yc.user.myexception.LoginException;
+import com.yc.user.myexception.MyException;
 
 /**
  * @author LX
@@ -11,5 +13,15 @@ public interface UserService {
 
     User selForLogin(String username , String password) throws LoginException;
 
-    void changeUserEdit( long uid, String email, String sex, String qq);
+    void changeUserEdit( long uid, String email, String sex, String qq) throws MyException;
+
+    User findUserById(Integer uid);
+
+	void UpdateUser(User u);
+
+	void changePwd(User u);
+
+	PageBean SerachPage(Integer uid, String page);
+
+    void sendToManager(String title,String content);
 }
