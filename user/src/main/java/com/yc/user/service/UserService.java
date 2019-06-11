@@ -1,6 +1,8 @@
 package com.yc.user.service;
 
 
+import java.util.Map;
+
 import com.yc.user.bean.PageBean;
 import com.yc.user.bean.User;
 import com.yc.user.myexception.LoginException;
@@ -21,5 +23,7 @@ public interface UserService {
 	void changePwd(User u);
 
 	PageBean SerachPage(Integer uid, String page);
+
+	Map<String, String> getUserMap(User user) throws Exception;
 
 }

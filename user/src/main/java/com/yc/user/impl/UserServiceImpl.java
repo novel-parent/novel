@@ -59,7 +59,7 @@ public class UserServiceImpl implements UserService{
 
 
 	@Override
-	public Map<String, String> getUserMap(User user) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException {
+	public Map<String, String> getUserMap(User user) throws Exception {
 		
 		Map<String,String> map=new LinkedHashMap<String,String>();
 		
