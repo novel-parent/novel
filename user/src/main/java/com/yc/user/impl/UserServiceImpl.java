@@ -1,5 +1,8 @@
 package com.yc.user.impl;
 
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
+import com.yc.user.bean.Message;
 import com.yc.user.bean.PageBean;
 import com.yc.user.bean.User;
 import com.yc.user.mapper.UserMapper;
@@ -13,6 +16,8 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.yc.user.service.UserService;
+
+import redis.clients.jedis.Jedis;
 
 
 /**
@@ -74,8 +79,27 @@ public class UserServiceImpl implements UserService{
 
 	@Override
 	public PageBean SerachPage(Integer uid, String page) {
-		// TODO Auto-generated method stub
-		return null;
+	
+		
+		int pageNum=0;
+		int pageSize=1;
+		
+		if(null != page) {
+			pageNum=Integer.parseInt(page.trim());
+			System.out.println("===========PAGE====================:"+page);
+		}
+		
+		
+		
+		Page<Message> pageList=PageHelper.startPage(pageNum, pageSize, true);
+		userMapper.SerachPage(uid);
+		
+		for(Message m:pageList.getResult()) {
+			
+			System.out.println(pageList);
+		}
+		
+		return new PageBean().setCurrengPagenum(pageNum).setPageList(pageList.getResult()).setPerPageSize(pageSize).setTotalpagenum(pageList.getPages());
 	}
 
 

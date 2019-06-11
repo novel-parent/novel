@@ -1,5 +1,6 @@
 package com.yc.loginregister.bean;
 
+import java.io.Serializable;
 import java.util.Date;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -14,7 +15,10 @@ import lombok.experimental.Accessors;
 @AllArgsConstructor
 @Data
 @Accessors(chain=true)
-public class User {
+@NoArgsConstructor
+public class User implements Serializable{
+
+	private static final long serialVersionUID = 1L;
 
 	private long uid;
 
@@ -38,8 +42,10 @@ public class User {
 	
 	private String title;
 	
-	private Date regtime;
+	private String regtime;
 	
 	private String level;
+	
+	private Vip vip;
 
 }

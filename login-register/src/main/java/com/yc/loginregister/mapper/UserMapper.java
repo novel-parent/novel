@@ -18,7 +18,8 @@ public interface UserMapper {
 
 	int addUser(User user);
 
-	List<User> findUser(User user);
+	User findUser(@Param("username") String username);
+
 
 	
 }

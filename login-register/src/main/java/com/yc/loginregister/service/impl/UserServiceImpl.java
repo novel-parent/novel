@@ -52,4 +52,35 @@ public class UserServiceImpl implements UserService {
 		return null;
 	}
 
+
+
+	@Override
+	public User findUser() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+
+	@Override
+	public User findUserByUserName(String username) {
+		return userMapper.findUser(username);
+	}
+
+
+
+	@Override
+	public Map<String, String> findUser(User user) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+
+	@Override
+	public int addUser(User user) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
 }

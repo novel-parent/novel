@@ -5,12 +5,13 @@
 <mapper namespace="com.yc.user.mapper.UserMapper">
 
 	<resultMap id="FindmessageMap" type="com.yc.user.bean.Message">
-			<association property="user" column="uid" select="mapper.UserMapper.findUsername"></association>
+			<association property="user" column="uid" select="com.yc.user.mapper.UserMapper.findUsername"></association>
 	</resultMap>
 
-	<!--<select id="findUsername" resultType="com.yc.user.bean.User">
+
+	<select id="findUsername" resultType="com.yc.user.bean.User">
 		select * from user where uid= #{uid}
-	</select>-->
+	</select>
 
     <select id="selByLogin" resultType="com.yc.user.bean.User">
 
@@ -49,6 +50,8 @@
    <!--  <select id="SerachPage" resultMap="FindmessageMap" parameterType="Integer">
        select * from message where uid=#{uid} limit #{pageNum},#{pageSize}
     </select> -->
+    
+    
     
     
 </mapper>

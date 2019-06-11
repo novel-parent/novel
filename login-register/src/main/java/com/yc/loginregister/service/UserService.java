@@ -17,4 +17,12 @@ public interface UserService {
 	Map<String, String> getUserMap(User user) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException;
 
 	User findUserById(Integer uid);
+
+	User findUser();
+
+	User findUserByUserName(String username);
+
+	Map<String, String> findUser(User user);
+
+	int addUser(User user);
 }
