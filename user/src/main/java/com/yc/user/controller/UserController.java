@@ -161,8 +161,12 @@ public class UserController {
 	@ResponseBody
 	@PostMapping("sendToManager.u")
     public String sendToManager(String title ,String content){
-		userService.sendToManager(title,content);
-    	return "ok";
+		try {
+			userService.sendToManager(title,content);
+            return "ok";
+		}catch (Exception e){
+            return e.getMessage();
+		}
 	}
 
 

@@ -5,6 +5,8 @@ import com.yc.user.bean.User;
 import com.yc.user.myexception.LoginException;
 import com.yc.user.myexception.MyException;
 
+import java.util.Map;
+
 /**
  * @author LX
  * @date 2019/5/26 - 20:59
@@ -23,5 +25,8 @@ public interface UserService {
 
 	PageBean SerachPage(Integer uid, String page);
 
-    void sendToManager(String title,String content);
+    void sendToManager(String title,String content) throws MyException;
+
+	Map<String, String> getUserMap(User user) throws Exception;
+
 }
