@@ -1,33 +1,18 @@
 package com.yc.user.controller;
 
-<<<<<<< HEAD:user/src/main/java/controller/UserController.java
-import bean.JsonModel;
-import bean.Message;
-import bean.PageBean;
-import bean.User;
-import myexception.LoginException;
 
-import java.util.List;
-
-=======
+import com.yc.user.bean.JsonModel;
+import com.yc.user.bean.PageBean;
 import com.yc.user.bean.User;
 import com.yc.user.myexception.LoginException;
->>>>>>> 7cbcc8c1b613281e7f6b330daf7ec482042452f7:user/src/main/java/com/yc/user/controller/UserController.java
+import com.yc.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-<<<<<<< HEAD:user/src/main/java/controller/UserController.java
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.SessionAttributes;
-
-import service.UserService;
-=======
-import com.yc.user.service.UserService;
-
->>>>>>> 7cbcc8c1b613281e7f6b330daf7ec482042452f7:user/src/main/java/com/yc/user/controller/UserController.java
 
 /**
  * @author LX
@@ -43,7 +28,7 @@ public class UserController {
 	@RequestMapping(value = "login.u")
 	@ResponseBody
 	public String login(Model model, @RequestParam("username") String username,
-			@RequestParam("password") String password, @RequestParam("flag") boolean flag) {
+						@RequestParam("password") String password, @RequestParam("flag") boolean flag) {
 
 		String message = "-1";
 

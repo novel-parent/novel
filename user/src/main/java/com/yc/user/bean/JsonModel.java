@@ -1,4 +1,4 @@
-package bean;
+package com.yc.user.bean;
 
 import java.io.Serializable;
 

@@ -1,12 +1,10 @@
 package com.yc.user.service;
 
-import java.util.List;
 
-
+import com.yc.user.bean.PageBean;
 import com.yc.user.bean.User;
 import com.yc.user.myexception.LoginException;
 
-import bean.PageBean;
 
 /**
  * @author LX
