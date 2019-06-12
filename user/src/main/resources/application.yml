@@ -11,3 +11,8 @@ mybatis:
   mapper-locations: classpath:mybatis/mapper/*.xml
 server:
   port: 100
+  
+  
+logging:
+  level:
+    com.yc: DEBUG
