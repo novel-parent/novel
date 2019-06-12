@@ -31,7 +31,7 @@ public class RedisPoolUtil {
         Jedis jedis = jedisPool.getResource();
 
         jedis.auth("li157922018");
-
+        
         return jedis;
     }
 

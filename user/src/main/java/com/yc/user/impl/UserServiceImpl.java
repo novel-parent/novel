@@ -1,10 +1,12 @@
 package com.yc.user.impl;
 
+import com.yc.user.bean.PageBean;
 import com.yc.user.bean.User;
 import com.yc.user.mapper.UserMapper;
 import com.yc.user.myexception.LoginException;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -12,8 +14,8 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.yc.user.service.UserService;
+import redis.clients.jedis.Jedis;
 
-import bean.PageBean;
 
 /**
  * @author LX
@@ -58,7 +60,6 @@ public class UserServiceImpl implements UserService{
     }
 
 
-	@Override
 	public Map<String, String> getUserMap(User user) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException {
 		
 		Map<String,String> map=new LinkedHashMap<String,String>();
