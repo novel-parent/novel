@@ -20,6 +20,8 @@ public interface UserMapper {
 
 	User findUser(@Param("username") String username);
 
+	void changeUserEdit(long uid, String email, String sex, String qq);
+
 
 	
 }

@@ -32,12 +32,10 @@
 $(function(){
 	$.ajax({
 		url:''
-	})
+	})	
+	
 })
 
-$("#saveUserEdit").click(function () {
-    alert("saveUserEdit.u");
-});
 
  var localUrl = window.location.search
 
@@ -124,13 +122,13 @@ $("#saveUserEdit").click(function () {
 			    <a class="list-group-item" href="passedit.html"><i class="fa fa-key fa-fw"></i>修改密码</a>
 			    <a class="list-group-item" href="userboxes.html"><i class="fa fa-envelope fa-fw"></i>收件箱</a>
 			    <a class="list-group-item" href="userboxes.html"><i class="fa fa-envelope fa-fw"></i>发件箱</a>
-			    <a class="list-group-item" href="sendmessage.html"><i class="fa fa-envelope fa-fw"></i>发信息给管理员</a>
+			    <a class="list-group-item" href="sendmessasge.html"><i class="fa fa-envelope fa-fw"></i>发信息给管理员</a>
 			    <a class="list-group-item" href="#"><i class="fa fa-power-off fa-fw"></i>退出登录</a>
             </div>
         </div>
         <div class="col-md-9">
             <!--<form name="useredit" class="form-horizontal" id="useredit" action="https://www.biqukan.cc/useredit.php?do=submit" method="post">-->
-            <form name="useredit" class="form-horizontal" action="saveUserEdit.u" method="post" id="useredit" >
+            <form name="useredit" class="form-horizontal" id="useredit" action="saveUserEdit.u" method="post">
                 <div class="panel panel-default">
                     <div class="panel-heading"><i class="fa fa-edit fa-fw"></i>修改个人资料</div>
                     <div class="panel-body">
@@ -166,7 +164,7 @@ $("#saveUserEdit").click(function () {
                         <div class="form-group">
                             <div class="col-md-offset-2 col-md-2">
 
-                                <button id="saveUserEdit" class="btn btn-primary btn-block"><i class="fa fa-hdd-o fa-fw"></i> 保 存</button>
+                                <button type="submit" id="saveUserEdit" class="btn btn-primary btn-block"><i class="fa fa-hdd-o fa-fw"></i> 保 存</button>
                             </div>
                         </div>
                     </div>
