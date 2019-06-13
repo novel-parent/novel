@@ -1,4 +1,4 @@
-package com.yc.novelclient.impl;
+package com.yc.novelclient.service.impl;
 
 import java.util.List;
 

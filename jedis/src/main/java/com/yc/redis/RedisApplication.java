@@ -1,17 +1,20 @@
-package com.yc.loginregister;
+package com.yc.redis;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.ServletComponentScan;
-import org.springframework.scheduling.annotation.EnableAsync;
+import org.springframework.cache.annotation.EnableCaching;
 
-@EnableAsync
+/**
+ * @author Administrator
+ */
 @ServletComponentScan
 @SpringBootApplication
-public class LoginRegisterApplication {
+@EnableCaching
+public class RedisApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(LoginRegisterApplication.class, args);
+        SpringApplication.run(RedisApplication.class, args);
     }
 
 }

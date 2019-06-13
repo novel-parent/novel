@@ -1,4 +1,4 @@
-package com.yc.util;
+package com.yc.redis.util;
 
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
@@ -31,7 +31,7 @@ public class RedisPoolUtil {
         Jedis jedis = jedisPool.getResource();
 
         jedis.auth("li157922018");
-
+        
         return jedis;
     }
 

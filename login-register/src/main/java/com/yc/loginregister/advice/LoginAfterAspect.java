@@ -1,14 +1,12 @@
 package com.yc.loginregister.advice;
 
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 import org.aspectj.lang.JoinPoint;
-import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
 @Aspect
@@ -20,9 +18,15 @@ public class LoginAfterAspect {
 
 	}
 
+	@Async
 	@AfterReturning(value = "executeService()", returning = "result")
 	public void doBeforeAdvice(JoinPoint jp, Object result) {
 
+		try {
+			Thread.sleep(10000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 
 		// 用户已登录
 		if (result != null) {
