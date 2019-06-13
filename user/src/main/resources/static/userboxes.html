@@ -73,7 +73,7 @@
 
 			
 			
-	$(function() {
+	 $(function() {
 		$('#titleLi').append(result);
 		var currentpage=1;
 		
@@ -83,6 +83,7 @@
 			type:'post',
 			success: function(data){
 				
+				var uid=window.location.search.substring(5,6);
 				
 				function msglist(data){
 					var html='';
@@ -153,13 +154,14 @@
 				
 				$("#firstpage").on('click',function(){
 					$.ajax({
-						url:'getpage.u?page=0',
+						url:'getpage.u?page=0&uid='+uid,
 						type:'post',
 						data:'',
 						success: function(data){
 							$("#msgblock").empty();
 							var html = '';
 							html+=msghead()+msglist(data)+msgfooter(data);
+							$("#msgblock").append(html);
 						}
 					})
 				})
@@ -175,13 +177,14 @@
 					var p=data.obj.currengPagenum+1;
 					
 					$.ajax({
-						url:'getpage.u?page='+p,
+						url:'getpage.u?page='+p+'&uid='+uid,
 						type:'post',
 						data:'',
 						success: function(data){
 							$("#msgblock").empty();
 							var html = '';
 							html+=msghead()+msglist(data)+msgfooter(data);
+							$("#msgblock").append(html);
 						}
 					})
 				})
@@ -196,13 +199,14 @@
 					var p= data.obj.currengPagenum-1;
 					
 					$.ajax({
-						url:'getpage.u?page='+p,
+						url:'getpage.u?page='+p+'&uid='+uid,
 						type:'post',
 						data:'',
 						success: function(data){
 							$("#msgblock").empty();
 							var html = '';
 							html+=msghead()+msglist(data)+msgfooter(data);
+							$("#msgblock").append(html);
 						}
 					})
 				})
@@ -211,13 +215,14 @@
 				$("#lastpage").on('click',function(){
 					var p=data.obj.totalpagenum-1
 					$.ajax({
-						url:'getpage.u?page='+p,
+						url:'getpage.u?page='+p+'&uid='+uid,
 						type:'post',
 						data:'',
 						success: function(data){
 							$("#msgblock").empty();
 							var html = '';
 							html+=msghead()+msglist(data)+msgfooter(data);
+							$("#msgblock").append(html);
 						}
 					})
 				})
@@ -244,7 +249,7 @@
 				
 			}
 		})
-	})
+	}) 
 
 	function indexUrl() {
 		if (url == '') {
@@ -254,6 +259,7 @@
 		}
 
 	}
+			
 </script>
 </head>
 <body>
@@ -315,7 +321,7 @@
 				</div>
 			</div>
 			<div class="col-md-9" id="msgblock">
-				 <!--<form action="https://www.biqukan.cc/message.php?box=outbox" method="post" name="checkform" id="checkform">
+				 <!-- <form action="https://www.biqukan.cc/message.php?box=outbox" method="post" name="checkform" id="checkform">
 					
 					<div class="panel panel-default">
 						<div class="panel-heading">
@@ -359,7 +365,7 @@
 							href="https://www.biqukan.cc/message.php?box=outbox&amp;page=1"
 							class="last">1</a></li>
 					</ul>
-				</form> -->
+				</form>  -->
 			</div>
 		</div>
 		<footer>

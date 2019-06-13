@@ -1,4 +1,7 @@
+
 function login(){
+	
+	
     var name = $('#name').val()
     var pwd = $('#pwd').val()
     var flag = false
@@ -24,12 +27,15 @@ function login(){
             data,
             function(data){
 
-                if(data != -1){
-
-                    window.location.href="http://localhost/index.html?"+data;
-                }else{
+                if(data.code == 0){
+                	alert(data.msg);
+                    
+                }else if(data.code == -1){
 
                     alert("账号或者密码错误");
+                }else{
+                	
+                	window.location.href="http://localhost/index.html?"+data.code;
                 }
             });
     }
