@@ -2,8 +2,15 @@ package com.yc.redis;
 
 import com.yc.redis.util.RedisPoolUtil;
 import org.junit.Test;
+<<<<<<< HEAD:jedis/src/main/java/com/yc/RedisTest.java
+import org.springframework.beans.factory.annotation.Autowired;
+import redis.clients.jedis.Jedis;
+
+import java.util.Set;
+=======
 import org.springframework.data.redis.core.RedisTemplate;
 import redis.clients.jedis.Jedis;
+>>>>>>> 6428e41986bc7abbc747fde591ce1052bd3fddc3:jedis/src/main/java/com/yc/redis/RedisTest.java
 
 /**
  * @author LX
@@ -36,4 +43,35 @@ public class RedisTest {
 
         RedisPoolUtil.close(jedis);
     }
+
+    @Test
+    public void setTest(){
+        Jedis jedis=new Jedis("106.14.162.109",6379);
+        jedis.auth("lsx666");
+//        jedis.zadd("z2",2500,"权利的游戏");
+//        jedis.zadd("z2",1600,"黑狱");
+//        jedis.zadd("z2",20080,"西游记");
+//        jedis.zrem("z2","黑狱");
+   //     jedis.zremrangeByScore("z2",0,99999);
+        jedis.del("z2");
+        Set<String> set= jedis.zrange("z2",0,-1);
+        System.out.println(set);
+
+
+        jedis.close();
+    }
+
+    @Autowired
+    private RedisPoolUtil rpu;
+    @Test
+    public void jedisTest(){
+        Jedis jedis=rpu.getJedis();
+        Set<String> set=jedis.keys("*");
+        System.out.println(set);
+        jedis.close();
+    }
+
+
+
+
 }
