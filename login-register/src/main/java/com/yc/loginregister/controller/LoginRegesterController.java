@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.yc.loginregister.mapper.UserMapper;
 import com.yc.loginregister.myexception.LoginException;
-import com.yc.loginregister.service.UserService;
+import com.yc.loginregister.service.LoginRegisterService;
 
 import redis.clients.jedis.Jedis;
 
@@ -26,7 +26,7 @@ import redis.clients.jedis.Jedis;
 public class LoginRegesterController {
 
 	@Autowired
-	private UserService userService;
+	private LoginRegisterService userService;
 
 	private Jedis jedis;
 
@@ -50,6 +50,7 @@ public class LoginRegesterController {
 		JsonModel jm = new JsonModel();
 		
 		try {
+			
 			User user = userService.selForLogin(username, password);
 
 			// 登录成功
@@ -58,11 +59,11 @@ public class LoginRegesterController {
 			jedis.set(key, user.getUid() + "");
 			// 设置key过期时间为30分钟
 			jedis.expire(key, 60 * 60 * 30);
-
-			jm.setCode((int) user.getUid()).setMsg("登录成功");
 			
 			jedis.del("num:"+username);
 
+			jm.setCode((int) user.getUid()).setMsg("登录成功");
+			
 		} catch (LoginException e) {
 
 			jm.setCode(-1).setMsg("登录失败!");
@@ -77,7 +78,7 @@ public class LoginRegesterController {
 	public Object test(User user) {
 		JsonModel jm = new JsonModel();
 
-		if (userService.findUser(user).size() > 0) {
+		if (userService.findUser(user) != null) {
 			jm.setCode(-1).setMsg("该用户已被注册!");
 			return jm;
 		}
