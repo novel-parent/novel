@@ -1,10 +1,9 @@
-package com.yc;
+package com.yc.redis;
 
-import com.yc.util.RedisPoolUtil;
+import com.yc.redis.util.RedisPoolUtil;
 import org.junit.Test;
+import org.springframework.data.redis.core.RedisTemplate;
 import redis.clients.jedis.Jedis;
-import redis.clients.jedis.JedisPool;
-import redis.clients.jedis.JedisPoolConfig;
 
 /**
  * @author LX
