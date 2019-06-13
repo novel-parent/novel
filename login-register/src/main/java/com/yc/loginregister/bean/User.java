@@ -17,6 +17,10 @@ import lombok.experimental.Accessors;
 @Accessors(chain=true)
 public class User implements Serializable{
 
+	public User() {
+		super();
+	}
+
 	private static final long serialVersionUID = 1L;
 
 	private long uid;

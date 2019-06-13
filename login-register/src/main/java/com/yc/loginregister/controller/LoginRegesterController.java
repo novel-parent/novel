@@ -45,76 +45,28 @@ public class LoginRegesterController {
 	@ResponseBody
 	@PostMapping("login.l")
 	public Object login(Model model, @RequestParam("username") String username,
-			@RequestParam("password") String password, @RequestParam("flag") boolean flag)
-			throws IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException,
-			SecurityException {
+			@RequestParam("password") String password, @RequestParam("flag") boolean flag) {
 
 		JsonModel jm = new JsonModel();
+		
+		try {
+			User user = userService.selForLogin(username, password);
 
-		User user = null;
+			// 登录成功
+			String key = "uid:" + user.getUid();
 
-		// 通过用户名查找到该用户
-		User lockedUser = userService.findUserByUserName(username);
+			jedis.set(key, user.getUid() + "");
+			// 设置key过期时间为30分钟
+			jedis.expire(key, 60 * 60 * 30);
 
-		// 设置当前登录用户登录次数，时间为三分钟
-		String loginNumKey = "loginNum:" + lockedUser.getUid();
+			jm.setCode((int) user.getUid()).setMsg("登录成功");
+			
+			jedis.del("num:"+username);
 
-		// 判断是不是存在loginNumKey
-		if (!jedis.exists(loginNumKey)) {
+		} catch (LoginException e) {
 
-			jedis.set(loginNumKey, "0");
-			jedis.expire(loginNumKey, 60 * 3);
-
-		}
-
-		// 判断该用户是否被限制登录,如果被限制登录则return
-		if (jedis.exists("lockuser:" + lockedUser.getUid())) {
-
-			jm.setCode(0).setMsg("您已登录失败超过5次请" + jedis.ttl("lockuser:" + lockedUser.getUid()) + "秒后再来吧！");
-
-		} else {
-
-			try {
-
-				user = userService.selForLogin(username, password);
-
-				// 登录成功
-				String key = "uid:" + user.getUid();
-
-				jedis.set(key, user.getUid() + "");
-				// 设置key过期时间为30分钟
-				jedis.expire(key, 60 * 60 * 30);
-
-				jm.setCode((int) user.getUid()).setMsg("登录成功");
-
-			} catch (LoginException e) {
-
-				jedis.incr(loginNumKey);
-
-				int loginTime = Integer.valueOf(jedis.get(loginNumKey));
-
-				if (loginTime <= 5) {
-
-					jm.setCode(-1).setMsg("登录失败!");
-
-				} else {
-
-					String key = "lockuser:" + lockedUser.getUid();
-
-					// 设置该用户锁定登录1分钟
-					if (!jedis.exists(key)) {
-
-						jedis.set(key, username);
-						jedis.expire(key, 60);
-						// 清零登录次数
-						jedis.del(loginNumKey);
-					}
-
-					jm.setCode(0).setMsg("您已登录失败超过5次请" + jedis.ttl(key) + "秒后再来吧！");
-				}
-
-				e.printStackTrace();
-			}
+			jm.setCode(-1).setMsg("登录失败!");
+			e.printStackTrace();
 		}
 
 		return jm;

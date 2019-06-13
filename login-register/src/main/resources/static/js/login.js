@@ -26,16 +26,17 @@ function login(){
             "login.l",
             data,
             function(data){
-
-                if(data.code == 0){
-                	alert(data.msg);
-                    
-                }else if(data.code == -1){
+            	
+            	if(typeof(data) == typeof("123")){
+            		alert(data.substring(1,data.length-1));
+            	}
+            	
+                if(data.code == -1){
 
                     alert("账号或者密码错误");
                 }else{
                 	
-                	window.location.href="http://localhost/index.html?"+data.code;
+                	//window.location.href="http://localhost/index.html?"+data.code;
                 }
             });
     }
