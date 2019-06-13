@@ -3,8 +3,6 @@ import com.yc.user.service.UserService;
 import org.junit.Test;
 import redis.clients.jedis.Jedis;
 
-import java.sql.Date;
-
 /*@RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration({"classpath:applicationContext.xml","classpath:springmvc.xml"})*/
 public class UserTest {
@@ -44,8 +42,8 @@ public class UserTest {
 
     @Test
     public void testtime(){
-        Date dt=new Date(System.currentTimeMillis());
-        System.out.println(dt);
+        Jedis jedis=new Jedis("106.14.162.109",6379,5000);
+        jedis.auth("lsx666");
     }
 
 }
