@@ -1,3 +1,7 @@
-
 server:
   port: 60
+spring:
+  redis:
+    host: 106.14.162.109
+    port: 6379
+    password: lsx666

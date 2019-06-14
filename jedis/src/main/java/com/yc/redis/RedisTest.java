@@ -2,15 +2,10 @@ package com.yc.redis;
 
 import com.yc.redis.util.RedisPoolUtil;
 import org.junit.Test;
-<<<<<<< HEAD:jedis/src/main/java/com/yc/RedisTest.java
 import org.springframework.beans.factory.annotation.Autowired;
 import redis.clients.jedis.Jedis;
 
 import java.util.Set;
-=======
-import org.springframework.data.redis.core.RedisTemplate;
-import redis.clients.jedis.Jedis;
->>>>>>> 6428e41986bc7abbc747fde591ce1052bd3fddc3:jedis/src/main/java/com/yc/redis/RedisTest.java
 
 /**
  * @author LX
@@ -70,8 +65,6 @@ public class RedisTest {
         System.out.println(set);
         jedis.close();
     }
-
-
 
 
 }
