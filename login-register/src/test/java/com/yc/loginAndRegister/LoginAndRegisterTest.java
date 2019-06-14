@@ -1,14 +1,19 @@
-package com.yc.loginAndRegister.Test;
+package com.yc.loginAndRegister;
 
 import com.yc.loginregister.bean.User;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringRunner;
 import redis.clients.jedis.Jedis;
 
+@RunWith(SpringRunner.class)
 @SpringBootTest
+@ContextConfiguration
 public class LoginAndRegisterTest {
 
 	@Autowired
@@ -30,7 +35,6 @@ public class LoginAndRegisterTest {
 	public void test() throws InterruptedException {
 		Jedis jedis=new Jedis("106.14.162.109",6379);
 		jedis.auth("lsx666");
-		
 		
 		jedis.set("a", "1");
 		

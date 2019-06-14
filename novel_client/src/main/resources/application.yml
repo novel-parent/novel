@@ -3,8 +3,19 @@ spring:
     username: root
     password: a
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/novel
+    url: jdbc:mysql://localhost:3306/novel?useSSL=true
 
+
+  rabbitmq:
+    host: 47.106.110.16
+    username: lx
+    password: li157922018
+    port: 5672
+
+
+  redis:
+    host: 47.106.110.16
+    password: li157922018
 
 mybatis:
   config-location: classpath:mybatis/mybatis-config.xml
