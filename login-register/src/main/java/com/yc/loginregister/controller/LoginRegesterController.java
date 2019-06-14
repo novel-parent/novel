@@ -49,7 +49,7 @@ public class LoginRegesterController {
 
 
 		JsonModel jm = new JsonModel();
-		
+
 		try {
 			
 			User user = userService.selForLogin(username, password);

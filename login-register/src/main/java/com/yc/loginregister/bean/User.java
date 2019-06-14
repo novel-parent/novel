@@ -19,10 +19,6 @@ public class User implements Serializable{
 	public User() {
 	}
 
-	public User() {
-		super();
-	}
-
 	private static final long serialVersionUID = 1L;
 
 	private long uid;
