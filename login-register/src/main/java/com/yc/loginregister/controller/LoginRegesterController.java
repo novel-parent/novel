@@ -15,116 +15,62 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
-
 import com.yc.loginregister.mapper.UserMapper;
 import com.yc.loginregister.myexception.LoginException;
-import com.yc.loginregister.service.UserService;
+import com.yc.loginregister.service.LoginRegisterService;
 
 import redis.clients.jedis.Jedis;
 
 @Controller
 @SessionAttributes("loginedUser")
 public class LoginRegesterController {
-	
+
 	@Autowired
-	private UserService userService;
-	
+	private LoginRegisterService userService;
+
 	private Jedis jedis;
-	
-	
-	
-	//初始化方法,创建jedis对象
+
+	// 初始化方法,创建jedis对象
 	@ModelAttribute
 	public void init() {
-		jedis =new Jedis("106.14.162.109",6379);
+		jedis = new Jedis("106.14.162.109", 6379);
 		jedis.auth("lsx666");
 	}
-	
+
 	/**
-	 * @param: username   用户名
-	 *         password   密码
-	 *         JsonModel.code : 1:正常登录  -1:登陆失败    0:用户被锁定
+	 * @param: username 用户名 password 密码 JsonModel.code : 1:正常登录 -1:登陆失败 0:用户被锁定
 	 * @author: hdl
 	 */
 
 	@ResponseBody
 	@PostMapping("login.l")
 	public Object login(Model model, @RequestParam("username") String username,
-			@RequestParam("password") String password, @RequestParam("flag") boolean flag) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException{
+			@RequestParam("password") String password, @RequestParam("flag") boolean flag) {
 
-		JsonModel jm=new JsonModel();
-		/*Jedis jedis =new Jedis("106.14.162.109",6379);
-		jedis.auth("lsx666");*/
-		User user = null;
-		
-		//通过用户名查找到该用户
-		User lockedUser=userService.findUserByUserName(username);
 
-		//设置当前登录用户登录次数，时间为三分钟
-		String loginNumKey="loginNum:"+lockedUser.getUid();
+		JsonModel jm = new JsonModel();
 		
-		//判断是不是存在loginNumKey
-		if(!jedis.exists(loginNumKey)) {
+		try {
 			
-			jedis.set(loginNumKey, "0");
-			jedis.expire(loginNumKey, 60*3);
-			
-		}
-		
-		
-		//判断该用户是否被限制登录,如果被限制登录则return
-		if(jedis.exists("lockuser:"+lockedUser.getUid())) {
-			
-			jm.setCode(0).setMsg("您已登录失败超过5次请一分钟后再来吧！");
-			
-		}else {
-			
+			User user = userService.selForLogin(username, password);
 
-			try {
-				user = userService.selForLogin(username, password);
-				
-				//登录成功
-				String key="uid:"+user.getUid();
-				
-				jedis.set(key, user.getUid()+"");
-				//设置key过期时间为30分钟
-				jedis.expire(key, 60*60*30);
-				
-				jm.setCode((int) user.getUid());
-				
-			} catch (LoginException e) {
-				
-                int loginTime=Integer.parseInt(jedis.get(loginNumKey))+1;
-                
-                jedis.set(loginNumKey, ""+loginTime);
-                
-                System.out.println(loginTime);
-				
-				if(loginTime <= 5) {
-					
-					jm.setCode(-1).setMsg("登录失败!");
-					
-				}else {
-					
-					String key="lockuser:"+lockedUser.getUid();
-					
-					jedis.set(key, username);
-					
-					//设置该用户锁定登录1分钟
-					if(!jedis.exists(key)) {
-						jedis.expire(key,60*1);
-					}
-					
-					jm.setCode(0).setMsg("您已登录失败超过5次请一分钟后再来吧！");
-				}
-				
-				e.printStackTrace();
-			}
+			// 登录成功
+			String key = "uid:" + user.getUid();
+
+			jedis.set(key, user.getUid() + "");
+			// 设置key过期时间为30分钟
+			jedis.expire(key, 60 * 60 * 30);
+			
+			jedis.del("num:"+username);
+
+			jm.setCode((int) user.getUid()).setMsg("登录成功");
+			
+		} catch (LoginException e) {
+
+			jm.setCode(-1).setMsg("登录失败!");
+			e.printStackTrace();
 		}
 
-		
-		jedis.close();
-		
 		return jm;
 	}
 
@@ -132,10 +78,8 @@ public class LoginRegesterController {
 	@ResponseBody
 	public Object test(User user) {
 		JsonModel jm = new JsonModel();
-		
 
-		
-		if (userService.findUser(user).size() > 0) {
+		if (userService.findUser(user) != null) {
 			jm.setCode(-1).setMsg("该用户已被注册!");
 			return jm;
 		}

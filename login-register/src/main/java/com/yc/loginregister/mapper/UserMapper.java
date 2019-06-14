@@ -22,6 +22,8 @@ public interface UserMapper {
 
 	void changeUserEdit(long uid, String email, String sex, String qq);
 
+	User findUserById(Integer uid);
+
 
 	
 }

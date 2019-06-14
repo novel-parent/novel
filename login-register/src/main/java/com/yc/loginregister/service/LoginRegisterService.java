@@ -10,7 +10,7 @@ import com.yc.loginregister.myexception.LoginException;
  * @author LX
  * @date 2019/5/26 - 20:59
  */
-public interface UserService {
+public interface LoginRegisterService {
 
     User selForLogin(String username , String password) throws LoginException;
 
@@ -18,11 +18,9 @@ public interface UserService {
 
 	User findUserById(Integer uid);
 
-	User findUser();
 
-	User findUserByUserName(String username);
-
-	Map<String, String> findUser(User user);
 
 	int addUser(User user);
+
+	User findUser(User user);
 }
