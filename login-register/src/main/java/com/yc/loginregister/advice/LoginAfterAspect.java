@@ -6,12 +6,15 @@ import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
 @Aspect
 @Component
 public class LoginAfterAspect {
+
+	private RabbitTemplate rabbitTemplate;
 
 	@Pointcut("execution(* com.yc.loginregister.service.impl..*.selForLogin(..))")
 	public void executeService() {
@@ -35,7 +38,7 @@ public class LoginAfterAspect {
 				Method method = result.getClass().getMethod("getVip");
 
 				if (method.invoke(result) != null) {
-					System.out.println("该用户是会员");
+					System.out.println("该用户是会员 "+ result);
 				} else {
 					System.out.println("该用户为普通用户");
 				}

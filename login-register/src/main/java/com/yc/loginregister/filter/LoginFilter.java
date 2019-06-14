@@ -1,6 +1,8 @@
 package com.yc.loginregister.filter;
 
 
+import redis.clients.jedis.Jedis;
+
 import javax.servlet.*;
 import java.io.IOException;
 
@@ -17,6 +19,11 @@ public class LoginFilter implements Filter {
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
+
+
+        Jedis jedis = new Jedis();
+
+        jedis.auth("");
 
         System.out.println("拦截登录   ");
         String username = request.getParameter("username");

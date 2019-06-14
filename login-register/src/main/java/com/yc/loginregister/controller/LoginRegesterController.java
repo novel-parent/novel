@@ -59,7 +59,7 @@ public class LoginRegesterController {
 		
 		//通过用户名查找到该用户
 		User lockedUser=userService.findUserByUserName(username);
-		
+
 		//设置当前登录用户登录次数，时间为三分钟
 		String loginNumKey="loginNum:"+lockedUser.getUid();
 		

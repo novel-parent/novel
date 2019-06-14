@@ -1,8 +1,6 @@
 package mapper;
 
-import java.util.List;
 
-import bean.IndexNovel;
 
 
 /**

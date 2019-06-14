@@ -5,10 +5,14 @@ spring:
     driver-class-name: com.mysql.jdbc.Driver
     url: jdbc:mysql://localhost:3306/novel?useSSL=true
 
+  rabbitmq:
+    host: 47.106.110.16
+    username: lx
+    password: li157922018
+    port: 5672
 
 mybatis:
   config-location: classpath:mybatis/mybatis-config.xml
   mapper-locations: classpath:mybatis/mapper/*.xml
 server:
   port: 80
-
