@@ -3,7 +3,7 @@ package com.yc.redis.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Set;
@@ -22,7 +22,7 @@ public class SearchListController {
     /**
      * 获取搜索排行榜前30
      */
-    @PostMapping("/getSearchList")
+    @RequestMapping("/getSearchList")
     public Set<String> getSearchList(){
         redisTemplate.opsForZSet().add("z1","斗罗大陆",8000);
         redisTemplate.opsForZSet().add("z1","斗破苍穹",10999);
@@ -30,8 +30,8 @@ public class SearchListController {
 
         Set<String> set=redisTemplate.opsForZSet().range("z1",0,100000);
         System.out.println(set);
-
-        return null;
+ //      redisTemplate.delete("z1");
+        return set;
     }
 
 
