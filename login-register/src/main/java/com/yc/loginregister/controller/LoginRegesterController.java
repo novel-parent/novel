@@ -3,6 +3,11 @@ package com.yc.loginregister.controller;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Map;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import com.yc.loginregister.bean.CookieModel;
 import com.yc.loginregister.bean.JsonModel;
 import com.yc.loginregister.bean.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +34,10 @@ public class LoginRegesterController {
 	private LoginRegisterService userService;
 
 	private Jedis jedis;
+	
+	public static final int LoginSessionTime=1800;
+	
+	public static final int CookieTime=60*60*24*7;
 
 	// 初始化方法,创建jedis对象
 	@ModelAttribute
@@ -45,7 +54,7 @@ public class LoginRegesterController {
 	@ResponseBody
 	@PostMapping("login.l")
 	public Object login(Model model, @RequestParam("username") String username,
-			@RequestParam("password") String password, @RequestParam("flag") boolean flag) {
+			@RequestParam("password") String password, @RequestParam("flag") boolean flag,HttpServletResponse response,HttpServletRequest request) {
 
 
 		JsonModel jm = new JsonModel();
@@ -59,9 +68,45 @@ public class LoginRegesterController {
 
 			jedis.set(key, user.getUid() + "");
 			// 设置key过期时间为30分钟
-			jedis.expire(key, 60 * 60 * 30);
+			jedis.expire(key, LoginSessionTime);
 			
 			jedis.del("num:"+username);
+			
+			//设置cookie
+			if(flag) {
+				//在创建cookie之前判断是否之前有设置过cookie
+				Cookie[] cookies=request.getCookies();
+				
+				for(Cookie c:cookies) {
+					if(!username.equals(String.valueOf(c.getValue()))) {
+						
+						Cookie usernamecookie=new Cookie("uname",username);
+						Cookie userpwdcookie=new Cookie("upwd",password);
+						//设置cookie过期时间为7天
+						usernamecookie.setMaxAge(CookieTime);
+						userpwdcookie.setMaxAge(CookieTime);
+						
+						response.addCookie(userpwdcookie);
+						response.addCookie(usernamecookie);
+					}
+				}
+			}else {
+				//如果未选择记住登陆状态则判断该用户之前是否有设置cookie，如果有则删除该cookie
+				Cookie[] cookies= request.getCookies();
+				
+				for(Cookie c:cookies) {
+					if(username.equals(c.getValue())) {
+						Cookie usernamecookie=new Cookie("uname",username);
+						Cookie userpwdcookie=new Cookie("upwd",password);
+						usernamecookie.setMaxAge(0);
+						userpwdcookie.setMaxAge(0);
+						usernamecookie.setPath("/");
+						userpwdcookie.setPath("/");
+						response.addCookie(userpwdcookie);
+						response.addCookie(usernamecookie);
+					}
+				}
+			}
 
 			jm.setCode((int) user.getUid()).setMsg("登录成功");
 			
@@ -91,5 +136,20 @@ public class LoginRegesterController {
 		}
 
 		return jm;
+	}
+	
+	@RequestMapping("getcookie.l")
+	@ResponseBody
+	public Object getCookie(HttpServletRequest request) {
+		CookieModel cookie=new CookieModel();
+		for(Cookie c: request.getCookies()) {
+			if("uname".equals(c.getName())) {
+				cookie.setUsername(c.getValue());
+			}
+			if("upwd".equals(c.getName())) {
+				cookie.setPassword(c.getValue());
+			}
+		}
+		return cookie;
 	}
 }

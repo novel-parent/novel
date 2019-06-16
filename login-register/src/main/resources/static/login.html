@@ -106,5 +106,20 @@
     </div>
 
 </div>
+<script type="text/javascript">
+$(function(){
+	$.ajax({
+		url:'getcookie.l',
+		type:'post',
+		data:'',
+		success: function(data){
+			if(data.username != null){
+				$('#name').val(data.username);
+				$('#pwd').val(data.password);
+			}
+		}
+	})
+})
+</script>
 
 </body></html>
