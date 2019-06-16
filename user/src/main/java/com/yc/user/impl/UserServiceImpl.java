@@ -129,21 +129,19 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public void UpdateUser(User u) {
-		// TODO Auto-generated method stub
-
+		userMapper.upadateUser(u);
 	}
 
 
 	@Override
 	public void changePwd(User u) {
-		// TODO Auto-generated method stub
-
+		userMapper.changePwd(u);
 	}
 
 
 	@Override
 	public User findUserById(Integer uid) {
-		return null;
+		return userMapper.findUserById(uid);
 	}
 
 

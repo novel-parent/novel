@@ -1,3 +1,5 @@
+
+
 function login() {
 
 	var name = $('#name').val()
@@ -13,6 +15,7 @@ function login() {
 		password : pwd,
 		flag : flag
 	};
+	
 	if (name == "") {
 		alert("请先输入用户名")
 	} else if (pwd == "") {

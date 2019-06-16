@@ -155,6 +155,7 @@ function changeuserinfo(){
 		success: function(result){
 			if(result.code==1){
 				alert(result.msg);
+				window.location.reload();
 			}
 		}
 	})  

@@ -18,7 +18,7 @@ public interface UserMapper {
 
     User findUserById(@Param("uid") Integer id);
 
-	void upadateUser(User u);
+	void upadateUser(User user);
 
 	void changePwd(User u);
 

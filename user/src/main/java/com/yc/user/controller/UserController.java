@@ -50,7 +50,7 @@ public class UserController {
 	 * @date 2019/5/26 - 20:57 根据用户id查找用户
 	 */
 
-	@RequestMapping("getuser.u")
+	@RequestMapping(value="getuser.u",method=RequestMethod.POST)
 	@ResponseBody
 	public Object getUser(Integer uid) {
 
@@ -91,14 +91,14 @@ public class UserController {
 	 * @author HDL
 	 * @date 2019/5/26 - 20:57 修改密码
 	 */
-
 	@RequestMapping("changepwd.u")
 	@ResponseBody
-	public Object changePwd(User u) {
+	public Object changePwd(User user) {
+		System.out.println(user);
 
 		JsonModel jm = new JsonModel();
 
-		userService.changePwd(u);
+		userService.changePwd(user);
 
 		jm.setCode(1).setMsg("密码修改成功");
 
