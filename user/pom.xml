@@ -32,10 +32,10 @@
 			<artifactId>spring-boot-starter-cache</artifactId>
 		</dependency>
 
-		<dependency>
+		<!-- <dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-redis</artifactId>
-		</dependency>
+		</dependency> -->
 
 		<!--  rabbitmq    -->
 		<dependency>
@@ -67,11 +67,25 @@
 		    <artifactId>pagehelper-spring-boot-starter</artifactId>
 		    <version>1.2.10</version>
 		</dependency>
+		
+		<!-- <dependency>
+			<groupId>com.alipay.api</groupId>
+			<artifactId>k12-alipay-sdk</artifactId>
+			<version>0.0.1-beta</version>
+		</dependency> -->
 
+		<dependency>
+			<groupId>com.alipay.sdk</groupId>
+			<artifactId>alipay-sdk-java</artifactId>
+			<version>3.4.27.ALL</version>
+		</dependency>
+		
+		
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-jdbc</artifactId>
 		</dependency>
+		
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
@@ -107,6 +121,7 @@
 			<artifactId>lombok</artifactId>
 		</dependency>
 
+		
 	</dependencies>
 
 

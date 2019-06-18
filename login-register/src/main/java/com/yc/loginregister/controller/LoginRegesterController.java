@@ -63,56 +63,80 @@ public class LoginRegesterController {
 			
 			User user = userService.selForLogin(username, password);
 
-			// 登录成功
+			// 登录成功设置的key
 			String key = "uid:" + user.getUid();
-
-			jedis.set(key, user.getUid() + "");
-			// 设置key过期时间为30分钟
-			jedis.expire(key, LoginSessionTime);
+			
+			//设置ip地址的key
+			String ipkey="uip:" + user.getUid();
+			
+			//获取登录用户的ip地址
+			String ip= request.getRemoteAddr();
+			
+			if(jedis.exists(ipkey)) {
+				
+				jm.setCode(-1).setMsg("该用户已在别的设备登录");
+				
+			}else if(jedis.exists(key)){
+				
+				jm.setCode(-1).setMsg("您已登录，无需再登录");
+				
+			} else {
+				
+				
+				//设置cookie
+				if(flag) {
+					//在创建cookie之前判断是否之前有设置过cookie
+					Cookie[] cookies=request.getCookies();
+					
+					for(Cookie c:cookies) {
+						if(!username.equals(String.valueOf(c.getValue()))) {
+							
+							Cookie usernamecookie=new Cookie("uname",username);
+							Cookie userpwdcookie=new Cookie("upwd",password);
+							//设置cookie过期时间为7天
+							usernamecookie.setMaxAge(CookieTime);
+							userpwdcookie.setMaxAge(CookieTime);
+							
+							response.addCookie(userpwdcookie);
+							response.addCookie(usernamecookie);
+						}
+					}
+				}else {
+					//如果未选择记住登陆状态则判断该用户之前是否有设置cookie，如果有则删除该cookie
+					Cookie[] cookies= request.getCookies();
+					
+					for(Cookie c:cookies) {
+						if(username.equals(c.getValue())) {
+							Cookie usernamecookie=new Cookie("uname",username);
+							Cookie userpwdcookie=new Cookie("upwd",password);
+							usernamecookie.setMaxAge(0);
+							userpwdcookie.setMaxAge(0);
+							usernamecookie.setPath("/");
+							userpwdcookie.setPath("/");
+							response.addCookie(userpwdcookie);
+							response.addCookie(usernamecookie);
+						}
+					}
+				}
+				
+				// 设置用户登录key
+				jedis.set(key, user.getUid() + "");
+				
+				//设置ip地址的key判断用户是不是在别的地方登录
+				jedis.set(ipkey, ip);
+				
+				// 设置用户登录key过期时间为30分钟
+				jedis.expire(key, LoginSessionTime);
+				jedis.expire(ipkey, LoginSessionTime);
+				
+				jm.setCode((int) user.getUid()).setMsg("登录成功");
+			}
 			
 			jedis.del("num:"+username);
-			
-			//设置cookie
-			if(flag) {
-				//在创建cookie之前判断是否之前有设置过cookie
-				Cookie[] cookies=request.getCookies();
-				
-				for(Cookie c:cookies) {
-					if(!username.equals(String.valueOf(c.getValue()))) {
-						
-						Cookie usernamecookie=new Cookie("uname",username);
-						Cookie userpwdcookie=new Cookie("upwd",password);
-						//设置cookie过期时间为7天
-						usernamecookie.setMaxAge(CookieTime);
-						userpwdcookie.setMaxAge(CookieTime);
-						
-						response.addCookie(userpwdcookie);
-						response.addCookie(usernamecookie);
-					}
-				}
-			}else {
-				//如果未选择记住登陆状态则判断该用户之前是否有设置cookie，如果有则删除该cookie
-				Cookie[] cookies= request.getCookies();
-				
-				for(Cookie c:cookies) {
-					if(username.equals(c.getValue())) {
-						Cookie usernamecookie=new Cookie("uname",username);
-						Cookie userpwdcookie=new Cookie("upwd",password);
-						usernamecookie.setMaxAge(0);
-						userpwdcookie.setMaxAge(0);
-						usernamecookie.setPath("/");
-						userpwdcookie.setPath("/");
-						response.addCookie(userpwdcookie);
-						response.addCookie(usernamecookie);
-					}
-				}
-			}
 
-			jm.setCode((int) user.getUid()).setMsg("登录成功");
-			
 		} catch (LoginException e) {
 
-			jm.setCode(-1).setMsg("登录失败!");
+			jm.setCode(-1).setMsg("账号或密码错误!");
 			e.printStackTrace();
 		}
 
