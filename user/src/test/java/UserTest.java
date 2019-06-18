@@ -1,7 +1,11 @@
 import com.yc.user.impl.UserServiceImpl;
+import com.yc.user.service.GetListService;
 import com.yc.user.service.UserService;
 import org.junit.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import redis.clients.jedis.Jedis;
+
+import java.util.Map;
 
 /*@RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration({"classpath:applicationContext.xml","classpath:springmvc.xml"})*/
@@ -44,6 +48,14 @@ public class UserTest {
     public void testtime(){
         Jedis jedis=new Jedis("106.14.162.109",6379,5000);
         jedis.auth("lsx666");
+    }
+
+    @Autowired
+    private GetListService gs;
+    @Test
+    public void testUpdateList(){
+        Map<String,Object> map= gs.getSearchList();
+        System.out.println(map.toString());
     }
 
 }
