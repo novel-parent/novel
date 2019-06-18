@@ -1,11 +1,27 @@
 package com.yc.user.controller;
 
 
+import com.alipay.api.AlipayApiException;
+import com.alipay.api.AlipayClient;
+import com.alipay.api.DefaultAlipayClient;
+import com.alipay.api.internal.util.AlipaySignature;
+import com.alipay.api.request.AlipayTradePagePayRequest;
 import com.yc.user.bean.JsonModel;
 import com.yc.user.bean.PageBean;
 import com.yc.user.bean.User;
+import com.yc.user.bean.Vip;
+import com.yc.user.config.AlipayConfig;
 import com.yc.user.myexception.LoginException;
 import com.yc.user.service.UserService;
+
+import java.io.UnsupportedEncodingException;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.UUID;
+
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,6 +35,22 @@ import redis.clients.jedis.Jedis;
 @Controller
 @SessionAttributes("loginedUser")
 public class UserController {
+	
+	private Jedis jedis;
+	
+	private AlipayClient client;
+	private AlipayTradePagePayRequest request;
+	
+	@ModelAttribute
+	public void init() {
+		    jedis=new Jedis("106.14.162.109",6379,5000);
+	        jedis.auth("lsx666");
+	        client = new DefaultAlipayClient(AlipayConfig.gatewayUrl, AlipayConfig.app_id, AlipayConfig.merchant_private_key, "json", AlipayConfig.charset, AlipayConfig.alipay_public_key, AlipayConfig.sign_type);
+			 request = new AlipayTradePagePayRequest();
+			request.setReturnUrl(AlipayConfig.return_url);
+			request.setNotifyUrl(AlipayConfig.notify_url);
+	}
+	
 
 	@Autowired
 	private UserService userService;
@@ -92,17 +124,11 @@ public class UserController {
 	 * @date 2019/5/26 - 20:57 修改密码
 	 */
 	@RequestMapping("changepwd.u")
-	@ResponseBody
-	public Object changePwd(User user) {
-		System.out.println(user);
-
-		JsonModel jm = new JsonModel();
+	public String changePwd(User user) {
 
 		userService.changePwd(user);
 
-		jm.setCode(1).setMsg("密码修改成功");
-
-		return jm;
+		return "redirect:/login.html";
 	}
 
 	/**
@@ -128,12 +154,13 @@ public class UserController {
      * 判断reids用户是否存在
      */
     @RequestMapping(value = "saveUserEdit.u" )
-    public String userEdit(String email, String usecookie, String qq){
+    public String userEdit(String email, String usecookie, String qq,String uid){
+    	
+    	
         String sex=usecookie;
-        Jedis jedis=new Jedis("106.14.162.109",6379,5000);
-        jedis.auth("lsx666");
+       
         /////////////////////////////////////////////////
-        if(jedis.exists("user:1")){
+        if(jedis.exists("user:"+uid)){
  //         Map<String,String> map=jedis.hgetAll("user:1");
  //         Integer id=Integer.parseInt(map.get("getUid"));
 			Integer id=Integer.parseInt(jedis.get("user:1"));
@@ -169,5 +196,113 @@ public class UserController {
 		}
 	}
 
+	@RequestMapping("getuseredit.u")
+	@ResponseBody
+	public Object getEditUser(User user) {
+		JsonModel jm=new JsonModel();
+		
+		jm.setCode(1).setObj(userService.getEditUser(user));
+		
+		return jm;
+	}
+	
+	@RequestMapping("exitlogin.u")
+	@ResponseBody
+	public Object exitLogin(String uid) {
+		JsonModel jm=new JsonModel();
+		
+		if(jedis.exists("uid:"+uid)) {
+			jedis.del("uid:"+uid);
+		}
+		
+		jm.setCode(1);
+		
+		return jm;
+	}
+	
+	@RequestMapping("chongzhi.u")
+	@ResponseBody
+	public Object chongZhin(long uid , int money , String type) throws AlipayApiException {
+		
+		
+		JsonModel jm=new JsonModel();
+		
+		jedis.set("money:"+uid,money+"");
+		
+		
+		
+		 request.setBizContent("{\"out_trade_no\":\"" +uid+":"+type+":" +UUID.randomUUID() + "\","
+	                + "\"total_amount\":\"" + money + "\","
+	                + "\"subject\":\"" + ""+type + "\","
+	                + "\"product_code\":\"FAST_INSTANT_TRADE_PAY\"}");
+	        String result = client.pageExecute(request).getBody();
+	        
+	        
+	        jm.setObj(result).setCode(1);
+	        
+		return jm;
+	}
+	
+	
+	
+	@RequestMapping("chongzhihou.u")
+	public Object chongZhiHou(HttpServletRequest request) throws UnsupportedEncodingException, AlipayApiException {
+		
+		JsonModel jm=new JsonModel();
+		
+		Map<String,String> params = new HashMap<String,String>();
+		Map<String,String[]> requestParams = request.getParameterMap();
+		for (Iterator<String> iter = requestParams.keySet().iterator(); iter.hasNext();) {
+			String name = (String) iter.next();
+			String[] values = (String[]) requestParams.get(name);
+			String valueStr = "";
+			for (int i = 0; i < values.length; i++) {
+				valueStr = (i == values.length - 1) ? valueStr + values[i]
+						: valueStr + values[i] + ",";
+			}
+			valueStr = new String(valueStr.getBytes("ISO-8859-1"), "utf-8");
+			params.put(name, valueStr);
+		}
+		
+		boolean signVerified = AlipaySignature.rsaCheckV1(params, AlipayConfig.alipay_public_key, AlipayConfig.charset, AlipayConfig.sign_type); //调用SDK验证签名
+
+		
+		
+		if(signVerified) {
+			
+			String tradeno = new String(request.getParameter("out_trade_no").getBytes("ISO-8859-1"),"UTF-8");
+			
+			String uid=tradeno.split(":")[0];
+			String type=tradeno.split(":")[1];
+			//支付宝交易号
+/*			String subject = new String(request.getParameter("subject").getBytes("ISO-8859-1"),"UTF-8");*/
+		
+			//付款金额
+			String money = new String(request.getParameter("total_amount").getBytes("ISO-8859-1"),"UTF-8");
+			
+			System.out.println(uid+":===================:"+type+":================"+money);
+			
+			if("vip".equals(type)) {
+				
+				Vip vip=userService.findUserIsOrNotVip(Long.parseLong(uid.substring(0, 1)));
+				
+				if(vip == null) {
+					userService.chongZhiVip(Long.parseLong(uid.substring(0, 1)), Integer.parseInt(money.substring(0, 1)));
+					
+					userService.UpdateUserVip(Long.parseLong(uid.substring(0,1)));
+				}else {
+					userService.UpdateUsersVip(Long.parseLong(uid.substring(0, 1)), Integer.parseInt(money.substring(0, 1)),vip);
+				}
+				
+				
+				
+			}else {
+			}
+		}
+		
+		
+		
+		return "redirect:chongzhi.html?uid="+2+"&code="+1;
+	}
 
 }

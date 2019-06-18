@@ -1,7 +1,11 @@
 package com.yc.user.impl;
 
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
+import com.yc.user.bean.Message;
 import com.yc.user.bean.PageBean;
 import com.yc.user.bean.User;
+import com.yc.user.bean.Vip;
 import com.yc.user.mapper.MessageMapper;
 import com.yc.user.mapper.UserMapper;
 import com.yc.user.myexception.LoginException;
@@ -122,8 +126,10 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public PageBean SerachPage(Integer uid, String page) {
-		// TODO Auto-generated method stub
-		return null;
+		PageBean pb=new PageBean();
+		Page<Message> msgList = PageHelper.startPage(0, 20);
+		userMapper.SerachPage(uid);
+		return pb.setCurrengPagenum(0).setPageList(msgList.getResult()).setTotalpagenum((int) msgList.getTotal());
 	}
 
 
@@ -142,6 +148,69 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public User findUserById(Integer uid) {
 		return userMapper.findUserById(uid);
+	}
+
+	@Override
+	public User getEditUser(User user) {
+		return userMapper.findUserById(Integer.valueOf(user.getUid()+""));
+	}
+
+	@Override
+	public int chongZhiVip(long uid,int money) {
+		
+		long currTime=System.currentTimeMillis();
+		
+		long endTime =currTime;
+		
+		if(1 == money) {
+			endTime=endTime + 60*60*24*30;
+			
+		}else if(3 == money) {
+			endTime=endTime + 60*60*24*90;
+		}else if(6 == money) {
+			endTime=endTime + 60*60*24*180;
+		}else {
+			endTime=endTime + 60*60*24*360;
+		}
+		
+	    return	userMapper.chongZhiVip(uid,currTime,endTime);
+		
+	}
+
+	@Override
+	public void chongZhiCode(long uid, int money) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void UpdateUserVip(long uid) {
+		userMapper.UpdateUserVip(uid);
+		
+	}
+
+	@Override
+	public Vip findUserIsOrNotVip(long uid) {
+		return userMapper.findUserIsOrNotVip(uid);
+	}
+
+	@Override
+	public int UpdateUsersVip(long uid, int money,Vip vip) {
+		
+		long endTime =vip.getEndTimes();
+		
+		if(1 == money) {
+			endTime=endTime + 60*60*24*30;
+			
+		}else if(3 == money) {
+			endTime=endTime + 60*60*24*90;
+		}else if(6 == money) {
+			endTime=endTime + 60*60*24*180;
+		}else {
+			endTime=endTime + 60*60*24*360;
+		}
+		
+		return userMapper.UpdateUsersVip(uid,endTime);
 	}
 
 

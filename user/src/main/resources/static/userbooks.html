@@ -38,18 +38,19 @@
 		url = '&' + url
 	}
 
-	var html='';
-	html+="<div class=\"list-group\">";
-	html+="<a class=\"list-group-item\" href=\"userinfo.html?"+rowurl+"\"><i class=\"fa fa-user fa-fw\"></i>会员信息</a>";
-	html+="<a class=\"list-group-item\" href=\"userbooks.html?"+rowurl+"\"><i class=\"fa fa-book fa-fw\"></i>我的书架</a>";
-	html+="<a class=\"list-group-item\" href=\"useredit.html?"+rowurl+"\"><i class=\"fa fa-edit fa-fw\"></i>修改资料</a>";
-	html+="<a class=\"list-group-item\" href=\"passedit.html?"+rowurl+"\"><i class=\"fa fa-key fa-fw\"></i>修改密码</a>";
-	html+="<a class=\"list-group-item\" href=\"userboxes.html?"+rowurl+"\"><i class=\"fa fa-envelope fa-fw\"></i>收件箱</a>";
-	html+="<a class=\"list-group-item\" href=\"userboxes.html?"+rowurl+"\"><i class=\"fa fa-envelope fa-fw\"></i>发件箱</a>";
-	html+="<a class=\"list-group-item\" href=\"sendmessage.html?"+rowurl+"\"><i class=\"fa fa-envelope fa-fw\"></i>发信息给管理员</a>";
-	html+="<a class=\"list-group-item\" href=\"#\"><i class=\"fa fa-power-off fa-fw\"></i>退出登录</a>";
-	html+="</div>";
-	html+="</div>";
+	 var uid=window.location.search.substring(5,6);
+		
+	 var html='';
+		html+='<a class="list-group-item" href="userinfo.html?uid='+uid+'"><i class="fa fa-user fa-fw"></i>会员信息</a>';
+		html+=' <a class="list-group-item" href="userbooks.html?uid='+uid+'"><i class="fa fa-book fa-fw"></i>我的书架</a>';
+		html+=' <a class="list-group-item" href="useredit.html?uid='+uid+'"><i class="fa fa-edit fa-fw"></i>修改资料</a>';
+		html+='<a class="list-group-item" href="passedit.html?uid='+uid+'"><i class="fa fa-key fa-fw"></i>修改密码</a>';
+		html+=' <a class="list-group-item" href="userboxes.html?uid='+uid+'"><i class="fa fa-envelope fa-fw"></i>收件箱</a>';
+		html+=' <a class="list-group-item" href="userboxes.html?uid='+uid+'"><i class="fa fa-envelope fa-fw"></i>发件箱</a>';
+		html+=' <a class="list-group-item" href="sendmessage.html?uid='+uid+'"><i class="fa fa-envelope fa-fw"></i>发信息给管理员</a>';
+		html+=' <a class="list-group-item" href="chongzhi.html?uid='+uid+'"><i class="fa fa-book fa-fw"></i>充值中心</a>';
+		html+='<a class="list-group-item" href="#" onclick="exitLogin()"><i class="fa fa-power-off fa-fw"></i>退出登录</a>';
+		
 	
 	
 	
@@ -90,7 +91,7 @@
 			
 	$(function() {
 		$('#titleLi').append(result);
-		$("#tableheader").append(html);
+		$("#headerContent").append(html);
 		
 		
 		
@@ -255,7 +256,7 @@
 
 
 		 <div class="row">
-			<div class="col-md-3 hidden-xs" id="tableheader" >
+			<div class="col-md-3 hidden-xs" id="headerContent" >
 			
 			
 			
@@ -316,4 +317,21 @@
 	</div>
 
 </body>
+
+<script type="text/javascript">
+		function exitLogin(){
+			var uid=window.location.search.substring(5,6);
+			
+			$ajax({
+				url:"exitlogin.u",
+				type:"post",
+				data:uid,
+				success: function(data){
+					if(data.code == 1){
+						window.location.href="login.html";
+					}
+				}
+			})
+		}
+	</script>
 </html>
