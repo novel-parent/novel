@@ -10,6 +10,7 @@ import org.springframework.cache.annotation.EnableCaching;
 @SpringBootApplication
 @EnableRabbit
 @EnableCaching
+//@EnableAutoConfiguration(exclude={DataSourceAutoConfiguration.class})
 public class UserApplication {
 
 	public static void main(String[] args) {

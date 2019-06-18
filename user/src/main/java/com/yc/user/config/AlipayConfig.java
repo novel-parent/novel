@@ -1,4 +1,4 @@
-﻿package com.yc.user.config;
+package com.yc.user.config;
 
 import java.io.FileWriter;
 import java.io.IOException;

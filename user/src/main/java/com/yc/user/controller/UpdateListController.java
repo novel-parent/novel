@@ -2,10 +2,12 @@ package com.yc.user.controller;
 
 import com.yc.user.service.GetListService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-@Controller
+import java.util.Map;
+
+@RestController
 public class UpdateListController {
     @Autowired
     private GetListService getListService;
@@ -32,6 +34,15 @@ public class UpdateListController {
     @RequestMapping("updateRecommendList.r")
     public void updateRecommendList(String bookName){
         getListService.updateRecommendList(bookName);
+    }
+
+
+    /**
+     * 获取搜索排行榜前30
+     */
+    @RequestMapping("/getSearchList.r")
+    public Map<String,Object> getSearchList(){
+        return getListService.getSearchList();
     }
 
 }

@@ -51,11 +51,11 @@ public class UserTest {
     }
 
     @Autowired
-    private GetListService gs;
+    private GetListService getListService;
     @Test
     public void testUpdateList(){
-        Map<String,Object> map= gs.getSearchList();
-        System.out.println(map.toString());
+        Map<String,Object> map= getListService.getSearchList();
+        System.out.println(map);
     }
 
 }

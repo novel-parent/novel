@@ -22,6 +22,7 @@ public class GetListService {
     public Map<String,Object> getSearchList(){
     //    Set<String> set=redisTemplate.opsForZSet().reverseRangeByScore("Ranking:search",0,99999999,0,30);
         Set<ZSetOperations.TypedTuple<Object>> set2=redisTemplate.opsForZSet().reverseRangeByScoreWithScores("Ranking:search",0,99999999,0,30);
+        System.out.println("set::"+set2);
         return SettoMap(set2);
     }
 
