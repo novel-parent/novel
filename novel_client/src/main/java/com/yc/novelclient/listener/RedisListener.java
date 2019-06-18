@@ -14,8 +14,6 @@ public class RedisListener extends KeyExpirationEventMessageListener {
 
     final String userKey = "user:";
 
-    final String vipKey = "vip:";
-
     public RedisListener(RedisMessageListenerContainer listenerContainer) {
         super(listenerContainer);
     }
@@ -37,9 +35,6 @@ public class RedisListener extends KeyExpirationEventMessageListener {
             System.out.println(new String(message.getBody()));
 
             System.out.println(new String(pattern));
-        }else if(expiredKey.startsWith( vipKey )){
-
-            System.out.println(new String(message.getBody()));
         }
     }
 }

@@ -1,4 +1,4 @@
-package com.yc.novelclient.lister;
+package com.yc.novelclient.listener;
 
 import com.yc.novelclient.bean.User;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
@@ -17,6 +17,8 @@ public class RabbitMqLister {
      */
     @RabbitListener(queues = "user.queue")
     public void login(User user){
+
+
 
         System.out.println(user);
     }
