@@ -1,6 +1,6 @@
-package com.yc.novelclient.listener;
+package com.yc.redis.listener;
 
-import com.yc.novelclient.bean.User;
+import com.yc.redis.bean.User;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Component;
 
@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
  * @author LX
  * @date 2019/6/14 - 10:37
  */
-//@Component
+@Component
 public class RabbitMqLister {
 
     /**

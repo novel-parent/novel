@@ -9,6 +9,7 @@ import com.yc.novelclient.mapper.NovelMapper;
 import com.yc.novelclient.mapper.VipNovelMapper;
 import org.apache.thrift.TException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import redis.clients.jedis.Jedis;
 import com.yc.novelclient.service.VipNovelService;
@@ -24,6 +25,9 @@ import java.util.concurrent.ExecutorService;
  */
 @Service
 public class VipNovelServiceImpl implements VipNovelService {
+
+    @Autowired
+    private RedisTemplate redisTemplate;
 
     private HashMap<String,VipUserThriftClient> vipUserThriftClientHashMap = VipUtil.vipUserThriftClientHashMap;
 
@@ -45,16 +49,15 @@ public class VipNovelServiceImpl implements VipNovelService {
     @Override
     public ReadNovel getNovelChapterContext(long nid, long cid, String uid) throws IntroductionNovelChaptersException {
 
-        long start = System.currentTimeMillis();
+        String key = "user:";
 
         Jedis jedis = new Jedis("47.106.110.16",6379);
 //      密码
-//        jedis.auth("li157922018");
         jedis.auth("li157922018");
 
         ReadNovel readNovel = null ;
 
-        if (jedis.exists("vip:"+uid)){
+        if (jedis.exists( key + uid )){
 
             //代表  vip用户登陆
             VipUserThriftClient vipUserThriftClient = VipUtil.vipUserThriftClientHashMap.get(uid);
