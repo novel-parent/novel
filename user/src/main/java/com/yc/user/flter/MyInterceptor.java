@@ -12,7 +12,7 @@ public class MyInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object o) throws Exception {
         String uid=request.getParameter("uid");
-        System.err.println("uid::"+uid);
+        System.err.println("uid:"+uid);
         if(uid ==null){
             System.out.println("用户未登录！！");
             return false;

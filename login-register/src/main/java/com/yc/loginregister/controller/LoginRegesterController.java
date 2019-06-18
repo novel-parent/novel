@@ -1,30 +1,19 @@
 package com.yc.loginregister.controller;
 
-import java.lang.reflect.InvocationTargetException;
-import java.util.Map;
+import com.yc.loginregister.bean.CookieModel;
+import com.yc.loginregister.bean.JsonModel;
+import com.yc.loginregister.bean.User;
+import com.yc.loginregister.myexception.LoginException;
+import com.yc.loginregister.service.LoginRegisterService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
+import redis.clients.jedis.Jedis;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import com.yc.loginregister.bean.CookieModel;
-import com.yc.loginregister.bean.JsonModel;
-import com.yc.loginregister.bean.User;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.SessionAttributes;
-
-import com.yc.loginregister.mapper.UserMapper;
-import com.yc.loginregister.myexception.LoginException;
-import com.yc.loginregister.service.LoginRegisterService;
-
-import redis.clients.jedis.Jedis;
 
 @Controller
 @SessionAttributes("loginedUser")
@@ -87,34 +76,37 @@ public class LoginRegesterController {
 				if(flag) {
 					//在创建cookie之前判断是否之前有设置过cookie
 					Cookie[] cookies=request.getCookies();
-					
-					for(Cookie c:cookies) {
-						if(!username.equals(String.valueOf(c.getValue()))) {
-							
-							Cookie usernamecookie=new Cookie("uname",username);
-							Cookie userpwdcookie=new Cookie("upwd",password);
-							//设置cookie过期时间为7天
-							usernamecookie.setMaxAge(CookieTime);
-							userpwdcookie.setMaxAge(CookieTime);
-							
-							response.addCookie(userpwdcookie);
-							response.addCookie(usernamecookie);
+
+					if(cookies != null){
+						for(Cookie c:cookies) {
+							if(!username.equals(String.valueOf(c.getValue()))) {
+
+								Cookie usernamecookie=new Cookie("uname",username);
+								Cookie userpwdcookie=new Cookie("upwd",password);
+								//设置cookie过期时间为7天
+								usernamecookie.setMaxAge(CookieTime);
+								userpwdcookie.setMaxAge(CookieTime);
+
+								response.addCookie(userpwdcookie);
+								response.addCookie(usernamecookie);
+							}
 						}
 					}
 				}else {
 					//如果未选择记住登陆状态则判断该用户之前是否有设置cookie，如果有则删除该cookie
 					Cookie[] cookies= request.getCookies();
-					
-					for(Cookie c:cookies) {
-						if(username.equals(c.getValue())) {
-							Cookie usernamecookie=new Cookie("uname",username);
-							Cookie userpwdcookie=new Cookie("upwd",password);
-							usernamecookie.setMaxAge(0);
-							userpwdcookie.setMaxAge(0);
-							usernamecookie.setPath("/");
-							userpwdcookie.setPath("/");
-							response.addCookie(userpwdcookie);
-							response.addCookie(usernamecookie);
+					if(cookies != null){
+						for(Cookie c:cookies) {
+							if(username.equals(c.getValue())) {
+								Cookie usernamecookie=new Cookie("uname",username);
+								Cookie userpwdcookie=new Cookie("upwd",password);
+								usernamecookie.setMaxAge(0);
+								userpwdcookie.setMaxAge(0);
+								usernamecookie.setPath("/");
+								userpwdcookie.setPath("/");
+								response.addCookie(userpwdcookie);
+								response.addCookie(usernamecookie);
+							}
 						}
 					}
 				}
@@ -166,14 +158,22 @@ public class LoginRegesterController {
 	@ResponseBody
 	public Object getCookie(HttpServletRequest request) {
 		CookieModel cookie=new CookieModel();
-		for(Cookie c: request.getCookies()) {
-			if("uname".equals(c.getName())) {
-				cookie.setUsername(c.getValue());
+
+		Cookie[] cookies=request.getCookies();
+
+		if(cookies != null){
+			for(Cookie c: cookies) {
+				if("uname".equals(c.getName())) {
+					cookie.setUsername(c.getValue());
+				}
+				if("upwd".equals(c.getName())) {
+					cookie.setPassword(c.getValue());
+				}
 			}
-			if("upwd".equals(c.getName())) {
-				cookie.setPassword(c.getValue());
-			}
+		}else{
+			cookie.setUsername("").setPassword("");
 		}
+
 		return cookie;
 	}
 }
