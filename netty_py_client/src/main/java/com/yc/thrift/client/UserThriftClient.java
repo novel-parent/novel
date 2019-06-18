@@ -28,9 +28,13 @@ public class UserThriftClient {
 
     private int port =8899;
 
+    private TTransport transport ;
+
+
+
     public UserThriftClient() throws TTransportException {
 
-        TTransport transport = new TSocket(host,port);
+        transport = new TSocket(host,port);
 
         // 会有异常    抛出异常  告诉 上面 用户服务器开启失败 . ..
 
@@ -121,5 +125,13 @@ public class UserThriftClient {
     public ReadNovel getReadNovel() {
         return readNovel;
 
+    }
+
+    public TTransport getTransport() {
+        return transport;
+    }
+
+    public void setTransport(TTransport transport) {
+        this.transport = transport;
     }
 }

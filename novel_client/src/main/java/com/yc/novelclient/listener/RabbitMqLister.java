@@ -1,4 +1,4 @@
-package com.yc.novelclient.lister;
+package com.yc.novelclient.listener;
 
 import com.yc.novelclient.bean.User;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
  * @author LX
  * @date 2019/6/14 - 10:37
  */
-@Component
+//@Component
 public class RabbitMqLister {
 
     /**
@@ -17,6 +17,8 @@ public class RabbitMqLister {
      */
     @RabbitListener(queues = "user.queue")
     public void login(User user){
+
+
 
         System.out.println(user);
     }

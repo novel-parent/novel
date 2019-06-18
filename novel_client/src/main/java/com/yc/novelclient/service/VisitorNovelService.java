@@ -11,7 +11,20 @@ import com.yc.bean.ReadNovel;
  */
 public interface VisitorNovelService {
 
+    /**
+     *        获取小说的章节列表
+     * @param nid
+     * @return
+     * @throws IntroductionNovelChaptersException
+     */
     String getIntroductionNovelChapters(long nid) throws IntroductionNovelChaptersException;
 
+    /**
+     *      获取小说章节内容
+     * @param nid
+     * @param cid
+     * @return
+     * @throws ReadNovelChapterContextException
+     */
     ReadNovel getNovelChapterContext(long nid , long cid ) throws ReadNovelChapterContextException;
 }
