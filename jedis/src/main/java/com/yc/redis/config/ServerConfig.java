@@ -15,10 +15,9 @@ public class ServerConfig {
         public FilterRegistrationBean filterRegistrationBean(){
 
             FilterRegistrationBean registrationBean = new FilterRegistrationBean();
-
             registrationBean.setFilter(new com.yc.redis.filter.UserLoginFilterConfig());
-
             registrationBean.addUrlPatterns("/");
+
             return registrationBean;
         }
 }

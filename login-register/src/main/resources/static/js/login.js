@@ -27,7 +27,7 @@ function login() {
 			if (typeof (data) == typeof ("123")) {
 				alert(data.substring(1, data.length - 1));
 			} else if (data.code == -1) {
-				alert("账号或者密码错误");
+				alert(data.msg);
 			} else {
 				window.location.href = "http://localhost/index.html?uid="
 						+ data.code;

@@ -2,6 +2,7 @@ package com.yc.user.service;
 
 import com.yc.user.bean.PageBean;
 import com.yc.user.bean.User;
+import com.yc.user.bean.Vip;
 import com.yc.user.myexception.LoginException;
 import com.yc.user.myexception.MyException;
 
@@ -28,5 +29,18 @@ public interface UserService {
     void sendToManager(String title,String content) throws MyException;
 
 	Map<String, String> getUserMap(User user) throws Exception;
+
+	User getEditUser(User user);
+
+	void chongZhiCode(long uid, int money);
+
+
+	int chongZhiVip(long uid, int money);
+
+	void UpdateUserVip(long parseLong);
+
+	Vip findUserIsOrNotVip(long l);
+
+	int UpdateUsersVip(long parseLong, int parseInt, Vip vip);
 
 }

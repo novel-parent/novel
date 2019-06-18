@@ -17,6 +17,8 @@ import java.io.IOException;
  * @date 2019/6/13 - 17:57
  */
 public class LoginFilter implements Filter {
+	
+	public static final int loginTime=180;
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
@@ -49,7 +51,7 @@ public class LoginFilter implements Filter {
             }else {
             	jedis.set(loginNum, "0");
                 
-                jedis.expire(loginNum, 60*3);
+                jedis.expire(loginNum, loginTime);
             }
             
             if(Integer.valueOf(jedis.get(loginNum))<=4) {

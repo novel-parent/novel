@@ -4,7 +4,10 @@ spring:
     password: a
     driver-class-name: com.mysql.jdbc.Driver
     url: jdbc:mysql://localhost:3306/novel
-
+  redis:
+    host: 106.14.162.109
+    port: 6379
+    password: lsx666
 
 mybatis:
   config-location: classpath:mybatis/mybatis-config.xml

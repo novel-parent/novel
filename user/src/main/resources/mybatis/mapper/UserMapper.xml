@@ -19,6 +19,10 @@
         and password = #{password}
 
     </select>
+    
+    <update id="UpdateUserVip">
+    	update user set level = '普通会员' where uid = #{uid}
+    </update>
 
     <update id="changeUserEdit" >
        update user
@@ -60,6 +64,18 @@
        select * from message where uid=#{uid} limit #{pageNum},#{pageSize}
     </select> -->
     
+    
+    <insert id="chongZhiVip">
+    	insert into vip(uid,startTimes,endTimes,flag) values(#{uid},#{startTimes},#{endTimes},1)
+    </insert>
+    
+    <select id="findUserIsOrNotVip" resultType="com.yc.user.bean.Vip">
+    	select * from vip where uid=#{uid}
+    </select>
+    
+    <update id="UpdateUsersVip">
+    	update vip set endTimes = #{endTimes} where uid = #{uid}
+    </update>
     
     
     

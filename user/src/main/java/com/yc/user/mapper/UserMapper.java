@@ -2,6 +2,8 @@ package com.yc.user.mapper;
 
 import com.yc.user.bean.Message;
 import com.yc.user.bean.User;
+import com.yc.user.bean.Vip;
+
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -25,5 +27,13 @@ public interface UserMapper {
 	//List<Message> SerachPage(@Param("uid")Integer uid,@Param("pageNum") Integer pageNum,@Param("pageSize") Integer pageSize);
 	
 	List<Message> SerachPage(@Param("uid")Integer uid);
+
+	int chongZhiVip(@Param("uid") long uid,@Param("startTimes") long startTime,@Param("endTimes") long endTime);
+
+	void UpdateUserVip(long uid);
+
+	Vip findUserIsOrNotVip(long uid);
+
+	int UpdateUsersVip(@Param("uid") long uid,@Param("endTimes") long endTimes);
 
 }

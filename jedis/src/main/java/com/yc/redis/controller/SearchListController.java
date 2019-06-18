@@ -1,12 +1,11 @@
 package com.yc.redis.controller;
 
+import com.yc.redis.service.GetListService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Set;
+import java.util.Map;
 
 /**
  * @author LX
@@ -15,28 +14,36 @@ import java.util.Set;
 @RestController
 public class SearchListController {
     @Autowired
-    private StringRedisTemplate stringRedisTemplate;
-    @Autowired
-    private RedisTemplate redisTemplate;
-
+    private GetListService getListService;
     /**
      * 获取搜索排行榜前30
      */
-    @RequestMapping("/getSearchList")
-    public Set<String> getSearchList(){
-        redisTemplate.opsForZSet().add("z1","斗罗大陆",8000);
-        redisTemplate.opsForZSet().add("z1","斗破苍穹",10999);
-        redisTemplate.opsForZSet().add("z1","完美世界",8924);
-
-        Set<String> set=redisTemplate.opsForZSet().range("z1",0,100000);
-        System.out.println(set);
- //      redisTemplate.delete("z1");
-        return set;
+    @RequestMapping("/getSearchList.r")
+    public Map<String,Object> getSearchList(){
+        return getListService.getSearchList();
     }
 
+    /**
+     * 获取收藏排行榜前30
+     */
+    @RequestMapping("/getConlectionList.r")
+    public Map<String,Object> getConlectionList(){
+        return getListService.getConlectionList() ;
+    }
 
+    /**
+     * 获取推荐排行榜前30
+     */
+    @RequestMapping("/getRecommendList.r")
+    public Map<String,Object> getRecommendList(){
+        return getListService.getRecommendList();
+    }
 
-
-
-
+    /**
+     * 测试
+     */
+    @RequestMapping("/test.r")
+    public Map<String,Object> getTest(){
+        return getListService.getSearchList();
+    }
 }
