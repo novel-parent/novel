@@ -6,12 +6,10 @@ import com.yc.bean.IntroductionNovel;
 import com.yc.bean.ReadNovel;
 import com.yc.thrift.client.VipUserThriftClient;
 import com.yc.novelclient.mapper.NovelMapper;
-import com.yc.novelclient.mapper.VipNovelMapper;
 import org.apache.thrift.TException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
-import redis.clients.jedis.Jedis;
 import com.yc.novelclient.service.VipNovelService;
 import util.ThreadPollUtil;
 import util.VipUtil;
@@ -32,32 +30,15 @@ public class VipNovelServiceImpl implements VipNovelService {
     private HashMap<String,VipUserThriftClient> vipUserThriftClientHashMap = VipUtil.vipUserThriftClientHashMap;
 
     @Autowired
-    private VipNovelMapper vipNovelMapper;
-
-    @Autowired
     private NovelMapper novelMapper;
 
     private ExecutorService executorService = ThreadPollUtil.executorService;
 
-    /**
-     * vip用户 获取 小说章节 内容
-     * @param nid
-     * @param cid
-     * @param uid
-     * @return
-     */
+
     @Override
     public ReadNovel getNovelChapterContext(long nid, long cid, String uid) throws IntroductionNovelChaptersException {
 
-        String key = "user:";
-
-        Jedis jedis = new Jedis("47.106.110.16",6379);
-//      密码
-        jedis.auth("li157922018");
-
         ReadNovel readNovel = null ;
-
-        if (jedis.exists( key + uid )){
 
             //代表  vip用户登陆
             VipUserThriftClient vipUserThriftClient = VipUtil.vipUserThriftClientHashMap.get(uid);
@@ -103,7 +84,6 @@ public class VipNovelServiceImpl implements VipNovelService {
 
                     String tNowUrl = vipUserThriftClient.getNowUrl();
 
-
                     if(nowUrl.equals(tNowUrl)){
 
                         // flag = true  代表可以直接 从内部的 nextReadNovel 取数据
@@ -129,52 +109,31 @@ public class VipNovelServiceImpl implements VipNovelService {
                          * 进行 下一章节的获取
                          */
                         vipUserThriftClient.setNextChapterUrl(introductionNovel.getUrl()+readNovel.getNextChapter()+".html");
+
                         executorService.execute(vipUserThriftClient);
                     }
                 }
-        }else{
-            // 用户信息已经过期或者还未登陆  提示用户重新登陆
-            return null;
-        }
-        jedis.close();
         return readNovel;
     }
 
-    /**
-     * vip用户 获取 小说介绍页面的章节列表
-     * @param nid
-     * @param uid
-     * @return
-     */
+
     @Override
     public String getIntroductionNovelChapters(long nid, String uid) throws ReadNovelChapterContextException {
 
-        long start = System.currentTimeMillis();
-
-        Jedis jedis = new Jedis("47.106.110.16",6379);
-//      密码
-//        jedis.auth("li157922018");
-        jedis.auth("li157922018");
-
         String novelChapterListJson = null;
 
-         if (jedis.exists("vip:"+uid)){
             //代表  vip用户登陆
             VipUserThriftClient vipUserThriftClient = VipUtil.vipUserThriftClientHashMap.get(uid);
 
                 IntroductionNovel introductionNovel = novelMapper.selNovelByNid(nid);
 
              try {
+
                  novelChapterListJson = vipUserThriftClient.getNovelChapterListByNovelUrl(introductionNovel.getUrl());
              } catch (TException e) {
                  throw new ReadNovelChapterContextException
                          ("VipNovelServiceImpl.getIntroductionNovelChapters  vip用户获得小说章节列表失败");
              }
-         }else{
-            // 用户信息已经过期或者还未登陆  提示用户重新登陆
-            return null;
-        }
-        jedis.close();
 
         return novelChapterListJson;
     }

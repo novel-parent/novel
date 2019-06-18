@@ -40,12 +40,6 @@ public class VisitorNovelServiceImpl implements VisitorNovelService {
     @Autowired
     private NovelMapper novelMapper;
 
-    /**
-     * 游客访问  获取小说的章节的信息
-     * @param nid
-     * @param cid
-     * @return
-     */
     @Override
     public ReadNovel getNovelChapterContext(long nid, long cid) throws ReadNovelChapterContextException {
 
@@ -63,11 +57,7 @@ public class VisitorNovelServiceImpl implements VisitorNovelService {
         return chapterContext;
     }
 
-    /**
-     * 游客  获取小说介绍页面的章节信息
-     * @param nid
-     * @return
-     */
+
     @Override
     public String getIntroductionNovelChapters(long nid) throws IntroductionNovelChaptersException {
 
