@@ -9,11 +9,13 @@ import com.yc.novelclient.mapper.NovelMapper;
 import com.yc.thrift.client.NovelThriftClient;
 import com.yc.util.NovelQueue;
 import org.apache.thrift.TException;
+import org.apache.thrift.transport.TTransportException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import com.yc.novelclient.service.VisitorNovelService;
+import util.NovelClientUtil;
 
 /**
  * @author LX
@@ -45,20 +47,25 @@ public class VisitorNovelServiceImpl implements VisitorNovelService {
             chapterContext = thriftClient.getNovelChapterContextByChapterUrl(novelChapterUrl);
 
             NovelQueue.novelThriftClientQueue.add(thriftClient);
-//            client.getTransport().close();
         } catch (TException e) {
 
             throw new ReadNovelChapterContextException
                     ("VisitorNovelServiceImpl.getNovelChapterContext(long, long) 游客获得小说章节内容出错");
         } catch (InterruptedException e) {
 
+            //  当 队列没了   手动创建  连接
+            try {
+                chapterContext = NovelClientUtil.getNovelChapterContext(novelChapterUrl);
+            } catch (TException e1) {
+                e1.printStackTrace();
+            }
             e.printStackTrace();
         }
-        return chapterContext;
+        return null;
     }
 
 
-    @Cacheable(cacheNames = "chapters" ,key = "#nid")
+    @Cacheable(cacheNames = "chapters" ,key = "#nid",cacheManager = "novelChaptersRedisCacheManager")
     @Override
     public String getIntroductionNovelChapters(long nid) throws IntroductionNovelChaptersException {
 
@@ -77,14 +84,23 @@ public class VisitorNovelServiceImpl implements VisitorNovelService {
 
             NovelQueue.novelThriftClientQueue.add(thriftClient);
             System.out.println(NovelQueue.novelThriftClientQueue.size());
-//            chapters = client.getNovelChapterListByNovelUrl(novelUrl);
-//            client.getTransport().close();
         } catch (TException e) {
 
             throw new IntroductionNovelChaptersException
                     ("VisitorNovelServiceImpl.getIntroductionNovelChapters  游客获得章节列表出错");
         } catch (InterruptedException e) {
 
+            //  当 队列没了   手动创建  连接
+            try {
+
+
+                chapters = NovelClientUtil.getNovelChapters(novelUrl);
+
+            } catch (TTransportException e1) {
+                e1.printStackTrace();
+            } catch (TException e1) {
+                e1.printStackTrace();
+            }
             e.printStackTrace();
         }
 

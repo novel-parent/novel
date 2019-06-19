@@ -2,6 +2,7 @@ package com.yc.novelclient.controller;
 
 import com.yc.bean.ReadNovel;
 import com.yc.novelclient.MyException.IntroductionNovelChaptersException;
+import com.yc.novelclient.MyException.ReadNovelChapterContextException;
 import org.apache.thrift.TException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -25,11 +26,14 @@ public class OrdinaryNovelController {
     public String getNovelChapterList(@RequestParam("nid") long nid, @RequestParam("uid") String uid){
 
         String msg = "-1";
+
         try {
             msg = ordinaryNovelService.getIntroductionNovelChapters(nid, uid);
         } catch (TException e) {
+
             e.printStackTrace();
         } catch (IntroductionNovelChaptersException e) {
+
             e.printStackTrace();
         }
         return msg;
@@ -39,7 +43,6 @@ public class OrdinaryNovelController {
     @RequestMapping("/userReadNovelChapter.n")
     public ReadNovel getNovelChapterContext(@RequestParam("nid") long nid,
                                             @RequestParam("cid") long cid, @RequestParam("uid") String uid){
-
         ReadNovel context = null ;
 
         try {
@@ -50,6 +53,8 @@ public class OrdinaryNovelController {
             e.printStackTrace();
         } catch (InterruptedException e) {
 
+            e.printStackTrace();
+        } catch (ReadNovelChapterContextException e) {
             e.printStackTrace();
         }
         return context;

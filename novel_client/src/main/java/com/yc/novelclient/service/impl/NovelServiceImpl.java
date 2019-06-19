@@ -4,6 +4,7 @@ import com.yc.novelclient.MyException.IntroductionNovelChaptersException;
 import com.yc.bean.IntroductionNovel;
 import com.yc.novelclient.mapper.NovelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import com.yc.novelclient.service.NovelService;
 
@@ -18,6 +19,7 @@ public class NovelServiceImpl implements NovelService {
     @Autowired
     private NovelMapper novelMapper;
 
+//    @Cacheable(cacheNames = "novel",key = "#nid",cacheManager = "novelChaptersRedisCacheManager")
     @Override
     public IntroductionNovel selNovelByNid(long nid) throws IntroductionNovelChaptersException {
 

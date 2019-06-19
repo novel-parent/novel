@@ -27,7 +27,7 @@ if(userIndex>=0){
     // 代表用户登陆
     var vipIndex = localUrl.indexOf('vip')
 
-    if(vipIndex>0){
+    if(vipIndex>=0){
         // 代表 vip用户登陆
 
         uid = urlParams[1].split('=')[1]

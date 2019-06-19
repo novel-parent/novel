@@ -143,6 +143,18 @@ $(function(){
             alert("请求出错.")
         },
         success:function(data){
+
+            if(data=="-1"){
+                alert("用户信息异常,请重新登陆")
+                window.location.href="http://127.0.0.1:80/login.html"
+                return ;
+            }else if(data ==""||data==null){
+                alert("服务器繁忙,请稍候再试")
+                window.location.href="/introduction.html?nid="+nid+url
+                return ;
+            }
+
+            alert(data)
             novelChapterName = data.novelChapterName
             $("#novelLi3").append(data.novelChapterName)
             $('#htmlContent').append("<br>"+data.context+"<br><br><br>")

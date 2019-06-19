@@ -1,10 +1,12 @@
 package com.yc.novelclient.bean;
 
+import java.io.Serializable;
+
 /**
  * @author LX
  * @date 2019/5/14 - 1:02
  */
-public class ReadNovel {
+public class ReadNovel implements Serializable {
 
     private String context;
 

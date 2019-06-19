@@ -27,5 +27,5 @@ public interface VipNovelService {
      * @return
      * @throws ReadNovelChapterContextException
      */
-    String getIntroductionNovelChapters(long nid ,String uid) throws ReadNovelChapterContextException;
+    String getIntroductionNovelChapters(long nid ,String uid) throws ReadNovelChapterContextException, IntroductionNovelChaptersException;
 }

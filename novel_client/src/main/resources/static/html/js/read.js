@@ -143,6 +143,9 @@ $(function(){
             alert("请求出错.")
         },
         success:function(data){
+
+            alert(data)
+
             novelChapterName = data.novelChapterName
             $("#novelLi3").append(data.novelChapterName)
             $('#htmlContent').append("<br>"+data.context+"<br><br><br>")
