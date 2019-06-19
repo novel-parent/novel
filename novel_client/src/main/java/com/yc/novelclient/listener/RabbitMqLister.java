@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
  * @author LX
  * @date 2019/6/14 - 10:37
  */
-//@Component
+@Component
 public class RabbitMqLister {
 
     /**
@@ -18,7 +18,7 @@ public class RabbitMqLister {
     @RabbitListener(queues = "user.queue")
     public void login(User user){
 
-
+        String  uid = user.getUid() + "";
 
         System.out.println(user);
     }

@@ -1,6 +1,9 @@
 package com.yc.novelclient.service;
 
 import com.yc.bean.ReadNovel;
+import com.yc.novelclient.MyException.IntroductionNovelChaptersException;
+import org.apache.thrift.TException;
+import org.apache.thrift.transport.TTransportException;
 
 /**
  * @author LX
@@ -15,7 +18,7 @@ public interface OrdinaryNovelService {
      * @param uid
      * @return
      */
-    ReadNovel getNovelChapterContext(long nid , long cid , String uid);
+    ReadNovel getNovelChapterContext(long nid , long cid , String uid) throws TException, InterruptedException;
 
     /**
      *       普通 用户 获取 小说章节内容
@@ -23,5 +26,5 @@ public interface OrdinaryNovelService {
      * @param uid
      * @return
      */
-    String getIntroductionNovelChapters(long nid ,String uid);
+    String getIntroductionNovelChapters(long nid ,String uid) throws TException, IntroductionNovelChaptersException;
 }

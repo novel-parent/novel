@@ -27,7 +27,7 @@ public class VipNovelController {
 
         try {
 
-            novelChapters = vipNovelService.getIntroductionNovelChapters(nid);
+            novelChapters = vipNovelService.getIntroductionNovelChapters(nid,uid);
         } catch (ReadNovelChapterContextException e) {
             e.printStackTrace();
         }

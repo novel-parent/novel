@@ -1,7 +1,7 @@
 package com.yc.novelclient.filter;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.RedisTemplate;
+import redis.clients.jedis.Jedis;
+import util.RedisPoolUtil;
 
 import javax.servlet.*;
 import java.io.IOException;
@@ -12,9 +12,6 @@ import java.io.IOException;
  */
 public class UserFilter implements Filter {
 
-    @Autowired
-    private RedisTemplate redisTemplate;
-
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
 
@@ -23,12 +20,23 @@ public class UserFilter implements Filter {
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 
+        long start = System.currentTimeMillis();
+
         String uid = request.getParameter("uid");
 
-        if(uid==null || redisTemplate.opsForValue().get("uid:"+uid) == null){
-            response.getWriter().write("该用户信息异常,请重新登陆");
+        Jedis jedis = RedisPoolUtil.getJedis();
+
+        if(uid == null || jedis.get( "user:"+uid ) == null ){
+            response.getWriter().write("-1");
+
+            jedis.close();
+
+            System.out.println(System.currentTimeMillis()-start);
             return;
         }
+
+        jedis.close();
+        System.out.println(System.currentTimeMillis()-start);
         chain.doFilter(request, response);
     }
 
