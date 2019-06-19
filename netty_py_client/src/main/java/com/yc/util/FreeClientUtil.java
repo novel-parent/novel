@@ -1,6 +1,6 @@
 package com.yc.util;
 
-import com.yc.thrift.client.UserThriftClient;
+import com.yc.thrift.client.NovelThriftClient;
 import org.apache.thrift.transport.TTransportException;
 
 import java.util.Stack;
@@ -11,7 +11,7 @@ import java.util.Stack;
  */
 public class FreeClientUtil {
 
-    public static Stack<UserThriftClient> freeStack = new Stack<>();
+    public static Stack<NovelThriftClient> freeStack = new Stack<>();
 
     static{
         int number = 10 ;
@@ -19,7 +19,7 @@ public class FreeClientUtil {
 
             try {
 
-                freeStack.push(new UserThriftClient());
+                freeStack.push(new NovelThriftClient());
             } catch (TTransportException e) {
 
                 e.printStackTrace();

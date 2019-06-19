@@ -5,17 +5,10 @@ import com.yc.bean.ReadNovel;
 import com.yc.novelclient.MyException.IntroductionNovelChaptersException;
 import com.yc.novelclient.mapper.NovelMapper;
 import com.yc.novelclient.service.OrdinaryNovelService;
-import com.yc.thrift.client.OrdinaryUserThriftClient;
-import com.yc.thrift.client.UserThriftClient;
+import com.yc.thrift.client.NovelThriftClient;
 import org.apache.thrift.TException;
-import org.apache.thrift.transport.TTransportException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
-import redis.clients.jedis.Jedis;
-import util.OrdinaryUtil;
-
-import java.util.HashMap;
 
 /**
  * @author LX
@@ -27,8 +20,6 @@ public class OrdinaryNovelServiceImpl implements OrdinaryNovelService {
     @Autowired
     private NovelMapper novelMapper;
 
-    private HashMap<String,OrdinaryUserThriftClient> ordinaryUserThriftClientHashMap
-            = OrdinaryUtil.ordinaryUserThriftClientHashMap;
 
     @Override
     public ReadNovel getNovelChapterContext(long nid, long cid, String uid) throws TException, InterruptedException {
@@ -37,7 +28,7 @@ public class OrdinaryNovelServiceImpl implements OrdinaryNovelService {
 
         String url = novel.getUrl()+cid+".html";
 
-        UserThriftClient client = new UserThriftClient();
+        NovelThriftClient client = new NovelThriftClient();
 
         ReadNovel context = client.getNovelChapterContextByChapterUrl(url);
 
@@ -55,7 +46,7 @@ public class OrdinaryNovelServiceImpl implements OrdinaryNovelService {
 
         IntroductionNovel introductionNovel = novelMapper.selNovelByNid(nid);
 
-        UserThriftClient thriftClient = new UserThriftClient();
+        NovelThriftClient thriftClient = new NovelThriftClient();
 
         String chapterList = thriftClient.getNovelChapterListByNovelUrl(introductionNovel.getUrl());
 
