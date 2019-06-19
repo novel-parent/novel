@@ -3,10 +3,9 @@ package com.yc.novelclient.service.impl;
 import com.yc.novelclient.MyException.IntroductionNovelChaptersException;
 import com.yc.bean.IntroductionNovel;
 import com.yc.novelclient.mapper.NovelMapper;
+import com.yc.thrift.IDL.NovelService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
-import com.yc.novelclient.service.NovelService;
 
 /**
  *
