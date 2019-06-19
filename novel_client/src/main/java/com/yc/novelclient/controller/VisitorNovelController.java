@@ -1,5 +1,7 @@
 package com.yc.novelclient.controller;
 
+import com.yc.bean.IntroductionDiv;
+import com.yc.bean.ReadDiv;
 import com.yc.novelclient.MyException.IntroductionNovelChaptersException;
 import com.yc.novelclient.MyException.ReadNovelChapterContextException;
 import com.yc.bean.ReadNovel;
@@ -23,32 +25,38 @@ public class VisitorNovelController {
 
     @ResponseBody
     @RequestMapping("/readNovelChapter.n")
-    public ReadNovel getNovelChapterContext(@RequestParam("nid") long nid, @RequestParam("cid") long cid){
+    public ReadDiv getNovelChapterContext(@RequestParam("nid") long nid, @RequestParam("cid") long cid){
+
+        ReadDiv readDiv = null ;
+
         ReadNovel novelChapterContext = null;
 
         try {
 
-            novelChapterContext = visitorNovelService.getNovelChapterContext(nid, cid);
+            readDiv = visitorNovelService.getNovelChapterContext(nid, cid);
+
         } catch (ReadNovelChapterContextException e) {
 
             e.printStackTrace();
         }
-        return novelChapterContext;
+        return readDiv;
     }
 
     @ResponseBody
-    @RequestMapping(value = "/novelChapters.n",produces = "text/html; charset=utf-8")
-    public String getNovelChapterList(@RequestParam("nid") long nid){
+    @RequestMapping(value = "/novelChapters.n",produces = " application/json ; charset=utf-8")
+    public IntroductionDiv getNovelChapterList(@RequestParam("nid") long nid){
 
-        String novelChapters = null;
-
+        System.out.println(nid);
+        IntroductionDiv introductionDiv = null;
         try {
-            novelChapters = visitorNovelService.getIntroductionNovelChapters(nid);
+            introductionDiv = visitorNovelService.getIntroductionNovelChapters(nid);
+
+            System.out.println(introductionDiv.getIntroductionNovel());
         } catch (IntroductionNovelChaptersException e) {
 
             e.printStackTrace();
         }
-        return novelChapters;
+        return introductionDiv;
     }
 
 }

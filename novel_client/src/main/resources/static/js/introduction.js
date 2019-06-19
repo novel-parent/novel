@@ -78,36 +78,36 @@ $(function(){
 
     // var params1 = urlParams[1].split('=')
 
+
     $.ajax({
-        url:'/introduction.n',
-        data:{"nid":nid},
+        url:introductionUrlMapping,
         error:function(){
             alert("请求出错.")
         },
         success:function(data){
 
             data = eval(data)
-            $('#novelTitle').append(data.novelName)
-            $('#lastNovel').append("《"+data.novelName+"》所有内容均来自互联网或网友上传，嘿 ! 污 只为原作者夜与雪的小说进行宣传。欢迎各位书友支持夜与雪并收藏《"+data.novelName+"》最新章节。")
+            $('#novelTitle').append(data.introductionNovel.novelName)
+            $('#lastNovel').append("《"+data.introductionNovel.novelName+"》所有内容均来自互联网或网友上传，嘿 ! 污 只为原作者夜与雪的小说进行宣传。欢迎各位书友支持夜与雪并收藏《"+data.introductionNovel.novelName+"》最新章节。")
 
-            $('#novelNewChapter').append("<strong>《"+data.novelName+"》最新章节</strong>")
+            $('#novelNewChapter').append("<strong>《"+data.introductionNovel.novelName+"》最新章节</strong>")
             var result =''
             result+="<li><a href='/' title='嘿 ! 污'><i class='fa fa-home fa-fw'></i>首页</a></li>"
-            result+="<li><a href='/type.html?page=1&type="+data.type+url+"' target='_blank' title='"+data.type+"'>"+data.type+"</a></li>"
-            result+="<li class='active'>"+data.novelName+"</li>"
+            result+="<li><a href='/type.html?page=1&type="+data.introductionNovel.type+url+"' target='_blank' title='"+data.introductionNovel.type+"'>"+data.introductionNovel.type+"</a></li>"
+            result+="<li class='active'>"+data.introductionNovel.novelName+"</li>"
             $('#introductionHead').append(result)
 
             result=''
             result+="<div class='col-md-2 col-xs-4 hidden-xs'>"
-            result+="<img class='img-thumbnail' alt='"+data.novelName+"' src='"+data.image+"' title='"+data.novelName+"' width='140' height='180'>"
+            result+="<img class='img-thumbnail' alt='"+data.introductionNovel.novelName+"' src='"+data.introductionNovel.image+"' title='"+data.introductionNovel.novelName+"' width='140' height='180'>"
             result+="</div>"
             result+="<div class='col-md-10'>"
-            result+="<h1 class='bookTitle'>"+data.novelName+"</h1>"
+            result+="<h1 class='bookTitle'>"+data.introductionNovel.novelName+"</h1>"
             result+="<p class='booktag'>"
-            result+="<a class='red' href='/search.html?page=1&key="+data.author+url+"' target='_blank' title='作者："+data.author+"'>"+data.author+"</a>"
-            result+="<a class='red' href='/type.html?page=1&type="+data.type+url+"' target='_blank' title='"+data.type+"'>"+data.type+"</a>"
-            result+="<span class='blue'>阅读数："+data.readCount+"</span>"
-            result+="<span class='blue'>"+data.state+"</span>"
+            result+="<a class='red' href='/search.html?page=1&key="+data.introductionNovel.author+url+"' target='_blank' title='作者："+data.introductionNovel.author+"'>"+data.introductionNovel.author+"</a>"
+            result+="<a class='red' href='/type.html?page=1&type="+data.introductionNovel.type+url+"' target='_blank' title='"+data.introductionNovel.type+"'>"+data.introductionNovel.type+"</a>"
+            result+="<span class='blue'>阅读数："+data.introductionNovel.readCount+"</span>"
+            result+="<span class='blue'>"+data.introductionNovel.state+"</span>"
             result+="</p>"
             result+="<p>"
 
@@ -124,26 +124,19 @@ $(function(){
             result+="<i class='fa fa-comments fa-fw'></i>留言反馈</a></span>"
             result+="<div class='clear'></div></div><hr>"
             result+="<p class='text-muted' id='bookIntro' style=''>"
-            result+="<img class='img-thumbnail pull-left visible-xs' style='margin:0 5px 0 0' alt='"+data.novelName+"' src='"+data.image+"' title='"+data.novelName+"' width='80' height='120'>"
-            result+=""+data.introduction+""
+            result+="<img class='img-thumbnail pull-left visible-xs' style='margin:0 5px 0 0' alt='"+data.introductionNovel.novelName+"' src='"+data.image+"' title='"+data.introductionNovel.novelName+"' width='80' height='120'>"
+            result+=""+data.introductionNovel.introduction+""
             result+="</p></div><div class='clear'><br></div>"
             $('#novelIntroduction').append(result)
 
-        },
-        type:'GET'
-    });
 
-    $.ajax({
-        url:introductionUrlMapping,
-        error:function(){
-            alert("请求出错.")
-        },
-        success:function(data){
+
+
 
             var result =''
-            data = eval('('+data+')')
+            // data = eval('('+data+')')
 
-            var chapters = data.chapters
+            var chapters =eval("("+data.novelChapters+")").chapters
 
             var chapterNumber = chapters.length
 

@@ -1,10 +1,12 @@
 package com.yc.novelclient.service.impl;
 
 
+import com.yc.bean.IntroductionDiv;
+import com.yc.bean.IntroductionNovel;
+import com.yc.bean.ReadDiv;
+import com.yc.bean.ReadNovel;
 import com.yc.novelclient.MyException.IntroductionNovelChaptersException;
 import com.yc.novelclient.MyException.ReadNovelChapterContextException;
-import com.yc.bean.IntroductionNovel;
-import com.yc.bean.ReadNovel;
 import com.yc.novelclient.mapper.NovelMapper;
 import com.yc.thrift.client.NovelThriftClient;
 import com.yc.util.NovelQueue;
@@ -32,7 +34,9 @@ public class VisitorNovelServiceImpl implements VisitorNovelService {
     private NovelMapper novelMapper;
 
     @Override
-    public ReadNovel getNovelChapterContext(long nid, long cid) throws ReadNovelChapterContextException {
+    public ReadDiv getNovelChapterContext(long nid, long cid) throws ReadNovelChapterContextException {
+
+        ReadDiv readDiv = null;
 
         IntroductionNovel introductionNovel = novelMapper.selNovelByNid(nid);
 
@@ -40,11 +44,15 @@ public class VisitorNovelServiceImpl implements VisitorNovelService {
         ReadNovel chapterContext = null;
         try {
 
-//            NovelThriftClient client = new NovelThriftClient();
-
             NovelThriftClient thriftClient = NovelQueue.novelThriftClientQueue.take();
 
             chapterContext = thriftClient.getNovelChapterContextByChapterUrl(novelChapterUrl);
+
+            readDiv = new ReadDiv();
+
+            readDiv.setIntroductionNovel(introductionNovel);
+
+            readDiv.setReadNovel(chapterContext);
 
             NovelQueue.novelThriftClientQueue.add(thriftClient);
         } catch (TException e) {
@@ -56,34 +64,48 @@ public class VisitorNovelServiceImpl implements VisitorNovelService {
             //  当 队列没了   手动创建  连接
             try {
                 chapterContext = NovelClientUtil.getNovelChapterContext(novelChapterUrl);
+
+                readDiv = new ReadDiv();
+
+                readDiv.setIntroductionNovel(introductionNovel);
+
+                readDiv.setReadNovel(chapterContext);
             } catch (TException e1) {
                 e1.printStackTrace();
             }
             e.printStackTrace();
         }
-        return null;
+        return readDiv;
     }
 
 
     @Cacheable(cacheNames = "chapters" ,key = "#nid",cacheManager = "novelChaptersRedisCacheManager")
     @Override
-    public String getIntroductionNovelChapters(long nid) throws IntroductionNovelChaptersException {
+    public IntroductionDiv getIntroductionNovelChapters(long nid) throws IntroductionNovelChaptersException {
 
         System.out.println("游客访问:  "+nid+"  小说章节");
         IntroductionNovel introductionNovel = novelMapper.selNovelByNid(nid);
 
         String novelUrl = introductionNovel.getUrl();
 
+        IntroductionDiv introductionDiv = null;
+
         String chapters = null;
         try {
 //            NovelThriftClient client = new NovelThriftClient();
             NovelThriftClient thriftClient = NovelQueue.novelThriftClientQueue.take();
 
-            System.out.println(NovelQueue.novelThriftClientQueue.size());
             chapters = thriftClient.getNovelChapterListByNovelUrl(novelUrl);
 
+            System.out.println(chapters);
+
+            introductionDiv = new IntroductionDiv();
+
+            introductionDiv.setIntroductionNovel(introductionNovel);
+
+            introductionDiv.setNovelChapters(chapters);
+
             NovelQueue.novelThriftClientQueue.add(thriftClient);
-            System.out.println(NovelQueue.novelThriftClientQueue.size());
         } catch (TException e) {
 
             throw new IntroductionNovelChaptersException
@@ -95,6 +117,11 @@ public class VisitorNovelServiceImpl implements VisitorNovelService {
 
 
                 chapters = NovelClientUtil.getNovelChapters(novelUrl);
+                introductionDiv = new IntroductionDiv();
+
+                introductionDiv.setIntroductionNovel(introductionNovel);
+
+                introductionDiv.setNovelChapters(chapters);
 
             } catch (TTransportException e1) {
                 e1.printStackTrace();
@@ -104,6 +131,6 @@ public class VisitorNovelServiceImpl implements VisitorNovelService {
             e.printStackTrace();
         }
 
-        return chapters;
+        return introductionDiv;
     }
 }

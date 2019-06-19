@@ -16,8 +16,9 @@ import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 @Configuration
 public class RedisConfig {
 
-    @Primary
-    @Bean
+//    @Primary
+//    @Bean
+
     public RedisTemplate<Object,Object> redisTemplate(RedisConnectionFactory connectionFactory ){
 
         RedisTemplate<Object,Object> redisTemplate = new RedisTemplate<Object,Object>();
@@ -47,7 +48,7 @@ public class RedisConfig {
     @Bean
     public RedisCacheManager novelChaptersRedisCacheManager(RedisTemplate<Object,Object> redisTemplate){
 
-        long time = 1800;
+        long time = 60;
         RedisCacheManager cacheManager = new RedisCacheManager(redisTemplate);
 
         // key 多了一个前缀
