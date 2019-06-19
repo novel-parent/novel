@@ -8,6 +8,8 @@ import com.yc.novelclient.service.OrdinaryNovelService;
 import com.yc.thrift.client.NovelThriftClient;
 import org.apache.thrift.TException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
 
 /**
@@ -41,9 +43,11 @@ public class OrdinaryNovelServiceImpl implements OrdinaryNovelService {
         return context;
     }
 
+    @Cacheable(cacheNames = "chapters" ,key = "#nid")
     @Override
     public String getIntroductionNovelChapters(long nid, String uid) throws TException, IntroductionNovelChaptersException {
 
+        System.out.println("普通用户访问:  "+nid+"  小说章节");
         IntroductionNovel introductionNovel = novelMapper.selNovelByNid(nid);
 
         NovelThriftClient thriftClient = new NovelThriftClient();

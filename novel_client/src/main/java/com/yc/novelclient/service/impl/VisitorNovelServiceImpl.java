@@ -10,6 +10,7 @@ import com.yc.thrift.client.NovelThriftClient;
 import com.yc.util.NovelQueue;
 import org.apache.thrift.TException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import com.yc.novelclient.service.VisitorNovelService;
@@ -57,9 +58,11 @@ public class VisitorNovelServiceImpl implements VisitorNovelService {
     }
 
 
+    @Cacheable(cacheNames = "chapters" ,key = "#nid")
     @Override
     public String getIntroductionNovelChapters(long nid) throws IntroductionNovelChaptersException {
 
+        System.out.println("游客访问:  "+nid+"  小说章节");
         IntroductionNovel introductionNovel = novelMapper.selNovelByNid(nid);
 
         String novelUrl = introductionNovel.getUrl();
