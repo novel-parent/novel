@@ -1,20 +1,23 @@
 package com.yc.novelclient.service.impl;
 
+import com.yc.bean.IntroductionDiv;
+import com.yc.bean.IntroductionNovel;
+import com.yc.bean.ReadDiv;
 import com.yc.novelclient.MyException.IntroductionNovelChaptersException;
 import com.yc.novelclient.MyException.ReadNovelChapterContextException;
-import com.yc.bean.IntroductionNovel;
 import com.yc.bean.ReadNovel;
-import com.yc.thrift.client.VipUserThriftClient;
 import com.yc.novelclient.mapper.NovelMapper;
+import com.yc.thrift.client.NovelThriftClient;
+import com.yc.util.NovelQueue;
 import org.apache.thrift.TException;
+import org.apache.thrift.transport.TTransportException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import com.yc.novelclient.service.VipNovelService;
+import util.NovelClientUtil;
 import util.ThreadPollUtil;
-import util.VipUtil;
 
-import java.util.HashMap;
 import java.util.concurrent.ExecutorService;
 
 /**
@@ -22,115 +25,108 @@ import java.util.concurrent.ExecutorService;
  * @date 2019/5/17 - 19:42
  */
 @Service
-public class VipNovelServiceImpl implements VipNovelService {
-
-    private HashMap<String,VipUserThriftClient> vipUserThriftClientHashMap = VipUtil.vipUserThriftClientHashMap;
+public class VipNovelServiceImpl implements VipNovelService{
 
     @Autowired
     private NovelMapper novelMapper;
 
     private ExecutorService executorService = ThreadPollUtil.executorService;
 
+    @Cacheable(cacheNames = "chapterContext" , key = "#cid",cacheManager = "novelChaptersRedisCacheManager")
     @Override
-    public ReadNovel getNovelChapterContext(long nid, long cid, String uid) throws IntroductionNovelChaptersException {
+    public ReadDiv getNovelChapterContext(long nid, String cid, String uid) throws ReadNovelChapterContextException {
 
-        ReadNovel readNovel = null ;
+        ReadDiv readDiv = null;
 
-            //代表  vip用户登陆
-            VipUserThriftClient vipUserThriftClient = VipUtil.vipUserThriftClientHashMap.get(uid);
+        IntroductionNovel introductionNovel = novelMapper.selNovelByNid(nid);
 
-                IntroductionNovel introductionNovel = novelMapper.selNovelByNid(nid);
+        String novelChapterUrl = introductionNovel.getUrl()+cid+".html";
+        ReadNovel chapterContext = null;
+        try {
 
-                String nowUrl = introductionNovel.getUrl()+cid+".html";
-                //    如果用户  看小说 的 时候  突然点击 另外一个 页面
-                //    然后按 返回键  页面没有刷新  再点击 下一章
-                //     这个时候 我们下一个章节我们是  保存在nextReadNovel 里面
-                //     那就在  flag = true 的时候  进行  url的判断
-                //      拿 接受到 的 url 和 nextReadNovel 的lastChapter相比较
-                //                  相等就直接转发
-                //                  不相等 就   进行 父类的client的 数据获取
-                /**
-                 *   flag 为 true  代表第下一章可以直接拿
-                 *
-                 *   flag 为 false 代表内部的nextReadNovel还没初始化好
-                 *
-                 *   得重新进行  普通的client的 数据获取
-                 */
+            NovelThriftClient thriftClient = NovelQueue.novelThriftClientQueue.take();
 
-                if(! vipUserThriftClient.isFlag()){
+            chapterContext = thriftClient.getNovelChapterContextByChapterUrl(novelChapterUrl);
 
-                    // flag = false    vip用户通过  父类的client 方法的获取数据
-                    try {
-                        readNovel = vipUserThriftClient.getNovelChapterContextByChapterUrl(nowUrl);
-                    } catch (TException e) {
-                        throw new IntroductionNovelChaptersException
-                                ("VipNovelServiceImpl.getNovelChapterContext vip用户获得小说章节内容失败 ");
-                    }
-                    /**
-                     * 进行 下一章节的获取
-                     */
-                    vipUserThriftClient.setFlag(false);
+            readDiv = new ReadDiv();
 
-                    vipUserThriftClient.setNextChapterUrl(introductionNovel.getUrl()+readNovel.getNextChapter()+".html");
+            readDiv.setIntroductionNovel(introductionNovel);
 
-                    executorService.execute(vipUserThriftClient);
-                }else{
+            readDiv.setReadNovel(chapterContext);
 
-                    ReadNovel nextReadNovel = vipUserThriftClient.getNextReadNovel();
+            NovelQueue.novelThriftClientQueue.add(thriftClient);
+        } catch (TException e) {
 
-                    String tNowUrl = vipUserThriftClient.getNowUrl();
+            throw new ReadNovelChapterContextException
+                    ("com.yc.novelclient.service.impl.VipNovelServiceImpl.getNovelChapterContext vip用户获得小说章节内容出错");
+        } catch (InterruptedException e) {
 
-                    if(nowUrl.equals(tNowUrl)){
+            //  当 队列没了   手动创建  连接
+            try {
+                chapterContext = NovelClientUtil.getNovelChapterContext(novelChapterUrl);
 
-                        // flag = true  代表可以直接 从内部的 nextReadNovel 取数据
-                        // 并且重新  获取 下一章节的信息
-                        vipUserThriftClient.setFlag(false);
-                        readNovel = nextReadNovel;
-                        vipUserThriftClient.setNextChapterUrl(introductionNovel.getUrl()+readNovel.getNextChapter()+".html");
-                        executorService.execute(vipUserThriftClient);
-                    }else{
+                readDiv = new ReadDiv();
 
-                        nowUrl = introductionNovel.getUrl()+cid+".html";
-                        // flag = false    vip用户通过  父类的client 方法的获取数据
-                        try {
-                            readNovel = vipUserThriftClient.getNovelChapterContextByChapterUrl(nowUrl);
-                        } catch (TException e) {
+                readDiv.setIntroductionNovel(introductionNovel);
 
-                            throw new IntroductionNovelChaptersException
-                                    ("VipNovelServiceImpl.getNovelChapterContext vip用户获得小说章节内容失败 ");
-                        }
-
-                        vipUserThriftClient.setFlag(false);
-                        /**
-                         * 进行 下一章节的获取
-                         */
-                        vipUserThriftClient.setNextChapterUrl(introductionNovel.getUrl()+readNovel.getNextChapter()+".html");
-
-                        executorService.execute(vipUserThriftClient);
-                    }
-                }
-        return readNovel;
+                readDiv.setReadNovel(chapterContext);
+            } catch (TException e1) {
+                e1.printStackTrace();
+            }
+            e.printStackTrace();
+        }
+        return readDiv;
     }
 
 
+    @Cacheable(cacheNames = "chapters" ,key = "#nid",cacheManager = "novelChaptersRedisCacheManager")
     @Override
-    public String getIntroductionNovelChapters(long nid, String uid) throws ReadNovelChapterContextException {
+    public IntroductionDiv getIntroductionNovelChapters(long nid, String uid) throws  IntroductionNovelChaptersException {
 
-        String novelChapterListJson = null;
+        IntroductionDiv introductionDiv = null;
 
-            //代表  vip用户登陆
-            VipUserThriftClient vipUserThriftClient = VipUtil.vipUserThriftClientHashMap.get(uid);
+        System.out.println("vip用户访问:  "+nid+"  小说章节");
+        IntroductionNovel introductionNovel = novelMapper.selNovelByNid(nid);
 
-                IntroductionNovel introductionNovel = novelMapper.selNovelByNid(nid);
+        String novelUrl = introductionNovel.getUrl();
 
-             try {
+        String chapters = null;
+        try {
+//            NovelThriftClient client = new NovelThriftClient();
+            NovelThriftClient thriftClient = NovelQueue.novelThriftClientQueue.take();
 
-                 novelChapterListJson = vipUserThriftClient.getNovelChapterListByNovelUrl(introductionNovel.getUrl());
-             } catch (TException e) {
-                 throw new ReadNovelChapterContextException
-                         ("VipNovelServiceImpl.getIntroductionNovelChapters  vip用户获得小说章节列表失败");
-             }
+            chapters = thriftClient.getNovelChapterListByNovelUrl(novelUrl);
 
-        return novelChapterListJson;
+            introductionDiv = new IntroductionDiv();
+
+            introductionDiv.setIntroductionNovel(introductionNovel);
+            introductionDiv.setNovelChapters(chapters);
+
+            NovelQueue.novelThriftClientQueue.add(thriftClient);
+        } catch (TException e) {
+
+            throw new IntroductionNovelChaptersException
+                    ("com.yc.novelclient.service.impl.VipNovelServiceImpl.getIntroductionNovelChapters  vip用户获得章节列表出错");
+        } catch (InterruptedException e) {
+
+            //  当 队列没了   手动创建  连接
+            try {
+
+                chapters = NovelClientUtil.getNovelChapters(novelUrl);
+                introductionDiv = new IntroductionDiv();
+
+                introductionDiv.setIntroductionNovel(introductionNovel);
+                introductionDiv.setNovelChapters(chapters);
+
+            } catch (TTransportException e1) {
+                e1.printStackTrace();
+            } catch (TException e1) {
+                e1.printStackTrace();
+            }
+            e.printStackTrace();
+        }
+
+        return introductionDiv;
     }
+
 }

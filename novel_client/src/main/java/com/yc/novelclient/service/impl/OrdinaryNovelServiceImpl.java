@@ -1,21 +1,22 @@
 package com.yc.novelclient.service.impl;
 
+import com.yc.bean.IntroductionDiv;
 import com.yc.bean.IntroductionNovel;
+import com.yc.bean.ReadDiv;
 import com.yc.bean.ReadNovel;
 import com.yc.novelclient.MyException.IntroductionNovelChaptersException;
+import com.yc.novelclient.MyException.ReadNovelChapterContextException;
 import com.yc.novelclient.mapper.NovelMapper;
 import com.yc.novelclient.service.OrdinaryNovelService;
-import com.yc.thrift.client.OrdinaryUserThriftClient;
-import com.yc.thrift.client.UserThriftClient;
+import com.yc.thrift.client.NovelThriftClient;
+import com.yc.util.NovelQueue;
 import org.apache.thrift.TException;
 import org.apache.thrift.transport.TTransportException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
-import redis.clients.jedis.Jedis;
-import util.OrdinaryUtil;
-
-import java.util.HashMap;
+import util.NovelClientUtil;
 
 /**
  * @author LX
@@ -27,44 +28,100 @@ public class OrdinaryNovelServiceImpl implements OrdinaryNovelService {
     @Autowired
     private NovelMapper novelMapper;
 
-    private HashMap<String,OrdinaryUserThriftClient> ordinaryUserThriftClientHashMap
-            = OrdinaryUtil.ordinaryUserThriftClientHashMap;
 
     @Override
-    public ReadNovel getNovelChapterContext(long nid, long cid, String uid) throws TException, InterruptedException {
+    public ReadDiv getNovelChapterContext(long nid, long cid, String uid) throws TException, InterruptedException, ReadNovelChapterContextException {
 
-        IntroductionNovel novel = novelMapper.selNovelByNid(nid);
-
-        String url = novel.getUrl()+cid+".html";
-
-        UserThriftClient client = new UserThriftClient();
-
-        ReadNovel context = client.getNovelChapterContextByChapterUrl(url);
-
-        client.getTransport().close();
-
-        if(context == null){
-            throw new InterruptedException("用户获取小说章节出错");
-        }
-
-        return context;
-    }
-
-    @Override
-    public String getIntroductionNovelChapters(long nid, String uid) throws TException, IntroductionNovelChaptersException {
-
+        ReadDiv readDiv = null;
         IntroductionNovel introductionNovel = novelMapper.selNovelByNid(nid);
 
-        UserThriftClient thriftClient = new UserThriftClient();
+        String novelChapterUrl = introductionNovel.getUrl()+cid+".html";
+        ReadNovel chapterContext = null;
+        try {
 
-        String chapterList = thriftClient.getNovelChapterListByNovelUrl(introductionNovel.getUrl());
+//            NovelThriftClient client = new NovelThriftClient();
 
-        thriftClient.getTransport().close();
+            NovelThriftClient thriftClient = NovelQueue.novelThriftClientQueue.take();
 
-        if (chapterList == null){
-            throw new IntroductionNovelChaptersException("获得小说章节列表出错");
+            chapterContext = thriftClient.getNovelChapterContextByChapterUrl(novelChapterUrl);
+
+            readDiv = new ReadDiv();
+
+            readDiv.setIntroductionNovel(introductionNovel);
+
+            readDiv.setReadNovel(chapterContext);
+
+            NovelQueue.novelThriftClientQueue.add(thriftClient);
+        } catch (TException e) {
+
+            throw new ReadNovelChapterContextException
+                    ("com.yc.novelclient.service.impl.OrdinaryNovelServiceImpl.getNovelChapterContext 用户获得小说章节内容出错");
+        } catch (InterruptedException e) {
+
+            //  当 队列没了   手动创建  连接
+            try {
+                chapterContext = NovelClientUtil.getNovelChapterContext(novelChapterUrl);
+                readDiv = new ReadDiv();
+
+                readDiv.setIntroductionNovel(introductionNovel);
+
+                readDiv.setReadNovel(chapterContext);
+            } catch (TException e1) {
+                e1.printStackTrace();
+            }
+            e.printStackTrace();
+        }
+        return readDiv;
+    }
+
+    @Cacheable(cacheNames = "chapters" ,key = "#nid",cacheManager = "novelChaptersRedisCacheManager")
+    @Override
+    public IntroductionDiv getIntroductionNovelChapters(long nid, String uid) throws TException, IntroductionNovelChaptersException {
+
+        IntroductionDiv introductionDiv = null;
+
+        System.out.println("普通用户访问:  "+nid+"  小说章节");
+        IntroductionNovel introductionNovel = novelMapper.selNovelByNid(nid);
+
+        String novelUrl = introductionNovel.getUrl();
+
+        String chapters = null;
+        try {
+//            NovelThriftClient client = new NovelThriftClient();
+            NovelThriftClient thriftClient = NovelQueue.novelThriftClientQueue.take();
+
+            chapters = thriftClient.getNovelChapterListByNovelUrl(novelUrl);
+
+            introductionDiv = new IntroductionDiv();
+
+            introductionDiv.setIntroductionNovel(introductionNovel);
+
+            introductionDiv.setNovelChapters(chapters);
+
+            NovelQueue.novelThriftClientQueue.add(thriftClient);
+        } catch (TException e) {
+
+            throw new IntroductionNovelChaptersException
+                    ("com.yc.novelclient.service.impl.OrdinaryNovelServiceImpl.getNovelChapterContext  用户获得章节列表出错");
+        } catch (InterruptedException e) {
+
+            //  当 队列没了   手动创建  连接
+            try {
+                chapters = NovelClientUtil.getNovelChapters(novelUrl);
+                introductionDiv = new IntroductionDiv();
+
+                introductionDiv.setIntroductionNovel(introductionNovel);
+
+                introductionDiv.setNovelChapters(chapters);
+
+            } catch (TTransportException e1) {
+                e1.printStackTrace();
+            } catch (TException e1) {
+                e1.printStackTrace();
+            }
+            e.printStackTrace();
         }
 
-        return chapterList;
+        return introductionDiv;
     }
 }

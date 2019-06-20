@@ -162,6 +162,11 @@
       /*  $.ajax({
                          url:'/novel/HotMonths.n',
                          success:function(data){
+                         data = - 1
+                         if(data == "-1"){
+                              alter("yonhgu")
+                              window.href="127.0.0.1:80"
+                         }
                              var results="";
                              $(data).each(function(index,ele){
                                  index = parsInt(index)+1;

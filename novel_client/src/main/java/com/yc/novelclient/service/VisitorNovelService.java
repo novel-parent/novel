@@ -1,9 +1,10 @@
 package com.yc.novelclient.service;
 
 
+import com.yc.bean.IntroductionDiv;
+import com.yc.bean.ReadDiv;
 import com.yc.novelclient.MyException.IntroductionNovelChaptersException;
 import com.yc.novelclient.MyException.ReadNovelChapterContextException;
-import com.yc.bean.ReadNovel;
 
 /**
  * @author LX
@@ -17,7 +18,7 @@ public interface VisitorNovelService {
      * @return
      * @throws IntroductionNovelChaptersException
      */
-    String getIntroductionNovelChapters(long nid) throws IntroductionNovelChaptersException;
+    IntroductionDiv getIntroductionNovelChapters(long nid) throws IntroductionNovelChaptersException;
 
     /**
      *      获取小说章节内容
@@ -26,5 +27,5 @@ public interface VisitorNovelService {
      * @return
      * @throws ReadNovelChapterContextException
      */
-    ReadNovel getNovelChapterContext(long nid , long cid ) throws ReadNovelChapterContextException;
+    ReadDiv getNovelChapterContext(long nid , long cid ) throws ReadNovelChapterContextException;
 }

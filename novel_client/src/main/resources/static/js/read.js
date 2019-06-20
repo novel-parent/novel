@@ -109,32 +109,6 @@ $(function(){
         cid = params1[1]
     }
 
-    $.ajax({
-
-        url:'/introduction.n',
-        data:{"nid":nid},
-        error:function(){
-            alert("请求出错.")
-        },
-        success:function(data){
-
-            var result =''
-            data = eval(data)
-            result+="<p class='text-center booktag'>"
-            result+="<a class='blue' href='/introduction.html?nid="+nid+url+"'><i class='fa fa-list fa-fw'></i>"+data.novelName+"</a>"
-            result+="<a class='blue' href='/search.html?page=1&key="+data.author+url+"' target='_blank' title='"+data.author+"'>作者："+data.author+"</a>"
-            result+="<a class='blue' rel='nofollow'><i class='fa fa-thumbs-up fa-fw'></i>投票推荐</a>"
-            result+="<a class='red' id='' onclick='bookMark("+nid+","+cid+")' rel='nofollow'><i class='fa fa-bookmark fa-fw'></i>加入书签</a>"
-            result+="<a href='#' class='red errorlink' target='_blank'>"
-            result+="<i class='fa fa-comments fa-fw'></i>留言反馈</a></p>"
-
-            $('#novelChapterTitle').append(result)
-            $('#novelLi1').append("<a href='/type.html?page=1&key="+data.type+url+"' target='_blank' title='"+data.type+"'>"+data.type+"</a>")
-            $('#novelLi2').append("<a href='/introduction.html?nid="+nid+url+"'>"+data.novelName+"</a>")
-            $('#novelFoot').append("<a href='/introduction.html?nid="+nid+url+"' title='"+data.novelName+"'>"+data.novelName+"</a>所有内容均来自互联网，笔趣阁只为原作者 "+data.author+" 的小说进行宣传。欢迎各位书友支持 "+data.author+" 并收藏")
-        },
-        type:'GET'
-    });
 
     $.ajax({
 
@@ -143,20 +117,48 @@ $(function(){
             alert("请求出错.")
         },
         success:function(data){
-            novelChapterName = data.novelChapterName
-            $("#novelLi3").append(data.novelChapterName)
-            $('#htmlContent').append("<br>"+data.context+"<br><br><br>")
+
+            if(data=="-1"){
+                alert("用户信息异常,请重新登陆")
+                window.location.href="http://127.0.0.1:80/login.html"
+                return ;
+            }else if(data ==""||data==null){
+                alert("服务器繁忙,请稍候再试")
+                window.location.href="/introduction.html?nid="+nid+url
+                return ;
+            }
+
             var result =''
-            result+="<a id='linkPrev' class='btn btn-default' href='/read.html?nid="+nid+"&cid="+data.lastChapter+url+"'><i class='fa fa-arrow-circle-left fa-fw'></i>上一章</a>"
+            data = eval(data)
+            result+="<p class='text-center booktag'>"
+            result+="<a class='blue' href='/introduction.html?nid="+nid+url+"'><i class='fa fa-list fa-fw'></i>"+data.introductionNovel.novelName+"</a>"
+            result+="<a class='blue' href='/search.html?page=1&key="+data.introductionNovel.author+url+"' target='_blank' title='"+data.introductionNovel.author+"'>作者："+data.introductionNovel.author+"</a>"
+            result+="<a class='blue' rel='nofollow'><i class='fa fa-thumbs-up fa-fw'></i>投票推荐</a>"
+            result+="<a class='red' id='' onclick='bookMark("+nid+","+cid+")' rel='nofollow'><i class='fa fa-bookmark fa-fw'></i>加入书签</a>"
+            result+="<a href='#' class='red errorlink' target='_blank'>"
+            result+="<i class='fa fa-comments fa-fw'></i>留言反馈</a></p>"
+
+            $('#novelChapterTitle').append(result)
+            $('#novelLi1').append("<a href='/type.html?page=1&key="+data.introductionNovel.type+url+"' target='_blank' title='"+data.introductionNovel.type+"'>"+data.introductionNovel.type+"</a>")
+            $('#novelLi2').append("<a href='/introduction.html?nid="+nid+url+"'>"+data.introductionNovel.novelName+"</a>")
+            $('#novelFoot').append("<a href='/introduction.html?nid="+nid+url+"' title='"+data.introductionNovel.novelName+"'>"+data.introductionNovel.novelName+"</a>所有内容均来自互联网，笔趣阁只为原作者 "+data.author+" 的小说进行宣传。欢迎各位书友支持 "+data.author+" 并收藏")
+
+
+
+            novelChapterName = data.readNovel.novelChapterName
+            $("#novelLi3").append(data.readNovel.novelChapterName)
+            $('#htmlContent').append("<br>"+data.readNovel.context+"<br><br><br>")
+            var result =''
+            result+="<a id='linkPrev' class='btn btn-default' href='/read.html?nid="+nid+"&cid="+data.readNovel.lastChapter+url+"'><i class='fa fa-arrow-circle-left fa-fw'></i>上一章</a>"
             result+="<a id='linkIndex' class='btn btn-default' href='/introduction.html?nid="+nid+url+"'><i class='fa fa-list fa-fw'></i>章节目录</a>"
-            if( data.nextChapter =='-1' ){
+            if( data.readNovel.nextChapter =='-1' ){
                 result+="<a id='linkNext' class='btn btn-default' onclick='tiShi()' href='javascript:void(0)'>下一章<i class='fa fa-arrow-circle-right fa-fw'></i></a>"
             }else{
-                result+="<a id='linkNext' class='btn btn-default' href='/read.html?nid="+nid+"&cid="+data.nextChapter+url+"'>下一章<i class='fa fa-arrow-circle-right fa-fw'></i></a>"
+                result+="<a id='linkNext' class='btn btn-default' href='/read.html?nid="+nid+"&cid="+data.readNovel.nextChapter+url+"'>下一章<i class='fa fa-arrow-circle-right fa-fw'></i></a>"
             }
 
             $('#novelTS').append(result)
-            $('#novelChapterName').append(data.novelChapterName)
+            $('#novelChapterName').append(data.readNovel.novelChapterName)
         },
         type:'GET'
     });
