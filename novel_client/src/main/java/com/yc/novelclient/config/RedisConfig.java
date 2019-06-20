@@ -58,6 +58,7 @@ public class RedisConfig {
      * @param redisTemplate
      * @return
      */
+    @Primary
     @Bean
     public RedisCacheManager novelChaptersRedisCacheManager(RedisTemplate<Object,Object> redisTemplate){
 

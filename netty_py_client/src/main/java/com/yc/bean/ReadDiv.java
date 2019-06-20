@@ -1,10 +1,12 @@
 package com.yc.bean;
 
+import java.io.Serializable;
+
 /**
  * @author LX
  * @date 2019/6/20 - 0:41
  */
-public class ReadDiv {
+public class ReadDiv implements Serializable {
     private IntroductionNovel introductionNovel;
 
     public ReadNovel getReadNovel() {

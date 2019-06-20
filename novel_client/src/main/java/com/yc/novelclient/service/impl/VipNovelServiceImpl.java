@@ -1,6 +1,8 @@
 package com.yc.novelclient.service.impl;
 
+import com.yc.bean.IntroductionDiv;
 import com.yc.bean.IntroductionNovel;
+import com.yc.bean.ReadDiv;
 import com.yc.novelclient.MyException.IntroductionNovelChaptersException;
 import com.yc.novelclient.MyException.ReadNovelChapterContextException;
 import com.yc.bean.ReadNovel;
@@ -23,27 +25,67 @@ import java.util.concurrent.ExecutorService;
  * @date 2019/5/17 - 19:42
  */
 @Service
-public class VipNovelServiceImpl implements VipNovelService ,Runnable{
+public class VipNovelServiceImpl implements VipNovelService{
 
     @Autowired
     private NovelMapper novelMapper;
 
     private ExecutorService executorService = ThreadPollUtil.executorService;
 
+    @Cacheable(cacheNames = "chapterContext" , key = "#cid",cacheManager = "novelChaptersRedisCacheManager")
     @Override
-    public ReadNovel getNovelChapterContext(long nid, long cid, String uid)  {
+    public ReadDiv getNovelChapterContext(long nid, String cid, String uid) throws ReadNovelChapterContextException {
 
-        ReadNovel readNovel = null ;
+        ReadDiv readDiv = null;
 
-        return readNovel;
+        IntroductionNovel introductionNovel = novelMapper.selNovelByNid(nid);
+
+        String novelChapterUrl = introductionNovel.getUrl()+cid+".html";
+        ReadNovel chapterContext = null;
+        try {
+
+            NovelThriftClient thriftClient = NovelQueue.novelThriftClientQueue.take();
+
+            chapterContext = thriftClient.getNovelChapterContextByChapterUrl(novelChapterUrl);
+
+            readDiv = new ReadDiv();
+
+            readDiv.setIntroductionNovel(introductionNovel);
+
+            readDiv.setReadNovel(chapterContext);
+
+            NovelQueue.novelThriftClientQueue.add(thriftClient);
+        } catch (TException e) {
+
+            throw new ReadNovelChapterContextException
+                    ("com.yc.novelclient.service.impl.VipNovelServiceImpl.getNovelChapterContext vip用户获得小说章节内容出错");
+        } catch (InterruptedException e) {
+
+            //  当 队列没了   手动创建  连接
+            try {
+                chapterContext = NovelClientUtil.getNovelChapterContext(novelChapterUrl);
+
+                readDiv = new ReadDiv();
+
+                readDiv.setIntroductionNovel(introductionNovel);
+
+                readDiv.setReadNovel(chapterContext);
+            } catch (TException e1) {
+                e1.printStackTrace();
+            }
+            e.printStackTrace();
+        }
+        return readDiv;
     }
 
 
     @Cacheable(cacheNames = "chapters" ,key = "#nid",cacheManager = "novelChaptersRedisCacheManager")
     @Override
-    public String getIntroductionNovelChapters(long nid, String uid) throws  IntroductionNovelChaptersException {
+    public IntroductionDiv getIntroductionNovelChapters(long nid, String uid) throws  IntroductionNovelChaptersException {
 
-        System.out.println("游客访问:  "+nid+"  小说章节");
+        IntroductionDiv introductionDiv = null;
+
+        System.out.println("vip用户访问:  "+nid+"  小说章节");
         IntroductionNovel introductionNovel = novelMapper.selNovelByNid(nid);
 
         String novelUrl = introductionNovel.getUrl();
@@ -53,11 +95,14 @@ public class VipNovelServiceImpl implements VipNovelService ,Runnable{
 //            NovelThriftClient client = new NovelThriftClient();
             NovelThriftClient thriftClient = NovelQueue.novelThriftClientQueue.take();
 
-            System.out.println(NovelQueue.novelThriftClientQueue.size());
             chapters = thriftClient.getNovelChapterListByNovelUrl(novelUrl);
 
+            introductionDiv = new IntroductionDiv();
+
+            introductionDiv.setIntroductionNovel(introductionNovel);
+            introductionDiv.setNovelChapters(chapters);
+
             NovelQueue.novelThriftClientQueue.add(thriftClient);
-            System.out.println(NovelQueue.novelThriftClientQueue.size());
         } catch (TException e) {
 
             throw new IntroductionNovelChaptersException
@@ -68,6 +113,10 @@ public class VipNovelServiceImpl implements VipNovelService ,Runnable{
             try {
 
                 chapters = NovelClientUtil.getNovelChapters(novelUrl);
+                introductionDiv = new IntroductionDiv();
+
+                introductionDiv.setIntroductionNovel(introductionNovel);
+                introductionDiv.setNovelChapters(chapters);
 
             } catch (TTransportException e1) {
                 e1.printStackTrace();
@@ -77,11 +126,7 @@ public class VipNovelServiceImpl implements VipNovelService ,Runnable{
             e.printStackTrace();
         }
 
-        return chapters;
+        return introductionDiv;
     }
 
-    @Override
-    public void run() {
-
-    }
 }
