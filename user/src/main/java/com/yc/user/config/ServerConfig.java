@@ -1,11 +1,8 @@
-package com.yc.novelclient.config;
+package com.yc.user.config;
 
-import com.yc.novelclient.filter.UserFilter;
+import com.yc.user.flter.UserFilter;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-
-import java.util.Arrays;
 
 /**
  *
@@ -24,7 +21,7 @@ public class ServerConfig {
 
         registrationBean.setFilter(new UserFilter());
 
-        registrationBean.addUrlPatterns("/vipReadNovelChapter.n","/vipNovelChapters.n","/userReadNovelChapter.n","/userNovelChapters.n");
+        registrationBean.addUrlPatterns("/userInfo.u");
 
         return registrationBean;
     }

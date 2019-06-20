@@ -305,4 +305,18 @@ public class UserController {
 		return "redirect:chongzhi.html?uid="+2+"&code="+1;
 	}
 
+	@ResponseBody
+	@RequestMapping("/userInfo.u")
+	public User getUserInfo(long uid){
+		User user = null;
+
+		user = userService.selUserByUid(uid);
+
+		if(user!=null){
+			user.setPassword("");
+		}
+
+		return user;
+	}
+
 }

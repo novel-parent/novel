@@ -34,11 +34,15 @@
 	var localUrl = window.location.search
 
 	var url = ''
+	var notUrl =''
 
 	if (localUrl == null || localUrl == '') {
 
+	    alert("无法访问......请先登录!!!!!!")
+	    window.location.href="http//127.0.0.1/login.html"
 	} else {
 		url = localUrl.substring(1)
+		notUrl = url
 		url = '&' + url
 	}
 
@@ -72,14 +76,13 @@
 			+ "' title='完本小说'>完本小说</a></li>"
 
 			 var html='';
-				html+='<a class="list-group-item" href="userinfo.html?uid='+uid+'"><i class="fa fa-user fa-fw"></i>会员信息</a>';
-				html+=' <a class="list-group-item" href="userbooks.html?uid='+uid+'"><i class="fa fa-book fa-fw"></i>我的书架</a>';
-				html+=' <a class="list-group-item" href="useredit.html?uid='+uid+'"><i class="fa fa-edit fa-fw"></i>修改资料</a>';
-				html+='<a class="list-group-item" href="passedit.html?uid='+uid+'"><i class="fa fa-key fa-fw"></i>修改密码</a>';
-				html+=' <a class="list-group-item" href="userboxes.html?uid='+uid+'"><i class="fa fa-envelope fa-fw"></i>收件箱</a>';
-				html+=' <a class="list-group-item" href="userboxes.html?uid='+uid+'"><i class="fa fa-envelope fa-fw"></i>发件箱</a>';
-				html+=' <a class="list-group-item" href="sendmessage.html?uid='+uid+'"><i class="fa fa-envelope fa-fw"></i>发信息给管理员</a>';
-				html+=' <a class="list-group-item" href="chongzhi.html?uid='+uid+'"><i class="fa fa-book fa-fw"></i>充值中心</a>';
+				html+='<a class="list-group-item" href="userinfo.html?'+notUrl+'"><i class="fa fa-user fa-fw"></i>会员信息</a>';
+				html+=' <a class="list-group-item" href="userbooks.html?'+notUrl+'"><i class="fa fa-book fa-fw"></i>我的书架</a>';
+				html+=' <a class="list-group-item" href="useredit.html?'+notUrl+'"><i class="fa fa-edit fa-fw"></i>修改资料</a>';
+				html+='<a class="list-group-item" href="passedit.html?'+notUrl+'"><i class="fa fa-key fa-fw"></i>修改密码</a>';
+				html+=' <a class="list-group-item" href="userboxes.html?'+notUrl+'"><i class="fa fa-envelope fa-fw"></i>收件箱</a>';
+				html+=' <a class="list-group-item" href="sendmessage.html?'+notUrl+'"><i class="fa fa-envelope fa-fw"></i>发信息给管理员</a>';
+				html+=' <a class="list-group-item" href="chongzhi.html?'+notUrl+'"><i class="fa fa-book fa-fw"></i>充值中心</a>';
 				html+='<a class="list-group-item" href="#" onclick="exitLogin()"><i class="fa fa-power-off fa-fw"></i>退出登录</a>';
 			
 			
@@ -115,7 +118,7 @@
 				
 				function msghead(){
 					var html='';
-					html+='<form action="https://www.biqukan.cc/message.php?box=outbox" method="post" name="checkform" id="checkform">';
+					html+='<form action="#" method="post" name="checkform" id="checkform">';
 					html+='<div class="panel panel-default">';
 					html+='<div class="panel-heading">';
 					html+='<i class="fa fa-envelope fa-fw"></i>发件箱 <small>（收/发件箱共允许消息数：100，现有消息数：1）</small>';

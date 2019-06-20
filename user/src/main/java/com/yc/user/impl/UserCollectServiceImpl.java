@@ -1,11 +1,14 @@
 package com.yc.user.impl;
 
+import com.yc.user.bean.Collect;
 import com.yc.user.mapper.UserCollectMapper;
 import com.yc.user.myexception.CollectException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.yc.user.service.UserCollectService;
 import util.DateUtil;
+
+import java.util.List;
 
 /**
  * @author LX
@@ -17,15 +20,11 @@ public class UserCollectServiceImpl implements UserCollectService {
     @Autowired
     private UserCollectMapper userCollectMapper;
 
-    /**
-     * 用戶 收藏小說
-     * @param uid  用户id
-     * @param nid  小说id
-     * @return
-     */
+
+    @Override
     public int insCollectNovel(long uid, long nid) throws CollectException {
 
-        int index = 0;
+        int index = 0 ;
 
         try {
             index = userCollectMapper.insCollectNovel(uid, nid, DateUtil.getDate());
@@ -37,14 +36,17 @@ public class UserCollectServiceImpl implements UserCollectService {
         return index;
     }
 
-    /**
-     * 用户收藏小说章节
-     * @param uid
-     * @param nid
-     * @param cid
-     * @param novelChapterName
-     * @return
-     */
+    @Override
+    public List<Collect> selUserCollectList(long uid) {
+
+        List<Collect> collectList = null ;
+
+        collectList = userCollectMapper.selUserCollectList(uid);
+
+        return collectList;
+    }
+
+    @Override
     public int insCollectNovelChapter(long uid, long nid, long cid, String novelChapterName) throws CollectException {
 
         int index = 0;
