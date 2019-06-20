@@ -3,13 +3,12 @@ package com.yc.redis.listener;
 import org.springframework.data.redis.connection.Message;
 import org.springframework.data.redis.listener.KeyExpirationEventMessageListener;
 import org.springframework.data.redis.listener.RedisMessageListenerContainer;
-import org.springframework.stereotype.Component;
 
 /**
  * @author LX
  * @date 2019/6/14 - 11:37
  */
-@Component
+//@Component
 public class RedisListener extends KeyExpirationEventMessageListener {
 
     final String userKey = "user:";

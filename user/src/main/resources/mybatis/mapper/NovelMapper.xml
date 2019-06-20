@@ -9,4 +9,8 @@
         SELECT nid ,novelName FROM novel WHERE nid = #{nid}
     </select>
 
+    <select id="selectNovelByName" resultType="com.yc.user.bean.Novel">
+        select nid,novelName,url,author from novel where novelName=#{novelName}
+    </select>
+
 </mapper>

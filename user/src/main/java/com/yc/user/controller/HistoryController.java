@@ -2,12 +2,12 @@ package com.yc.user.controller;
 
 import com.yc.user.bean.HistorySearch;
 import com.yc.user.myexception.SearchHistoryException;
+import com.yc.user.service.HistoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import com.yc.user.service.HistoryService;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.UnsupportedEncodingException;

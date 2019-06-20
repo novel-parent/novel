@@ -12,6 +12,6 @@ public class MyspringConfig extends WebMvcConfigurerAdapter {
     private MyInterceptor myInterceptor;
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(myInterceptor).addPathPatterns("/**.r");
+        registry.addInterceptor(myInterceptor).addPathPatterns("/**");
     }
 }

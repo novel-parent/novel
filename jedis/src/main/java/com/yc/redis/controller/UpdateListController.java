@@ -33,5 +33,4 @@ public class UpdateListController {
     public void updateRecommendList(String bookName){
         getListService.updateRecommendList(bookName);
     }
-
 }

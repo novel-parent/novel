@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.Map;
 
 /**
@@ -19,7 +20,8 @@ public class SearchListController {
      * 获取搜索排行榜前30
      */
     @RequestMapping("/getSearchList.r")
-    public Map<String,Object> getSearchList(){
+    public Map<String,Map> getSearchList(HttpServletResponse resp){
+        resp.setHeader("Access-Control-Allow-Origin","*");
         return getListService.getSearchList();
     }
 
@@ -27,7 +29,8 @@ public class SearchListController {
      * 获取收藏排行榜前30
      */
     @RequestMapping("/getConlectionList.r")
-    public Map<String,Object> getConlectionList(){
+    public Map<String,Map> getConlectionList(HttpServletResponse resp){
+        resp.setHeader("Access-Control-Allow-Origin","*");
         return getListService.getConlectionList() ;
     }
 
@@ -35,7 +38,8 @@ public class SearchListController {
      * 获取推荐排行榜前30
      */
     @RequestMapping("/getRecommendList.r")
-    public Map<String,Object> getRecommendList(){
+    public Map<String,Map> getRecommendList(HttpServletResponse resp){
+        resp.setHeader("Access-Control-Allow-Origin","*");
         return getListService.getRecommendList();
     }
 
@@ -43,7 +47,9 @@ public class SearchListController {
      * 测试
      */
     @RequestMapping("/test.r")
-    public Map<String,Object> getTest(){
-        return getListService.getSearchList();
+    public String getTest(HttpServletResponse resp){
+        resp.setHeader("Access-Control-Allow-Origin","*");
+        getListService.getTest();
+        return "ok";
     }
 }
