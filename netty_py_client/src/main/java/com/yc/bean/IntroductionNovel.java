@@ -1,10 +1,12 @@
 package com.yc.bean;
 
+import java.io.Serializable;
+
 /**
  * @author LX
  * @date 2019/5/2 - 21:08
  */
-public class IntroductionNovel {
+public class IntroductionNovel implements Serializable{
 
     private long nid;
 

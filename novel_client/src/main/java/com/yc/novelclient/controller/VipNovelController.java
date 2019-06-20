@@ -1,7 +1,11 @@
 package com.yc.novelclient.controller;
 
+import com.yc.bean.IntroductionDiv;
+import com.yc.bean.ReadDiv;
+import com.yc.bean.ReadNovel;
 import com.yc.novelclient.MyException.IntroductionNovelChaptersException;
 import com.yc.novelclient.MyException.ReadNovelChapterContextException;
+import com.yc.novelclient.service.VipCacheService;
 import com.yc.novelclient.service.VipNovelService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,36 +23,54 @@ public class VipNovelController {
     @Autowired
     private VipNovelService vipNovelService;
 
-    @ResponseBody
-    @RequestMapping(value = "/vipNovelChapters.n",produces = "text/html; charset=utf-8")
-    public String getNovelChapterList(@RequestParam("nid") long nid,@RequestParam("uid") String uid,@RequestParam(value = "vip") boolean vip){
+    @Autowired
+    private VipCacheService vipCacheService;
 
+    @ResponseBody
+    @RequestMapping(value = "/vipNovelChapters.n",produces = " application/json ; charset=utf-8")
+    public IntroductionDiv getNovelChapterList(@RequestParam("nid") long nid, @RequestParam("uid") String uid, @RequestParam(value = "vip") boolean vip){
+
+
+        long start = System.currentTimeMillis();
+        IntroductionDiv introductionDiv = null ;
         String novelChapters = null;
 
         try {
 
-            novelChapters = vipNovelService.getIntroductionNovelChapters(nid,uid);
+            introductionDiv = vipNovelService.getIntroductionNovelChapters(nid,uid);
         } catch (ReadNovelChapterContextException e) {
             e.printStackTrace();
-        }
-
-        return novelChapters;
-    }
-
-    @ResponseBody
-    @RequestMapping("/vipReadNovelChapter.n")
-    public com.yc.bean.ReadNovel getNovelChapterContext(@RequestParam("nid") long nid,
-                                                        @RequestParam("cid") long cid, @RequestParam("uid") String uid, @RequestParam(value = "vip") boolean vip){
-
-        com.yc.bean.ReadNovel chapterContext = null;
-
-        try {
-
-            chapterContext = vipNovelService.getNovelChapterContext(nid, cid, uid);
         } catch (IntroductionNovelChaptersException e) {
             e.printStackTrace();
         }
 
-        return chapterContext;
+        System.out.println(System.currentTimeMillis()-start);
+        return introductionDiv;
+    }
+
+    @ResponseBody
+    @RequestMapping("/vipReadNovelChapter.n")
+    public ReadDiv getNovelChapterContext(@RequestParam("nid") long nid,
+                                          @RequestParam("cid") String cid, @RequestParam("uid") String uid, @RequestParam(value = "vip") boolean vip){
+
+        ReadDiv readDiv = null;
+        ReadNovel chapterContext = null;
+
+        try {
+
+            readDiv = vipNovelService.getNovelChapterContext(nid, cid, uid);
+        } catch (IntroductionNovelChaptersException e) {
+            e.printStackTrace();
+        } catch (ReadNovelChapterContextException e) {
+            e.printStackTrace();
+        }
+
+        if(readDiv != null){
+
+            String url = readDiv.getIntroductionNovel().getUrl() + readDiv.getReadNovel().getNextChapter() + ".html";
+
+            vipCacheService.getVipNextReadDiv(readDiv.getIntroductionNovel(),  readDiv.getReadNovel().getNextChapter(), url);
+        }
+        return readDiv;
     }
 }

@@ -1,4 +1,4 @@
-import com.yc.thrift.client.UserThriftClient;
+import com.yc.thrift.client.NovelThriftClient;
 import org.apache.thrift.TException;
 import org.apache.thrift.transport.TTransportException;
 import org.junit.Test;
@@ -28,9 +28,9 @@ public class ClientTest {
 
             new Thread(()->{
 
-                UserThriftClient userThriftClient = null;
+                NovelThriftClient userThriftClient = null;
                 try {
-                    userThriftClient = new UserThriftClient();
+                    userThriftClient = new NovelThriftClient();
                 } catch (TTransportException e) {
                     e.printStackTrace();
                 }

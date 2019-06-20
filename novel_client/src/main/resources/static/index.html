@@ -158,6 +158,34 @@
             },
             type:'GET'
         });
+<<<<<<< HEAD
+=======
+
+        /*     推荐榜    */
+      /*  $.ajax({
+                         url:'/novel/HotMonths.n',
+                         success:function(data){
+                         data = - 1
+                         if(data == "-1"){
+                              alter("yonhgu")
+                              window.href="127.0.0.1:80"
+                         }
+                             var results="";
+                             $(data).each(function(index,ele){
+                                 index = parsInt(index)+1;
+                                 results+= "<li class=\"list-group-item\">";
+                                 results+= "<i class=\"topNum\">"+index+"</i>";
+                                 results+= "<a href=\"/introduction.html?nid="+ele.nid+"\" class=\"novelMemory\" title=\""+ele.novelName+"\">"+ele.novelName+"</a>";
+                                 results+= "<small class=\"text-muted\">/ "+ele.author+"</small>";
+                                 results+= "<span class=\"pull-right text-muted\">"+ele.readCount+"</span>";
+                                 results+= "</li>";
+                             });
+                             $('#HotThisMonth').append(results);
+                         }
+
+                     });*/
+
+>>>>>>> 2d3513fff1f6bb1ca15b47ff9e5ad0fd59049669
     });
 
     function getSearchList(){

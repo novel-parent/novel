@@ -16,9 +16,7 @@ import org.springframework.stereotype.Component;
  * @author LX
  * @date 2019/5/14 - 1:56
  */
-@Scope("prototype")
-@Component
-public class UserThriftClient {
+public class NovelThriftClient {
 
     private NovelService.Client client ;
 
@@ -30,9 +28,7 @@ public class UserThriftClient {
 
     private TTransport transport ;
 
-
-
-    public UserThriftClient() throws TTransportException {
+    public NovelThriftClient() throws TTransportException {
 
         transport = new TSocket(host,port);
 
@@ -45,6 +41,8 @@ public class UserThriftClient {
         this.client = new NovelService.Client(tProtocol);
 
         this.readNovel = new ReadNovel();
+
+        System.out.println("创建novelClient客户端");
     }
 
     /**
@@ -79,39 +77,6 @@ public class UserThriftClient {
         this.readNovel.setNovelChapterName(novelChapterContext.getNovelChapterName());
 
         return this.readNovel;
-    }
-
-    /**
-     *   将获取到的  ReadNovel信息 赋值给  传入的ReadNovel
-     *              用的 初始化的client 进行取值的
-     *   此方法一般为  VIP用户 使用自己 的client 的取过一次值得时候 使用
-     *
-     * @param chapterUrl
-     * @param readNovel
-     * @throws TException
-     */
-    public boolean getNovelChapterContextByChapterUrl(String chapterUrl,ReadNovel readNovel) {
-
-        NovelChapterContext novelChapterContext = null;
-        try {
-
-            novelChapterContext = this.client.getNovelChapterContextByChapterUrl(chapterUrl);
-
-        } catch (TException e) {
-
-            e.printStackTrace();
-            return false ;
-        }
-
-        this.readNovel.setContext(novelChapterContext.getContext());
-
-        this.readNovel.setLastChapter(novelChapterContext.getLastChapter());
-
-        this.readNovel.setNextChapter(novelChapterContext.getNextChapter());
-
-        this.readNovel.setNovelChapterName(novelChapterContext.getNovelChapterName());
-
-        return true;
     }
 
     public NovelService.Client getClient() {
