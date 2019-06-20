@@ -6,8 +6,10 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.data.redis.cache.RedisCacheManager;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.listener.RedisMessageListenerContainer;
 import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
+import org.springframework.data.redis.serializer.StringRedisSerializer;
 
 /**
  * @author LX
@@ -18,13 +20,24 @@ public class RedisConfig {
 
 //    @Primary
 //    @Bean
+//    public RedisTemplate<Object,Object> redisTemplate(RedisConnectionFactory connectionFactory ){
+//
+//        RedisTemplate<Object,Object> redisTemplate = new RedisTemplate<Object,Object>();
+//        redisTemplate.setConnectionFactory(connectionFactory);
+////        redisTemplate.setKeySerializer(new StringRedisSerializer());
+//        redisTemplate.setValueSerializer(new Jackson2JsonRedisSerializer<Object>(Object.class));
+//        return redisTemplate;
+//    }
 
-    public RedisTemplate<Object,Object> redisTemplate(RedisConnectionFactory connectionFactory ){
+    @Primary
+    @Bean
+    public StringRedisTemplate stringRedisTemplate(RedisConnectionFactory connectionFactory){
 
-        RedisTemplate<Object,Object> redisTemplate = new RedisTemplate<Object,Object>();
-        redisTemplate.setConnectionFactory(connectionFactory);
-        redisTemplate.setDefaultSerializer(new Jackson2JsonRedisSerializer<Object>(Object.class));
-        return redisTemplate;
+        StringRedisTemplate stringRedisTemplate = new StringRedisTemplate();
+        stringRedisTemplate.setConnectionFactory(connectionFactory);
+        stringRedisTemplate.setKeySerializer(new StringRedisSerializer());
+        stringRedisTemplate.setValueSerializer(new Jackson2JsonRedisSerializer<Object>(Object.class));
+        return stringRedisTemplate;
     }
 
     @Bean

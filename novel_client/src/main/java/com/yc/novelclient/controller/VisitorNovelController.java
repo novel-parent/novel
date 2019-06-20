@@ -46,12 +46,10 @@ public class VisitorNovelController {
     @RequestMapping(value = "/novelChapters.n",produces = " application/json ; charset=utf-8")
     public IntroductionDiv getNovelChapterList(@RequestParam("nid") long nid){
 
-        System.out.println(nid);
         IntroductionDiv introductionDiv = null;
         try {
             introductionDiv = visitorNovelService.getIntroductionNovelChapters(nid);
 
-            System.out.println(introductionDiv.getIntroductionNovel());
         } catch (IntroductionNovelChaptersException e) {
 
             e.printStackTrace();

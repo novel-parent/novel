@@ -1,5 +1,7 @@
 package com.yc.novelclient.controller;
 
+import com.yc.bean.IntroductionDiv;
+import com.yc.bean.ReadDiv;
 import com.yc.bean.ReadNovel;
 import com.yc.novelclient.MyException.IntroductionNovelChaptersException;
 import com.yc.novelclient.MyException.ReadNovelChapterContextException;
@@ -22,13 +24,14 @@ public class OrdinaryNovelController {
     private OrdinaryNovelService ordinaryNovelService;
 
     @ResponseBody
-    @RequestMapping(value = "/userNovelChapters.n",produces = "text/html; charset=utf-8")
-    public String getNovelChapterList(@RequestParam("nid") long nid, @RequestParam("uid") String uid){
+    @RequestMapping(value = "/userNovelChapters.n",produces = " application/json ; charset=utf-8")
+    public IntroductionDiv getNovelChapterList(@RequestParam("nid") long nid, @RequestParam("uid") String uid){
 
-        String msg = "-1";
+        long start = System.currentTimeMillis();
+        IntroductionDiv introductionDiv = null;
 
         try {
-            msg = ordinaryNovelService.getIntroductionNovelChapters(nid, uid);
+            introductionDiv = ordinaryNovelService.getIntroductionNovelChapters(nid, uid);
         } catch (TException e) {
 
             e.printStackTrace();
@@ -36,18 +39,21 @@ public class OrdinaryNovelController {
 
             e.printStackTrace();
         }
-        return msg;
+        System.out.println(System.currentTimeMillis()-start);
+        return introductionDiv;
     }
 
     @ResponseBody
     @RequestMapping("/userReadNovelChapter.n")
-    public ReadNovel getNovelChapterContext(@RequestParam("nid") long nid,
-                                            @RequestParam("cid") long cid, @RequestParam("uid") String uid){
+    public ReadDiv getNovelChapterContext(@RequestParam("nid") long nid,
+                                          @RequestParam("cid") long cid, @RequestParam("uid") String uid){
+
+        ReadDiv readDiv = null;
         ReadNovel context = null ;
 
         try {
 
-            context = ordinaryNovelService.getNovelChapterContext(nid, cid, uid);
+            readDiv = ordinaryNovelService.getNovelChapterContext(nid, cid, uid);
         } catch (TException e) {
 
             e.printStackTrace();
@@ -57,6 +63,6 @@ public class OrdinaryNovelController {
         } catch (ReadNovelChapterContextException e) {
             e.printStackTrace();
         }
-        return context;
+        return readDiv;
     }
 }

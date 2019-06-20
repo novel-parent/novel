@@ -20,7 +20,7 @@ public class VipNovelController {
     private VipNovelService vipNovelService;
 
     @ResponseBody
-    @RequestMapping(value = "/vipNovelChapters.n",produces = "text/html; charset=utf-8")
+    @RequestMapping(value = "/vipNovelChapters.n",produces = " application/json ; charset=utf-8")
     public String getNovelChapterList(@RequestParam("nid") long nid,@RequestParam("uid") String uid,@RequestParam(value = "vip") boolean vip){
 
         String novelChapters = null;
