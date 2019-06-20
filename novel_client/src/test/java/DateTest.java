@@ -1,4 +1,5 @@
 import org.junit.Test;
+import util.RedisPoolUtil;
 
 import javax.sound.midi.Soundbank;
 import java.util.Date;
@@ -19,6 +20,8 @@ public class DateTest {
        long t = 45l;
 
         System.out.println(t+"");
+
+        System.out.println( RedisPoolUtil.getJedis().get("vip:1") );
 
     }
 }

@@ -24,16 +24,12 @@ import java.util.concurrent.ExecutorService;
 @Service
 public class VipNovelServiceImpl implements VipNovelService {
 
-    @Autowired
-    private RedisTemplate redisTemplate;
-
     private HashMap<String,VipUserThriftClient> vipUserThriftClientHashMap = VipUtil.vipUserThriftClientHashMap;
 
     @Autowired
     private NovelMapper novelMapper;
 
     private ExecutorService executorService = ThreadPollUtil.executorService;
-
 
     @Override
     public ReadNovel getNovelChapterContext(long nid, long cid, String uid) throws IntroductionNovelChaptersException {
