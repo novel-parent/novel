@@ -179,7 +179,14 @@
 
     });
 
-
+    function getSearchList(){
+        $.post()(
+            "localhost:60/test.r",
+            function(data){
+                alert(data);
+            }
+        );
+    }
 
     // function searchLiOnclick(data){
     //
@@ -362,7 +369,7 @@
             </span>
             <ul class="nav nav-tabs" role="tablist">
                 <li role="presentation" class="active">
-                    <a href="https://www.biqukan.cc/#tab-weekvisit" role="tab"
+                    <a href="" role="tab" onclick="getSearchList()"
                                                           data-toggle="tab">本月热门</a>
                 </li>
 

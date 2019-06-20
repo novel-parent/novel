@@ -2,6 +2,7 @@ package com.yc.redis.controller;
 
 import com.yc.redis.service.GetListService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -42,8 +43,8 @@ public class SearchListController {
     /**
      * 测试
      */
-    @RequestMapping("/test.r")
-    public Map<String,Object> getTest(){
-        return getListService.getSearchList();
+    @PostMapping("/test.r")
+    public String getTest(){
+        return "ok";
     }
 }
