@@ -34,6 +34,7 @@ public class UserFilter implements Filter {
             System.out.println(System.currentTimeMillis()-start);
             return;
         }
+        jedis.expire("user:"+uid, 30*60);
 
         jedis.close();
         System.out.println(System.currentTimeMillis()-start);

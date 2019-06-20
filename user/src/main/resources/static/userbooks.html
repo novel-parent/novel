@@ -93,6 +93,39 @@
 			
 			
 	$(function() {
+
+
+	$.ajax({
+    		url : "/userInfo.u?"+notUrl,
+    		type : 'GET',
+    		success : function(data) {
+
+    		    if(data =='-1' ){
+    		        alert("该用户还没登录,或者用户信息过期,请重新登陆")
+    		         window.location.href = "/login.html"
+    		    }else if( data =='' || data ==null){
+    		        alert("该用户信息异常,请重新登陆")
+    		        window.location.href = "/login.html"
+    		    }
+
+    		    var result = ''
+
+    		    result+="<li><a href='/userBooks.html?"+url+"' title='我的书架'><i class='fa fa-book fa-fw'></i>我的书架</a></li>"
+                result+="<li class='dropdown'><a class='dropdown-toggle'"
+                result+="data-toggle='dropdown'><i class='fa fa-user fa-fw'></i>"+data.username+"<span"
+                result+="class='caret'></span></a>"
+                result+="<ul class='dropdown-menu' role='menu'>"
+                result+="<li><a href='/userinfo.html?'"+url+""
+                result+="title='个人资料'><i class='fa fa-info fa-fw'></i>个人资料</a></li>"
+                result+="<li><a href='/userboxes.html?"+url+"'"
+                result+="title='站内消息'><i class='fa fa-envelope fa-fw'></i>站内消息</a></li>"
+                result+="<li><a href='#' title='退出登录'><i"
+                result+="class='fa fa-power-off fa-fw'></i>退出登录</a></li>"
+                result+="</ul></li>"
+                $('#userInfo').append(result)
+    		}
+    	});
+
 		$('#titleLi').append(result);
 		$("#headerContent").append(html);
 		
@@ -212,20 +245,8 @@
 				role="navigation" id="nav-header">
 				<ul class="nav navbar-nav" id="titleLi">
 				</ul>
-				<ul class="nav navbar-nav navbar-right">
-					<li><a href="userbooks.html" title="我的书架"><i
-							class="fa fa-book fa-fw"></i>我的书架</a></li>
-					<li class="dropdown"><a class="dropdown-toggle"
-						data-toggle="dropdown"><i class="fa fa-user fa-fw"></i>jiuhao<span
-							class="caret"></span></a>
-						<ul class="dropdown-menu" role="menu">
-							<li><a href="userinfo.html?uid=1" title="个人资料"><i
-									class="fa fa-info fa-fw"></i>个人资料</a></li>
-							<li><a href="sendmessage.html" title="站内消息"><i
-									class="fa fa-envelope fa-fw"></i>站内消息</a></li>
-							<li><a href="exitlogin.u" title="退出登录" onclick="exit()"><i
-									class="fa fa-power-off fa-fw"></i>退出登录</a></li>
-						</ul></li>
+				<ul class="nav navbar-nav navbar-right" id="userInfo">
+
 
 				</ul>
 			</nav>
