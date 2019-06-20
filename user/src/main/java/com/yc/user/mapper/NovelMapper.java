@@ -1,5 +1,6 @@
 package com.yc.user.mapper;
 
+import com.yc.user.bean.Novel;
 import com.yc.user.bean.SearchHistoryNovel;
 import org.apache.ibatis.annotations.Param;
 
@@ -10,4 +11,7 @@ import org.apache.ibatis.annotations.Param;
 public interface NovelMapper {
 
     SearchHistoryNovel selForSearchHistoryNovel(@Param("nid") long nid);
+
+    Novel selectNovelByName(@Param("novelName")String novelName);
+
 }

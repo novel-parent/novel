@@ -1,19 +1,29 @@
 package com.yc.user.service;
 
+import com.yc.user.bean.Novel;
+import com.yc.user.mapper.NovelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ZSetOperations;
 import org.springframework.stereotype.Service;
 
-import java.util.Iterator;
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 @Service
 public class GetListService {
+
     @Autowired
     private RedisTemplate redisTemplate;
+    @Autowired
+    private NovelMapper novelMapper;
+
+    public String addNoveltolist(String key,String novelName,double db){
+        Novel nv=novelMapper.selectNovelByName(novelName);
+        Set<Novel> set=new HashSet<Novel>();
+        set.add(nv);
+        redisTemplate.opsForZSet().add(key,set,db);
+        return "添加成功";
+    }
 
     /**
      * 获取搜索排行榜前30

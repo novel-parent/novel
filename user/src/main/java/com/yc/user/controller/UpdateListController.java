@@ -3,6 +3,7 @@ package com.yc.user.controller;
 import com.yc.user.service.GetListService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Map;
@@ -43,6 +44,14 @@ public class UpdateListController {
     @RequestMapping("/getSearchList.r")
     public Map<String,Object> getSearchList(){
         return getListService.getSearchList();
+    }
+
+    /**
+     * 向redis添加小说，有记录
+     */
+    @RequestMapping("snovel")
+    public String addNoveltolist(String novelName,@RequestParam("db") double db){
+        return getListService.addNoveltolist("Ranking:conlection",novelName,db);
     }
 
 }

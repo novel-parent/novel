@@ -19,7 +19,7 @@ public class GetListService {
      * 获取搜索排行榜前30
      * Ranking:search
      */
-    public Map<String,Object> getSearchList(){
+    public Map<String,Map> getSearchList(){
     //    Set<String> set=redisTemplate.opsForZSet().reverseRangeByScore("Ranking:search",0,99999999,0,30);
         Set<ZSetOperations.TypedTuple<Object>> set2=redisTemplate.opsForZSet().reverseRangeByScoreWithScores("Ranking:search",0,99999999,0,30);
         return SettoMap(set2);
@@ -39,7 +39,7 @@ public class GetListService {
      * 获取收藏排行榜前30
      * Ranking:conlection
      */
-    public Map<String,Object> getConlectionList(){
+    public Map<String,Map> getConlectionList(){
         Set<ZSetOperations.TypedTuple<Object>> set=redisTemplate.opsForZSet().reverseRangeByScoreWithScores("Ranking:conlection",0,99999999,0,30);
         return SettoMap(set);
     }
@@ -58,7 +58,7 @@ public class GetListService {
      * 获取推荐排行榜前30
      * Ranking:recommend
      */
-    public Map<String,Object> getRecommendList(){
+    public Map<String,Map> getRecommendList(){
         Set<ZSetOperations.TypedTuple<Object>> set=redisTemplate.opsForZSet().reverseRangeByScoreWithScores("Ranking:recommend",0,99999999,0,30);
         return SettoMap(set);
     }
@@ -76,30 +76,33 @@ public class GetListService {
     /**
      * 将ZSetOperations.TypedTuple<Object> 转为Map<String,Object>键值对
      */
-    public Map<String,Object> SettoMap(Set<ZSetOperations.TypedTuple<Object>> set){
-        Iterator i=set.iterator();
-        Map<String,Object> map=new LinkedHashMap<String, Object>();
-        while (i.hasNext()){
-            ZSetOperations.TypedTuple<Object> typedTuple = (ZSetOperations.TypedTuple<Object> )i.next();
-            Object value = typedTuple.getValue();
+    public Map<String,Map> SettoMap(Set<ZSetOperations.TypedTuple<Object>> set){
+        Map<String,Map> M=new LinkedHashMap<String, Map>();
+        Iterator it=set.iterator();
+        while (it.hasNext()){
+            ZSetOperations.TypedTuple<Object> typedTuple = (ZSetOperations.TypedTuple<Object> )it.next();
+            List<Map> value =  (List<Map>) typedTuple.getValue();
             String score = ""+typedTuple.getScore();
-            map.put(score,value);
+            M.put(score,value.get(0));
         }
-        return map;
+        return M;
     }
 
     /**
      * 测试
      */
-    public Double getTest(){
-        ///////取0—9999999范围内的小到大，0开始的前2个值
-        Set<String> set=redisTemplate.opsForZSet().rangeByScore("z1",0,99999999,0,2);
-        ///////取0—9999999范围内的大到小，0开始的前2个值
-        set=redisTemplate.opsForZSet().reverseRangeByScore("z1",0,99999999,0,2);
-        ////// 返回指定元素的分数
-        Double db=redisTemplate.opsForZSet().score("z1","斗罗大陆");
-
-        return db;
+    public Map<String,Map> getTest(){
+        Map<String,Map> M=new LinkedHashMap<String, Map>();
+        Set<ZSetOperations.TypedTuple<Object>> set=redisTemplate.opsForZSet().reverseRangeByScoreWithScores("Ranking:search",0,99999999,0,30);
+        Iterator<ZSetOperations.TypedTuple<Object>> it=set.iterator();
+        while(it.hasNext()){
+            ZSetOperations.TypedTuple<Object> typedTuple = (ZSetOperations.TypedTuple<Object> )it.next();
+            List<Map> value =  (List<Map>) typedTuple.getValue();
+            System.err.println(value.get(0).get("novelName"));
+            String score = ""+typedTuple.getScore();
+            M.put(score,value.get(0));
+        }
+        return M;
     }
 
 }
