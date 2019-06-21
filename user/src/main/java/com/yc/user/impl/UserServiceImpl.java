@@ -12,6 +12,8 @@ import com.yc.user.myexception.LoginException;
 import com.yc.user.myexception.MyException;
 import com.yc.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import redis.clients.jedis.Jedis;
 
@@ -45,6 +47,7 @@ public class UserServiceImpl implements UserService {
 		return bl;
 	}
 
+	@CacheEvict(cacheNames = "userInfo",key = "uid")
 	@Override
 	public void changeUserEdit(long uid, String email, String sex, String qq) throws MyException {
 		////////////////////邮箱验证
@@ -192,6 +195,12 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public Vip findUserIsOrNotVip(long uid) {
 		return userMapper.findUserIsOrNotVip(uid);
+	}
+
+	@Cacheable(cacheNames = "userInfo",key = "#uid")
+	@Override
+	public User selUserByUid(long uid) {
+		return userMapper.selUserByUid(uid);
 	}
 
 	@Override

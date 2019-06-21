@@ -43,4 +43,11 @@ public interface UserService {
 
 	int UpdateUsersVip(long parseLong, int parseInt, Vip vip);
 
+	/**
+	 *      通过uid  得到用户的基本信息
+	 * @param uid
+	 * @return
+	 */
+	User selUserByUid(long uid);
+
 }

@@ -15,4 +15,16 @@
         INSERT INTO collect(uid,nid,cid,chapterName,cTimes) VALUES (#{uid},#{nid},#{cid},#{novelChapterName},#{cTimes})
 
     </insert>
+
+    <resultMap id="myCollectListMap" type="com.yc.user.bean.Collect">
+        <id property="coid" column="coid"></id>
+        <result property="nid" column="nid"></result>
+
+        <association property="searchHistoryNovel" column="nid" select="com.yc.user.mapper.NovelMapper.selForSearchHistoryNovel"></association>
+    </resultMap>
+
+    <select id="selUserCollectList" resultMap="myCollectListMap">
+        SELECT * FROM collect WHERE uid = #{uid}
+
+    </select>
 </mapper>

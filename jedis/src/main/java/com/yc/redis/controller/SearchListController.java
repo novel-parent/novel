@@ -1,11 +1,13 @@
 package com.yc.redis.controller;
 
+import com.yc.redis.bean.CollectDiv;
 import com.yc.redis.service.GetListService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -28,10 +30,10 @@ public class SearchListController {
     /**
      * 获取收藏排行榜前30
      */
-    @RequestMapping("/getConlectionList.r")
-    public Map<String,Map> getConlectionList(HttpServletResponse resp){
+    @RequestMapping("/getCollectionList.r")
+    public List<CollectDiv> getCollectionList(HttpServletResponse resp){
         resp.setHeader("Access-Control-Allow-Origin","*");
-        return getListService.getConlectionList() ;
+        return getListService.getCollectionList("read") ;
     }
 
     /**

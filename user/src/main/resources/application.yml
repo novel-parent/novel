@@ -3,7 +3,7 @@ spring:
     username: root
     password: a
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/novel
+    url: jdbc:mysql://localhost:3306/novel?useSSL=true
   redis:
     host: 106.14.162.109
     port: 6379

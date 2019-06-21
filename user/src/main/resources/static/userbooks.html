@@ -30,27 +30,30 @@
 
 	var rowurl = localUrl.substring(1);
 	var url = ''
+	var notUrl =''
 
 	if (localUrl == null || localUrl == '') {
 
 	} else {
 		url = localUrl.substring(1)
+		notUrl=url
 		url = '&' + url
 	}
 
 	 var uid=window.location.search.substring(5,6);
-		
+
 	 var html='';
-		html+='<a class="list-group-item" href="userinfo.html?uid='+uid+'"><i class="fa fa-user fa-fw"></i>会员信息</a>';
-		html+=' <a class="list-group-item" href="userbooks.html?uid='+uid+'"><i class="fa fa-book fa-fw"></i>我的书架</a>';
-		html+=' <a class="list-group-item" href="useredit.html?uid='+uid+'"><i class="fa fa-edit fa-fw"></i>修改资料</a>';
-		html+='<a class="list-group-item" href="passedit.html?uid='+uid+'"><i class="fa fa-key fa-fw"></i>修改密码</a>';
-		html+=' <a class="list-group-item" href="userboxes.html?uid='+uid+'"><i class="fa fa-envelope fa-fw"></i>收件箱</a>';
-		html+=' <a class="list-group-item" href="userboxes.html?uid='+uid+'"><i class="fa fa-envelope fa-fw"></i>发件箱</a>';
-		html+=' <a class="list-group-item" href="sendmessage.html?uid='+uid+'"><i class="fa fa-envelope fa-fw"></i>发信息给管理员</a>';
-		html+=' <a class="list-group-item" href="chongzhi.html?uid='+uid+'"><i class="fa fa-book fa-fw"></i>充值中心</a>';
-		html+='<a class="list-group-item" href="#" onclick="exitLogin()"><i class="fa fa-power-off fa-fw"></i>退出登录</a>';
-		
+		 var html='';
+        var html='';
+        html+='<a class="list-group-item" href="userinfo.html?'+notUrl+'"><i class="fa fa-user fa-fw"></i>会员信息</a>';
+        html+=' <a class="list-group-item" href="userbooks.html?'+notUrl+'"><i class="fa fa-book fa-fw"></i>我的书架</a>';
+        html+=' <a class="list-group-item" href="useredit.html?'+notUrl+'"><i class="fa fa-edit fa-fw"></i>修改资料</a>';
+        html+='<a class="list-group-item" href="passedit.html?'+notUrl+'"><i class="fa fa-key fa-fw"></i>修改密码</a>';
+        html+=' <a class="list-group-item" href="userboxes.html?'+notUrl+'"><i class="fa fa-envelope fa-fw"></i>收件箱</a>';
+        html+=' <a class="list-group-item" href="sendmessage.html?'+notUrl+'"><i class="fa fa-envelope fa-fw"></i>发信息给管理员</a>';
+        html+=' <a class="list-group-item" href="chongzhi.html?'+notUrl+'"><i class="fa fa-book fa-fw"></i>充值中心</a>';
+        html+='<a class="list-group-item" href="#" onclick="exitLogin()"><i class="fa fa-power-off fa-fw"></i>退出登录</a>';
+
 	
 	
 	
@@ -90,6 +93,39 @@
 			
 			
 	$(function() {
+
+
+	$.ajax({
+    		url : "/userInfo.u?"+notUrl,
+    		type : 'GET',
+    		success : function(data) {
+
+    		    if(data =='-1' ){
+    		        alert("该用户还没登录,或者用户信息过期,请重新登陆")
+    		         window.location.href = "/login.html"
+    		    }else if( data =='' || data ==null){
+    		        alert("该用户信息异常,请重新登陆")
+    		        window.location.href = "/login.html"
+    		    }
+
+    		    var result = ''
+
+    		    result+="<li><a href='/userBooks.html?"+url+"' title='我的书架'><i class='fa fa-book fa-fw'></i>我的书架</a></li>"
+                result+="<li class='dropdown'><a class='dropdown-toggle'"
+                result+="data-toggle='dropdown'><i class='fa fa-user fa-fw'></i>"+data.username+"<span"
+                result+="class='caret'></span></a>"
+                result+="<ul class='dropdown-menu' role='menu'>"
+                result+="<li><a href='/userinfo.html?'"+url+""
+                result+="title='个人资料'><i class='fa fa-info fa-fw'></i>个人资料</a></li>"
+                result+="<li><a href='/userboxes.html?"+url+"'"
+                result+="title='站内消息'><i class='fa fa-envelope fa-fw'></i>站内消息</a></li>"
+                result+="<li><a href='#' title='退出登录'><i"
+                result+="class='fa fa-power-off fa-fw'></i>退出登录</a></li>"
+                result+="</ul></li>"
+                $('#userInfo').append(result)
+    		}
+    	});
+
 		$('#titleLi').append(result);
 		$("#headerContent").append(html);
 		
@@ -107,7 +143,7 @@
 			window.location.href = "/login.html"
 		} else {
 					$.ajax({
-						url : '/noveluser/search.u',
+						url : '/userCollectList.u',
 						data : {
 							"uid" : uid
 						},
@@ -119,48 +155,24 @@
 							var last = ''
 							var num = ''
 							last += " <tr><td colspan=\"6\">选中项目<select name=\"newclassid\" id=\"newclassid\" class=\"select\">"
-							last += " <option value=\"-1\" selected=\"selected\">移出书架</option><option value=\"0\">移到默认书架</option>"
-							last += " <option value=\"1\">移到第1组书架</option><option value=\"2\">移到第2组书架</option><option value=\"3\">移到第3组书架</option>"
-							last += " <option value=\"4\">移到第4组书架</option><option value=\"5\">移到第5组书架</option></select><input name=\"btnsubmit\" type=\"button\" value=\"确认\"onclick=\"remBook()\" class=\"btn btn-sm btn-primary\"></td></tr>"
-							$(data)
-									.each(
-											function(index, ele) {
+							last += " <option value=\"-1\" selected=\"selected\">移出书架</option>"
+							last+="<input name=\"btnsubmit\" type=\"submit\" value=\" 确认 \" class=\"btn btn-sm btn-primary\">"
+							$(data).each( function(index, ele) {
 												result += "<tr><td class=\"hidden-xs\"><input type=\"checkbox\" id=\"checkid["+index+"]\" name=\"checkid[]\" value=\"33449\"></td>"
-												result += "<td class=\"even\"><a href=\"http://localhost/novel/introduction.html?nid="
-														+ ele.nid
-														+ "&uid="
-														+ ele.uid
-														+ "&vip=true\" target=\"_blank\">"
-														+ ele.name
+												result += "<td class=\"even\"><a href=\"http://localhost/novel/introduction.html?nid=" + ele.nid +url+ "\" target=\"_blank\">"
+														+ ele.searchHistoryNovel.novelName
 														+ "</a> <span class=\"text-red fs-12\">New</span></td>"
-												result += "<td class=\"odd\"><a href=\"http://localhost/novel/read.html?nid="
-														+ ele.nid
-														+ "&cid="
-														+ ele.cid
-														+ "&uid="
-														+ ele.uid
-														+ "&vip=true\" target=\"_blank\">"
-														+ ele.nid + "</a></td>"
-												result += "<td class=\"even\"><a href=\"http://localhost/novel/read.html?nid="
-														+ ele.nid
-														+ "&cid="
-														+ ele.cid
-														+ "&uid="
-														+ ele.uid
-														+ "&vip=true\" target=\"_blank\">"
-														+ ele.chapName
+												result += "<td class=\"even\"><a href=\"http://localhost/novel/read.html?nid=" + ele.nid + "&cid=" + ele.cid + url + "\" target=\"_blank\">"
+														+ ele.chapterName
 														+ "</a></td>"
-												result += "<td class=\"hidden-xs\" align=\"center\">"
-														+ ele.ctimes + " </td>"
-												result += "<td class=\"text-danger\" align=\"center\"><a class=\"text-danger\"><a class=\"text-danger\" href=\"javascript:if(confirm('确实要将本书移出书架么？')) document.location='/noveluser/userbooks.html?uid="
-														+ ele.uid
-														+ "'\"><i class=\"fa fa-times-circle fa-fw\"></i></a></td></tr>"
+												result += "<td class=\"hidden-xs\" >"
+														+ ele.cTimes + " </td>"
+												result += "<td class=\"text-danger\" align=\"center\"><a class=\"text-danger\"><a class=\"text-danger\" ><i class=\"fa fa-times-circle fa-fw\"></i></a></td></tr>"
 												i++
 											})
 							num += "<div class=\"panel-heading\"><i class=\"fa fa-book fa-fw\"></i>我的书架 <small>您的书架可收藏 20 本，已收藏 "
 									+ i + " 本，本组有 " + i + " 本。</small>"
-							num += "<select name=\"classlist\" class=\"pull-right\"><option value=\"0\" selected=\"selected\">默认书架</option> <option value=\"1\">第1组书架</option>"
-							num += "<option value=\"2\">第2组书架</option><option value=\"3\">第3组书架</option><option value=\"4\">第4组书架</option><option value=\"5\">第5组书架</option></select>"
+							num += "<select name=\"classlist\" class=\"pull-right\"><option value=\"0\" selected=\"selected\">默认书架</option> </select>"
 							$("#num").append(num);
 							$("#collect").append(result);
 							$("#collect").append(last);
@@ -233,20 +245,8 @@
 				role="navigation" id="nav-header">
 				<ul class="nav navbar-nav" id="titleLi">
 				</ul>
-				<ul class="nav navbar-nav navbar-right">
-					<li><a href="userbooks.html" title="我的书架"><i
-							class="fa fa-book fa-fw"></i>我的书架</a></li>
-					<li class="dropdown"><a class="dropdown-toggle"
-						data-toggle="dropdown"><i class="fa fa-user fa-fw"></i>jiuhao<span
-							class="caret"></span></a>
-						<ul class="dropdown-menu" role="menu">
-							<li><a href="userinfo.html?uid=1" title="个人资料"><i
-									class="fa fa-info fa-fw"></i>个人资料</a></li>
-							<li><a href="sendmessage.html" title="站内消息"><i
-									class="fa fa-envelope fa-fw"></i>站内消息</a></li>
-							<li><a href="exitlogin.u" title="退出登录" onclick="exit()"><i
-									class="fa fa-power-off fa-fw"></i>退出登录</a></li>
-						</ul></li>
+				<ul class="nav navbar-nav navbar-right" id="userInfo">
+
 
 				</ul>
 			</nav>
@@ -269,27 +269,11 @@
 							<th width="5%" class="hidden-xs"><input type="checkbox"
 								id="checkall" name="checkall" value="checkall"
 								onclick="javascript: for (var i=0;i<this.form.elements.length;i++){ if (this.form.elements[i].name != 'checkkall') this.form.elements[i].checked = form.checkall.checked; }"></th>
-							<th width="21%">文章名称</th>
-							<th width="30%">小说id</th>
+							<th width="30%">文章名称</th>
 							<th width="30%">书签</th>
-							<th width="7%" class="hidden-xs">更新</th>
+							<th width="25%"  align="center" class="hidden-xs">操作时间</th>
 							<th width="7%">操作</th>
 						</tr>
-
-						<tr>
-							<td class="text-danger" align="center"></td>
-							<td class="hidden-xs">
-                            <input type="checkbox" id="checkid[]" name="checkid[]" value="33449">    </td>
-                        <td class="even"><a href="https://www.biqukan.cc/book/50686/" target="_blank">都市逍遥仙帝</a> <span class="text-red fs-12">New</span></td>
-                        <td class="odd"><a href="https://www.biqukan.cc/book/50686/32339123.html" target="_blank">第九百六十四章 小老弟，有何指教！</a>
-
-                        </td>
-                        <td class="even"><a href="https://www.biqukan.cc/book/50686/32329734.html" target="_blank">第九百五十九章 紫金葫芦</a></td>
-                        <td class="hidden-xs" align="center">05-15
-                            </td>
-                        <td class="text-danger" align="center"><a class="text-danger"><i class="fa fa-times-circle fa-fw"></i></a></td>
-						</tr>
-
 
 					</tbody>
 				</table>

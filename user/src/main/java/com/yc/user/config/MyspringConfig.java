@@ -6,7 +6,7 @@ import org.springframework.boot.SpringBootConfiguration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
-@SpringBootConfiguration
+//@SpringBootConfiguration
 public class MyspringConfig extends WebMvcConfigurerAdapter {
     @Autowired
     private MyInterceptor myInterceptor;

@@ -18,6 +18,16 @@ public class Collect {
 
     private String chapterName;
 
+    private SearchHistoryNovel searchHistoryNovel;
+
+    public SearchHistoryNovel getSearchHistoryNovel() {
+        return searchHistoryNovel;
+    }
+
+    public void setSearchHistoryNovel(SearchHistoryNovel searchHistoryNovel) {
+        this.searchHistoryNovel = searchHistoryNovel;
+    }
+
     public long getCoid() {
         return coid;
     }

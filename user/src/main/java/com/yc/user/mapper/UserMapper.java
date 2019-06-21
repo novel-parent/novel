@@ -36,4 +36,6 @@ public interface UserMapper {
 
 	int UpdateUsersVip(@Param("uid") long uid,@Param("endTimes") long endTimes);
 
+	User selUserByUid(@Param("uid") long uid);
+
 }

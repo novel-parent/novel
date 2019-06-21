@@ -72,7 +72,10 @@
     <select id="findUserIsOrNotVip" resultType="com.yc.user.bean.Vip">
     	select * from vip where uid=#{uid}
     </select>
-    
+    <select id="selUserByUid" resultType="com.yc.user.bean.User">
+        SELECT * FROM user where uid =#{uid}
+    </select>
+
     <update id="UpdateUsersVip">
     	update vip set endTimes = #{endTimes} where uid = #{uid}
     </update>

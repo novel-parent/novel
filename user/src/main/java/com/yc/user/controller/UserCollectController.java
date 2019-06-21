@@ -1,5 +1,6 @@
 package com.yc.user.controller;
 
+import com.yc.user.bean.Collect;
 import com.yc.user.myexception.CollectException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.yc.user.service.UserCollectService;
 
 import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 
 /**
  * @author LX
@@ -50,6 +52,17 @@ public class UserCollectController {
             e.printStackTrace();
         }
         return index;
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "userCollectList.u")
+    public List<Collect> userCollectList(long uid){
+
+        List<Collect> collectList = null ;
+
+        collectList = userCollectService.selUserCollectList(uid);
+
+        return collectList ;
     }
 
 }

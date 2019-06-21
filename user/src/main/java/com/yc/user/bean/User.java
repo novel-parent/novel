@@ -5,6 +5,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
+import java.io.Serializable;
+
 /**
  * @author LX
  * @date 2019/5/1 - 18:24
@@ -13,7 +15,7 @@ import lombok.experimental.Accessors;
 @Data
 @NoArgsConstructor
 @Accessors(chain=true)
-public class User {
+public class User implements Serializable {
 
 	private long uid;
 
