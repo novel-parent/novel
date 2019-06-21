@@ -1,6 +1,9 @@
 package com.yc.redis.service;
 
+import com.yc.redis.bean.CollectDiv;
+import com.yc.redis.mapper.ListMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.ZSetOperations;
@@ -15,11 +18,18 @@ public class GetListService {
     @Autowired
     private RedisTemplate redisTemplate;
 
+    @Autowired
+    private ListMapper listMapper;
+
     /**
      * 获取搜索排行榜前30
      * Ranking:search
      */
     public Map<String,Map> getSearchList(){
+
+        stringRedisTemplate.opsForZSet().add("search", "斗罗大陆", 1);
+        stringRedisTemplate.opsForZSet().incrementScore("search", "斗罗大陆", 1);
+
     //    Set<String> set=redisTemplate.opsForZSet().reverseRangeByScore("Ranking:search",0,99999999,0,30);
         Set<ZSetOperations.TypedTuple<Object>> set2=redisTemplate.opsForZSet().reverseRangeByScoreWithScores("Ranking:search",0,99999999,0,30);
         return SettoMap(set2);
@@ -39,9 +49,13 @@ public class GetListService {
      * 获取收藏排行榜前30
      * Ranking:conlection
      */
-    public Map<String,Map> getConlectionList(){
-        Set<ZSetOperations.TypedTuple<Object>> set=redisTemplate.opsForZSet().reverseRangeByScoreWithScores("Ranking:conlection",0,99999999,0,30);
-        return SettoMap(set);
+    @Cacheable(cacheNames = "hot",key = "#read",cacheManager = "novelListRedisCacheManager")
+    public List<CollectDiv> getCollectionList(String read){
+
+            // redis 里面没有
+            List<CollectDiv> divs = listMapper.selCollectForHotList();
+
+            return divs;
     }
 
     /**
