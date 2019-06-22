@@ -79,11 +79,11 @@ $(function () {
          }*/
         ajaxType(t1[1],t2[1])
 
-
+alert(uid)
         if(uid!=''){
 
             $.ajax({
-                url:'http://localhost:8080/user/insHistory.u?'+uid+"&key="+encodeURI(t2[1]),
+                url:'http://localhost:100/user/insHistory.u?'+uid+"&key="+encodeURI(t2[1]),
                 error:function(){
                     alert("请求出错.")
                 },
