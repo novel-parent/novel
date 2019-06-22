@@ -77,6 +77,16 @@
     	update vip set endTimes = #{endTimes} where uid = #{uid}
     </update>
     
+    <delete id="deleteFromMsg">
+    	delete from message where id in 
+    	<foreach collection="array" open="("   close=")"  separator=","  item="item" >
+    			#{item}
+    	</foreach>
+    </delete>
+    
+    <delete id="deleteFromMsgByUid">
+    	delete from message where uid = #{uid}
+    </delete>
     
     
 </mapper>

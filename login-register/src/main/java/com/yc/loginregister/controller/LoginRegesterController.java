@@ -90,7 +90,6 @@ public class LoginRegesterController {
 			}catch(AuthenticationException e) {
 				e.printStackTrace();
 			}
-			
 		}
 		
 		

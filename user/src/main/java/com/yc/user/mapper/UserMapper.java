@@ -36,4 +36,8 @@ public interface UserMapper {
 
 	int UpdateUsersVip(@Param("uid") long uid,@Param("endTimes") long endTimes);
 
+	int deleteFromMsg(String[] id);
+
+	int deleteFromMsgByUid(String uid);
+
 }

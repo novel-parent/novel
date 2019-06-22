@@ -213,5 +213,20 @@ public class UserServiceImpl implements UserService {
 		return userMapper.UpdateUsersVip(uid,endTime);
 	}
 
+	@Override
+	public int deleteFromMsg(String mid) {
+		
+		String id[] = mid.split(":");
+		
+		return	userMapper.deleteFromMsg(id);
+		
+	}
+
+	@Override
+	public int deleteFromMsgByUid(String uid) {
+		
+		return userMapper.deleteFromMsgByUid(uid);
+	}
+
 
 }

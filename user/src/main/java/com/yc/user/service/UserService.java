@@ -43,4 +43,8 @@ public interface UserService {
 
 	int UpdateUsersVip(long parseLong, int parseInt, Vip vip);
 
+	int deleteFromMsg(String mid);
+
+	int deleteFromMsgByUid(String uid);
+
 }

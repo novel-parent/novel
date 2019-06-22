@@ -71,6 +71,8 @@
 	result += "<li><a href='/type.html?page=1&state=complete" + url
 			+ "' title='完本小说'>完本小说</a></li>"
 
+			var uid=localUrl.substring(5,6);
+			
 			 var html='';
 				html+='<a class="list-group-item" href="userinfo.html?uid='+uid+'"><i class="fa fa-user fa-fw"></i>会员信息</a>';
 				html+=' <a class="list-group-item" href="userbooks.html?uid='+uid+'"><i class="fa fa-book fa-fw"></i>我的书架</a>';
@@ -103,7 +105,7 @@
 					var html='';
 					for(var i=0;i<data.obj.pageList.length;i++ ){
 						html += '<tr>';
-						html += '<td class="odd" align="center"><input type="checkbox" id="checkid[]" name="checkid[]" value="1327"></td>';
+						html += '<td class="odd" align="center"><input type="checkbox" id="checkid[]" name="checkid[]" value="'+data.obj.pageList[i].id+'"></td>';
 						html += '<td class="even"><span class="hottext">'+data.obj.pageList[i].user.username+'</span></td>';
 						html += '<td class="odd"><a href="https://www.biqukan.cc/messagedetail.php?id=1327">'+data.obj.pageList[i].title+'</a></td>';
 						html += '<td class="even" align="center">'+data.obj.pageList[i].senddate+'</td>';
@@ -151,17 +153,18 @@
 					html+='<li><a id="nextpage" class="ngroup">&gt;&gt;</a></li>';
 					html+='<li><a id="lastpage" class="last">'+data.obj.totalpagenum+'</a></li>';
 					html+='</ul>'; */
+					
+					
 					html+='</form>';
 					return html;
 				}
 				
 				
 				
+				
 				$("#msgblock").empty();
 				var html = '';
 				html+=msghead()+msglist(data)+msgfooter(data);
-				
-				
 				
 				
 				$("#msgblock").append(html);
@@ -176,6 +179,62 @@
 							var html = '';
 							html+=msghead()+msglist(data)+msgfooter(data);
 							$("#msgblock").append(html);
+						}
+					})
+				})
+				
+				$("input[name='delcheck']").on('click',function(){
+					
+					var chkList = $("input[name^='checkid']");
+					var mid='';
+					var allflag=false;
+					
+					for(var i=0;i<chkList.size();i++){
+						
+						var flag = chkList.eq(i).prop('checked');
+						
+						if(flag){
+							allflag=true;
+							mid+=chkList.eq(i).val()+":";
+						}
+					}
+					
+					if(! allflag){
+						alert("请选择消息");
+						return;
+					}
+					
+					$.ajax({
+						url:'deleteFromMsg.u',
+						type:'post',
+						data:'mid='+mid,
+						cache:false,
+						success: function(data){
+							if(data.code != -1){
+								
+								alert(data.msg);
+								window.location.reload();
+								
+							}
+						}
+					})
+					
+				})
+				
+				$("input[ name = 'delall' ]").on('click',function(){
+					alert(1);
+					$.ajax({
+						url:'deleteAllMsg.u',
+						type:'post',
+						data:'uid='+uid,
+						success: function(data){
+							if(data.code != -1){
+								
+								alert(data.msg);
+								
+								window.location.reload();
+								
+							}
 						}
 					})
 				})
@@ -225,6 +284,19 @@
 					})
 				})
 				
+				$.ajax({
+					url:'getuser.u',
+					type:'post',
+					data:'uid='+uid,
+					success: function(data){
+						if(data.code == 1){
+							
+							$('.dropdown-toggle').html(data.obj.username);
+							
+						}
+					}
+				})
+			
 				
 				$("#lastpage").on('click',function(){
 					var p=data.obj.totalpagenum-1
@@ -273,20 +345,6 @@
 
 	}
 	 
-	 
-	 $.ajax({
-			url:'getuser.u',
-			type:'post',
-			data:'uid='+localUrl.substring(5,6),
-			success: function(data){
-				if(data.code == 1){
-					
-					$('.dropdown-toggle').html(data.obj.username);
-					
-				}
-			}
-		})
-			
 </script>
 </head>
 <body>

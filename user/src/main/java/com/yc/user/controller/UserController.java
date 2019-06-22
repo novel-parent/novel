@@ -275,12 +275,16 @@ public class UserController {
 		boolean signVerified = AlipaySignature.rsaCheckV1(params, AlipayConfig.alipay_public_key, AlipayConfig.charset,
 				AlipayConfig.sign_type); // 调用SDK验证签名
 
+		String locuid="";
+		
 		if (signVerified) {
 
 			String tradeno = new String(request.getParameter("out_trade_no").getBytes("ISO-8859-1"), "UTF-8");
 
 			String uid = tradeno.split(":")[0];
 			String type = tradeno.split(":")[1];
+			
+			locuid=uid;
 			// 支付宝交易号
 			/*
 			 * String subject = new
@@ -289,8 +293,6 @@ public class UserController {
 
 			// 付款金额
 			String money = new String(request.getParameter("total_amount").getBytes("ISO-8859-1"), "UTF-8");
-
-			System.out.println(uid + ":===================:" + type + ":================" + money);
 
 			if ("vip".equals(type)) {
 
@@ -310,7 +312,39 @@ public class UserController {
 			}
 		}
 
-		return "redirect:chongzhi.html?uid=" + 2 + "&code=" + 1;
+		return "redirect:chongzhi.html?uid=" + locuid + "&code=" + 1;
+	}
+	
+	@RequestMapping("deleteFromMsg.u")
+	@ResponseBody
+	public Object deleteFromMsgBox(@RequestParam("mid") String mid) {
+		JsonModel jm=new JsonModel();
+		
+		int num = userService.deleteFromMsg(mid);
+		
+		if(num>0) {
+			jm.setCode(num).setMsg("删除成功");
+		}else {
+			jm.setCode(-1).setMsg("系统繁忙请稍后再试!");
+		}
+		
+		return jm;
+	}
+	
+	@RequestMapping("deleteAllMsg.u")
+	@ResponseBody
+	public Object deleteFromMessage(String uid) {
+		JsonModel jm=new JsonModel();
+		
+		int num=userService.deleteFromMsgByUid(uid);
+		
+		if(num>=0) {
+			jm.setCode(num).setMsg("删除成功!");
+		}else {
+			jm.setCode(-1).setMsg("系统繁忙，请稍后再试!");
+		}
+		
+		return jm;
 	}
 
 }
