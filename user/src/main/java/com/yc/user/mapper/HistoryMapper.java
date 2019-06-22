@@ -16,4 +16,6 @@ public interface HistoryMapper {
 
     int insHistory(@Param("uid") long uid,@Param("key") String key);
 
+    HistorySearch selHistoryByKey(@Param("uid") long uid,@Param("key") String key);
+
 }

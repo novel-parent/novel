@@ -5,7 +5,11 @@
 <mapper namespace="com.yc.user.mapper.HistoryMapper">
 
     <select id="selForHistorySearch" resultType="com.yc.user.bean.HistorySearch">
-        SELECT * FROM historysearch WHERE uid = #{uid}
+        SELECT DISTINCT (historySearchName) FROM historysearch WHERE uid = #{uid}
+    </select>
+
+    <select id="selHistoryByKey" resultType="com.yc.user.bean.HistorySearch">
+        SELECT * FROM historysearch WHERE WHERE uid = #{uid} and historySearchName = #{key}
     </select>
 
     <insert id="insHistory" >
