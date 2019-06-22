@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author LX
@@ -18,12 +19,12 @@ public class SearchListController {
     @Autowired
     private GetListService getListService;
     /**
-     * 获取阅读 前6条
+     * 获取热门搜索 前6条
      */
     @RequestMapping("/getSearchHistory.r")
-    public List<String> selSearchHistory(HttpServletResponse resp,Integer uid){
+    public Set<String> selSearchHistory(HttpServletResponse resp, Integer uid){
         resp.setHeader("Access-Control-Allow-Origin","*");
-        return getListService.selSearchHistory(uid);
+        return getListService.selSearchHistory();
     }
 
     /**
@@ -57,8 +58,9 @@ public class SearchListController {
      * 测试
      */
     @RequestMapping("/test.r")
-    public String getTest(HttpServletResponse resp){
+    public String getTest(HttpServletResponse resp,String name){
         resp.setHeader("Access-Control-Allow-Origin","*");
+        getListService.test01(name);
         return "ok";
     }
 }

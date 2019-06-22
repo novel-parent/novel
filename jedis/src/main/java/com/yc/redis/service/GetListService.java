@@ -21,8 +21,9 @@ public class GetListService {
     @Autowired
     private ListMapper listMapper;
 
-    public List<String> selSearchHistory(Integer uid){
-        return listMapper.selSearchHistory(uid);
+    public Set<String> selSearchHistory(){
+        Set<String> list=stringRedisTemplate.opsForZSet().reverseRangeByScore("searchHistory",0,999999999,0,6);
+        return list;
     }
 
     /*  更新搜索排行榜
@@ -57,4 +58,7 @@ public class GetListService {
         return divs;
     }
 
+    public void test01(String key){
+        stringRedisTemplate.opsForZSet().incrementScore("searchHistory",key,1);
+    }
 }

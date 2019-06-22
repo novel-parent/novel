@@ -3,9 +3,10 @@ package com.yc.user.impl;
 import com.yc.user.bean.HistorySearch;
 import com.yc.user.mapper.HistoryMapper;
 import com.yc.user.myexception.SearchHistoryException;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 import com.yc.user.service.HistoryService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
@@ -18,7 +19,8 @@ public class HistoryServiceImpl implements HistoryService {
 
     @Autowired
     private HistoryMapper historyMapper;
-
+    @Autowired
+    private StringRedisTemplate stringRedisTemplate;
     /**
      * 更新用户  输入记录的功能
      * @param uid
@@ -26,9 +28,8 @@ public class HistoryServiceImpl implements HistoryService {
      * @return
      */
     public int insHistory(long uid, String key) {
-
         int index = historyMapper.insHistory(uid, key);
-
+        stringRedisTemplate.opsForZSet().incrementScore("searchHistory",key,1);
         return index;
     }
 

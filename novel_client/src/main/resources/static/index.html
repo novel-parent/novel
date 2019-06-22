@@ -166,8 +166,11 @@
             });
         });
 
-        function getReadList() {
+        function getReadList(num) {
             event.preventDefault();//使a自带的方法失效
+            $("li[name='titleList"+num+"']").addClass("active");
+            $("li[name='titleList"+(num+1)+"']").removeClass("active");
+            $("li[name='titleList"+(num+2)+"']").removeClass("active");
             $('#showList').html("");
             $.ajax({
                 url: "http://localhost:60/getReadList.r",
@@ -189,9 +192,12 @@
             });
         }
 
-        function getConlectionList() {
+        function getConlectionList(num) {
             event.preventDefault();//使a自带的方法失效
             $('#showList').html("");
+            $("li[name='titleList"+(num-1)+"']").removeClass("active");
+            $("li[name='titleList"+num+"']").addClass("active");
+            $("li[name='titleList"+(num+1)+"']").removeClass("active");
             $.ajax({
                 url: "http://localhost:60/getCollectionList.r",
                 success: function (data) {
@@ -212,8 +218,11 @@
             });
         }
 
-        function getRecommendList() {
+        function getRecommendList( num ) {
             event.preventDefault();//使a自带的方法失效
+            $("li[name='titleList"+(num-2)+"']").removeClass("active");
+            $("li[name='titleList"+(num-1)+"']").removeClass("active");
+            $("li[name='titleList"+num+"']").addClass("active");
             $('#showList').html("");
             $.ajax({
                 url: "http://localhost:60/getRecommendList.r",
@@ -410,18 +419,18 @@
                 </div>
             </span>
             <ul class="nav nav-tabs" role="tablist">
-                <li role="presentation" class="active">
-                    <a href="" role="tab" onclick="getReadList()"
+                <li role="presentation" class="active" name="titleList1" >
+                    <a href="" role="tab" onclick="getReadList(1)"
                        data-toggle="tab">本月热门</a>
                 </li>
 
-                <li role="presentation">
-                    <a href="" role="tab" onclick="getConlectionList()"
-                       data-toggle="tab">收藏排行</a>
+                <li role="presentation" name="titleList2" >
+                    <a href="" role="tab" onclick="getConlectionList(2)"
+                       data-toggle="tab" >收藏排行</a>
                 </li>
 
-                <li role="presentation">
-                    <a href="" role="tab" onclick="getRecommendList()"
+                <li role="presentation" name="titleList3" >
+                    <a href="" role="tab" onclick="getRecommendList(3)"
                        data-toggle="tab">网友推荐</a>
                 </li>
 
