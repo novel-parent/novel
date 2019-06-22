@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author LX
@@ -19,30 +18,39 @@ public class SearchListController {
     @Autowired
     private GetListService getListService;
     /**
-     * 获取搜索排行榜前30
+     * 获取阅读 前6条
      */
-    @RequestMapping("/getSearchList.r")
-    public Map<String,Map> getSearchList(HttpServletResponse resp){
+    @RequestMapping("/getSearchHistory.r")
+    public List<String> selSearchHistory(HttpServletResponse resp,Integer uid){
         resp.setHeader("Access-Control-Allow-Origin","*");
-        return getListService.getSearchList();
+        return getListService.selSearchHistory(uid);
     }
 
     /**
-     * 获取收藏排行榜前30
+     * 获取阅读-热门 排行榜前15
+     */
+    @RequestMapping("/getReadList.r")
+    public List<CollectDiv> getReadList(HttpServletResponse resp){
+        resp.setHeader("Access-Control-Allow-Origin","*");
+        return getListService.getReadList("read");
+    }
+
+    /**
+     * 获取收藏排行榜前15
      */
     @RequestMapping("/getCollectionList.r")
     public List<CollectDiv> getCollectionList(HttpServletResponse resp){
         resp.setHeader("Access-Control-Allow-Origin","*");
-        return getListService.getCollectionList("read") ;
+        return getListService.getCollectionList("collection") ;
     }
 
     /**
-     * 获取推荐排行榜前30
+     * 获取推荐排行榜前15
      */
     @RequestMapping("/getRecommendList.r")
-    public Map<String,Map> getRecommendList(HttpServletResponse resp){
+    public List<CollectDiv> getRecommendList(HttpServletResponse resp){
         resp.setHeader("Access-Control-Allow-Origin","*");
-        return getListService.getRecommendList();
+        return getListService.getRecommendList("vote");
     }
 
     /**
@@ -51,7 +59,6 @@ public class SearchListController {
     @RequestMapping("/test.r")
     public String getTest(HttpServletResponse resp){
         resp.setHeader("Access-Control-Allow-Origin","*");
-        getListService.getTest();
         return "ok";
     }
 }

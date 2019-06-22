@@ -6,8 +6,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Map;
-
 @RestController
 public class UpdateListController {
     @Autowired
@@ -18,6 +16,7 @@ public class UpdateListController {
      */
     @RequestMapping("updateSearchList.r")
     public void updateSearchList(String bookName){
+
         getListService.updateSearchList(bookName);
     }
 
@@ -26,6 +25,7 @@ public class UpdateListController {
      */
     @RequestMapping("updateConlectionList.r")
     public void updateConlectionList(String bookName){
+
         getListService.updateConlectionList(bookName);
     }
 
@@ -34,16 +34,8 @@ public class UpdateListController {
      */
     @RequestMapping("updateRecommendList.r")
     public void updateRecommendList(String bookName){
+
         getListService.updateRecommendList(bookName);
-    }
-
-
-    /**
-     * 获取搜索排行榜前30
-     */
-    @RequestMapping("/getSearchList.r")
-    public Map<String,Object> getSearchList(){
-        return getListService.getSearchList();
     }
 
     /**
