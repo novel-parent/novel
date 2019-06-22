@@ -21,36 +21,28 @@ public class GetListService {
     @Autowired
     private ListMapper listMapper;
 
-    /**
-     * 获取搜索排行榜前30
-     * Ranking:search
-     */
-    public Map<String,Map> getSearchList(){
-
-        stringRedisTemplate.opsForZSet().add("search", "斗罗大陆", 1);
-        stringRedisTemplate.opsForZSet().incrementScore("search", "斗罗大陆", 1);
-
-    //    Set<String> set=redisTemplate.opsForZSet().reverseRangeByScore("Ranking:search",0,99999999,0,30);
-        Set<ZSetOperations.TypedTuple<Object>> set2=redisTemplate.opsForZSet().reverseRangeByScoreWithScores("Ranking:search",0,99999999,0,30);
-        return SettoMap(set2);
+    public List<String> selSearchHistory(Integer uid){
+        return listMapper.selSearchHistory(uid);
     }
 
-    /**
-     * 更新搜索排行榜
-     * Ranking:search
-     */
+    /*  更新搜索排行榜
     public void updateSearchList(String name){
         //返回指定成员分数
         Double db=redisTemplate.opsForZSet().score("Ranking:search",name);
         redisTemplate.opsForZSet().add("Ranking:search",name,db+1);
+    }*/
+
+    @Cacheable(cacheNames = "hot",key = "#read",cacheManager = "novelListRedisCacheManager")
+    public List<CollectDiv> getReadList(String read){
+
+        // redis 里面没有
+        List<CollectDiv> divs = listMapper.selReadForHotList();
+
+        return divs;
     }
 
-    /**
-     * 获取收藏排行榜前30
-     * Ranking:conlection
-     */
-    @Cacheable(cacheNames = "hot",key = "#read",cacheManager = "novelListRedisCacheManager")
-    public List<CollectDiv> getCollectionList(String read){
+    @Cacheable(cacheNames = "hot",key = "#collection",cacheManager = "novelListRedisCacheManager")
+    public List<CollectDiv> getCollectionList(String collection){
 
             // redis 里面没有
             List<CollectDiv> divs = listMapper.selCollectForHotList();
@@ -58,65 +50,11 @@ public class GetListService {
             return divs;
     }
 
-    /**
-     * 更新收藏排行榜
-     * Ranking:conlection
-     */
-    public void updateConlectionList(String name){
-        //返回指定成员分数
-        Double db=redisTemplate.opsForZSet().score("Ranking:conlection",name);
-        redisTemplate.opsForZSet().add("Ranking:conlection",name,db+1);
-    }
-
-    /**
-     * 获取推荐排行榜前30
-     * Ranking:recommend
-     */
-    public Map<String,Map> getRecommendList(){
-        Set<ZSetOperations.TypedTuple<Object>> set=redisTemplate.opsForZSet().reverseRangeByScoreWithScores("Ranking:recommend",0,99999999,0,30);
-        return SettoMap(set);
-    }
-
-    /**
-     * 更新推荐排行榜
-     * Ranking:recommend
-     */
-    public void updateRecommendList(String name){
-        //返回指定成员分数
-        Double db=redisTemplate.opsForZSet().score("Ranking:recommend",name);
-        redisTemplate.opsForZSet().add("Ranking:recommend",name,db+1);
-    }
-
-    /**
-     * 将ZSetOperations.TypedTuple<Object> 转为Map<String,Object>键值对
-     */
-    public Map<String,Map> SettoMap(Set<ZSetOperations.TypedTuple<Object>> set){
-        Map<String,Map> M=new LinkedHashMap<String, Map>();
-        Iterator it=set.iterator();
-        while (it.hasNext()){
-            ZSetOperations.TypedTuple<Object> typedTuple = (ZSetOperations.TypedTuple<Object> )it.next();
-            List<Map> value =  (List<Map>) typedTuple.getValue();
-            String score = ""+typedTuple.getScore();
-            M.put(score,value.get(0));
-        }
-        return M;
-    }
-
-    /**
-     * 测试
-     */
-    public Map<String,Map> getTest(){
-        Map<String,Map> M=new LinkedHashMap<String, Map>();
-        Set<ZSetOperations.TypedTuple<Object>> set=redisTemplate.opsForZSet().reverseRangeByScoreWithScores("Ranking:search",0,99999999,0,30);
-        Iterator<ZSetOperations.TypedTuple<Object>> it=set.iterator();
-        while(it.hasNext()){
-            ZSetOperations.TypedTuple<Object> typedTuple = (ZSetOperations.TypedTuple<Object> )it.next();
-            List<Map> value =  (List<Map>) typedTuple.getValue();
-            System.err.println(value.get(0).get("novelName"));
-            String score = ""+typedTuple.getScore();
-            M.put(score,value.get(0));
-        }
-        return M;
+    @Cacheable(cacheNames = "hot",key = "#vote",cacheManager = "novelListRedisCacheManager")
+    public List<CollectDiv> getRecommendList(String vote){
+        // redis 里面没有
+        List<CollectDiv> divs = listMapper.selVoteForHotList();
+        return divs;
     }
 
 }
