@@ -118,6 +118,20 @@
 			}
 		});
 	})
+	
+	
+	$.ajax({
+		url:'getuser.u',
+		type:'post',
+		data:'uid='+localUrl.substring(5,6),
+		success: function(data){
+			if(data.code == 1){
+				
+				$('.dropdown-toggle').html(data.obj.username);
+				
+			}
+		}
+	})
 </script>
 
 </head>

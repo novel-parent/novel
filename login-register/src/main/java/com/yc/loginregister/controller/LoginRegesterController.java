@@ -10,6 +10,13 @@ import javax.servlet.http.HttpServletResponse;
 import com.yc.loginregister.bean.CookieModel;
 import com.yc.loginregister.bean.JsonModel;
 import com.yc.loginregister.bean.User;
+
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.AuthenticationException;
+import org.apache.shiro.authc.IncorrectCredentialsException;
+import org.apache.shiro.authc.UnknownAccountException;
+import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -45,13 +52,71 @@ public class LoginRegesterController {
 		jedis = new Jedis("106.14.162.109", 6379);
 		jedis.auth("lsx666");
 	}
+	
+	
+	@ResponseBody
+	@PostMapping("login.l")
+	public Object login(Model model, @RequestParam("username") String username,
+			@RequestParam("password") String password, @RequestParam("flag") boolean flag,HttpServletResponse response,HttpServletRequest request) {
+
+
+		JsonModel jm = new JsonModel();
+
+		Subject currUser=SecurityUtils.getSubject();
+		
+		UsernamePasswordToken token=new UsernamePasswordToken(username,password);
+		
+		//设置记住该用户
+		if(flag) {
+			token.setRememberMe(true);
+		}
+		
+		
+		//判断当前用户是否被认证
+		if(! currUser.isAuthenticated()) {
+			try {
+				//执行登录
+				currUser.login(token);
+				
+				jm.setCode((int) userService.findUser(new User().setUsername(username)).getUid()).setMsg("登录成功");
+				
+			}catch(UnknownAccountException e) {
+				jm.setCode(-1).setMsg("用户不存在");
+				e.printStackTrace();
+			}catch(IncorrectCredentialsException e) {
+				jm.setCode(-1).setMsg("密码错误");
+				e.printStackTrace();
+				
+			}catch(AuthenticationException e) {
+				e.printStackTrace();
+			}
+			
+		}
+		
+		
+
+		
+		return jm;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 	/**
 	 * @param: username 用户名 password 密码 JsonModel.code : 1:正常登录 -1:登陆失败 0:用户被锁定
 	 * @author: hdl
 	 */
 
-	@ResponseBody
+/*	@ResponseBody
 	@PostMapping("login.l")
 	public Object login(Model model, @RequestParam("username") String username,
 			@RequestParam("password") String password, @RequestParam("flag") boolean flag,HttpServletResponse response,HttpServletRequest request) {
@@ -88,35 +153,46 @@ public class LoginRegesterController {
 					//在创建cookie之前判断是否之前有设置过cookie
 					Cookie[] cookies=request.getCookies();
 					
-					for(Cookie c:cookies) {
-						if(!username.equals(String.valueOf(c.getValue()))) {
-							
-							Cookie usernamecookie=new Cookie("uname",username);
-							Cookie userpwdcookie=new Cookie("upwd",password);
-							//设置cookie过期时间为7天
-							usernamecookie.setMaxAge(CookieTime);
-							userpwdcookie.setMaxAge(CookieTime);
-							
-							response.addCookie(userpwdcookie);
-							response.addCookie(usernamecookie);
+					if(cookies != null) {
+						
+						for(Cookie c:cookies) {
+							if(!username.equals(String.valueOf(c.getValue()))) {
+								
+								Cookie usernamecookie=new Cookie("uname",username);
+								Cookie userpwdcookie=new Cookie("upwd",password);
+								//设置cookie过期时间为7天
+								usernamecookie.setMaxAge(CookieTime);
+								userpwdcookie.setMaxAge(CookieTime);
+								
+								response.addCookie(userpwdcookie);
+								response.addCookie(usernamecookie);
+							}
 						}
 					}
+					
+					
 				}else {
 					//如果未选择记住登陆状态则判断该用户之前是否有设置cookie，如果有则删除该cookie
 					Cookie[] cookies= request.getCookies();
 					
-					for(Cookie c:cookies) {
-						if(username.equals(c.getValue())) {
-							Cookie usernamecookie=new Cookie("uname",username);
-							Cookie userpwdcookie=new Cookie("upwd",password);
-							usernamecookie.setMaxAge(0);
-							userpwdcookie.setMaxAge(0);
-							usernamecookie.setPath("/");
-							userpwdcookie.setPath("/");
-							response.addCookie(userpwdcookie);
-							response.addCookie(usernamecookie);
+					if(cookies != null) {
+						
+						for(Cookie c:cookies) {
+							if(username.equals(c.getValue())) {
+								Cookie usernamecookie=new Cookie("uname",username);
+								Cookie userpwdcookie=new Cookie("upwd",password);
+								usernamecookie.setMaxAge(0);
+								userpwdcookie.setMaxAge(0);
+								usernamecookie.setPath("/");
+								userpwdcookie.setPath("/");
+								response.addCookie(userpwdcookie);
+								response.addCookie(usernamecookie);
+							}
 						}
+						
 					}
+					
+					
 				}
 				
 				// 设置用户登录key
@@ -141,7 +217,7 @@ public class LoginRegesterController {
 		}
 
 		return jm;
-	}
+	}*/
 
 	@RequestMapping("register.l")
 	@ResponseBody
@@ -162,7 +238,7 @@ public class LoginRegesterController {
 		return jm;
 	}
 	
-	@RequestMapping("getcookie.l")
+	/*@RequestMapping("getcookie.l")
 	@ResponseBody
 	public Object getCookie(HttpServletRequest request) {
 		CookieModel cookie=new CookieModel();
@@ -175,5 +251,5 @@ public class LoginRegesterController {
 			}
 		}
 		return cookie;
-	}
+	}*/
 }
