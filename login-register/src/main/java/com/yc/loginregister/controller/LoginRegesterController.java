@@ -54,7 +54,7 @@ public class LoginRegesterController {
 	}
 	
 	
-	@ResponseBody
+/*	@ResponseBody
 	@PostMapping("login.l")
 	public Object login(Model model, @RequestParam("username") String username,
 			@RequestParam("password") String password, @RequestParam("flag") boolean flag,HttpServletResponse response,HttpServletRequest request) {
@@ -97,7 +97,7 @@ public class LoginRegesterController {
 		
 		return jm;
 	}
-	
+	*/
 	
 	
 	
@@ -115,7 +115,7 @@ public class LoginRegesterController {
 	 * @author: hdl
 	 */
 
-/*	@ResponseBody
+	@ResponseBody
 	@PostMapping("login.l")
 	public Object login(Model model, @RequestParam("username") String username,
 			@RequestParam("password") String password, @RequestParam("flag") boolean flag,HttpServletResponse response,HttpServletRequest request) {
@@ -216,7 +216,7 @@ public class LoginRegesterController {
 		}
 
 		return jm;
-	}*/
+	}
 
 	@RequestMapping("register.l")
 	@ResponseBody
@@ -237,7 +237,7 @@ public class LoginRegesterController {
 		return jm;
 	}
 	
-	/*@RequestMapping("getcookie.l")
+	@RequestMapping("getcookie.l")
 	@ResponseBody
 	public Object getCookie(HttpServletRequest request) {
 		CookieModel cookie=new CookieModel();
@@ -250,5 +250,5 @@ public class LoginRegesterController {
 			}
 		}
 		return cookie;
-	}*/
+	}
 }
