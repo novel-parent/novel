@@ -5,6 +5,7 @@
 <mapper namespace="com.yc.loginregister.mapper.UserMapper">
 
 	<resultMap type="com.yc.loginregister.bean.User" id="loginUserMap">
+        <id column="uid" property="uid"></id>
 		<collection property="vip" column="uid" select="com.yc.loginregister.mapper.VipMapper.findVipByUid"></collection>
 	</resultMap>
 

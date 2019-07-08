@@ -120,7 +120,8 @@ public class LoginRegesterController {
 				// 设置用户登录key过期时间为30分钟
 				jedis.expire(key, LoginSessionTime);
 				jedis.expire(ipkey, LoginSessionTime);
-				
+
+				System.out.println(user);
 				jm.setCode((int) user.getUid()).setMsg("登录成功");
 			}
 			
