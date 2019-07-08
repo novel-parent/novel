@@ -10,4 +10,5 @@ import lombok.experimental.Accessors;
 public class CookieModel {
 	private String username;
 	private String password;
+	private long code;
 }

@@ -79,7 +79,7 @@
                             <div class="col-sm-offset-2 col-sm-10">
                                 <div class="checkbox">
                                     <label>
-                                        <input type="checkbox" id="checkbox" name="usecookie" checked="checked" > 记住登录状态
+                                        <input type="checkbox" id="checkbox" name="usecookie" checked="checked" > 记住账号
                                     </label>
                                 </div>
                             </div>
@@ -117,6 +117,10 @@ $(function(){
 			if(data.username != null){
 				$('#name').val(data.username);
 				$('#pwd').val(data.password);
+				
+				if(data.code == 1){
+					$("#singUp").click();
+				}
 			}
 		}
 	})

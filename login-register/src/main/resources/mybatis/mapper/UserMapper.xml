@@ -5,12 +5,13 @@
 <mapper namespace="com.yc.loginregister.mapper.UserMapper">
 
 	<resultMap type="com.yc.loginregister.bean.User" id="loginUserMap">
+        <id column="uid" property="uid"></id>
 		<collection property="vip" column="uid" select="com.yc.loginregister.mapper.VipMapper.findVipByUid"></collection>
 	</resultMap>
 
     <select id="selByLogin" resultMap="loginUserMap">
 
-        SELECT * FROM user where username = #{username}
+        select * from user where username = #{username}
         and password = #{password}
 
     </select>
