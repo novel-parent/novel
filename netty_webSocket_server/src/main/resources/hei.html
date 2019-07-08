@@ -10,6 +10,7 @@
 <meta name="viewport" content="width=device-width">
 <link rel="stylesheet"
 	href="https://qiyukf.nosdn.127.net/sdk/tr/t_trade_index_m0_386885c9fea45476a2e376115b6fae72.css">
+<script src="jquery-1.9.1.min.js" ></script>
 <style>
 /**
 * ===========================
@@ -436,7 +437,7 @@ display: none;
 										</div>
 										<div class="j-flag-tlt left">
 											<div class="u-bd-title">
-												<span class="name">网易云课堂-客服</span>
+												<span class="name">heiwu小说网-客服</span>
 											</div>
 										</div>
 									</div>
@@ -451,7 +452,7 @@ display: none;
 															src="https://qiyukf.nosdn.127.net/sdk/res/default/loading_3782900ab9d04a1465e574a7d50af408.gif">
 														正在连接，请稍等...
 													</div>
-													<di class="chat_show_msg j-chat" id="auto-id-1560676702509"
+													<div class="chat_show_msg j-chat" id="auto-id-1560676702509"
 														style="bottom: 150px;">
 													<div class="msg-upscroll j-upscroll"></div>
 													<div class="m-msglist j-list" id="auto-id-1560676702507">
@@ -689,28 +690,7 @@ display: none;
 															</div>
 															<!-- transhwords -->
 														</div>
-														<!-- 消息相关end -->
-														<!-- macro start -->
-														<!-- 文件消息 -->
-														<!-- bot消息 -->
-														<!-- 消息入口 -->
-														<!-- 评价选择begin -->
-														<!-- 消息展示 判断是否需要分多条展示 -->
-														<div id="15606767026301560676702405"
-															class="msg msg_left f-cb">
-															<div class="msg_main ">
-																<i class="u-icon-avater"> <img
-																	src="https://ysf.nosdn.127.net/B726658D1C8976CF8C9ACAEB2C1F9854?imageView&amp;type=png|imageView&amp;thumbnail=76y76&amp;axis=5"
-																	alt="在线客服头像">
-																</i>
-																<div class="rich msg_bubble    ">
-																	<div class="arrow"></div>
-																	<div class="p" data-action="richContentDelegate">您好，云妞的知识有限，您的问题我暂时无法解答，您可以发送具体问题至邮箱：study@service.netease.com进行处理。（云妞正在努力充电中，让自己赶紧UP
-																		UP UP，以便更好地为您服务）</div>
-																</div>
-															</div>
-															<!-- transhwords -->
-														</div>
+
 														<!-- 消息相关end -->
 														<!-- macro start -->
 														<!-- 文件消息 -->
@@ -815,48 +795,22 @@ display: none;
 														</div>
 														<!-- 消息相关end -->
 													</div>
-													</di>
+													</div>
 													<div class="chat_show_bot j-flag-bot"
 														style="opacity: 0; z-index: -1000;"></div>
 													<div class="chat_show_editor j-editor z-robot">
 														<div class="m-iptbox" id="auto-id-1560676702532">
-															<label id="portrait_btn" class="portrait_label f-dn"
-																title="发送表情"> <i class="u-icon u-icon-portrait">
 
-															</i>
-															</label> <label class="photo_label j-flag f-dn" title="发送图片"
-																id="auto-id-1560676702531" for="1560676702528-0"
-																data-log=""> <i class="u-icon u-icon-photo"></i></label>
-															<label class="file_label j-fflag f-dn" title="发送文件"
-																id="auto-id-1560676702539" for="1560676702569-0">
-																<i class="u-icon u-icon-file"></i>
-															</label>
-															<div class="textarea j-richflag u-status-robot">
-																<div
-																	class="textarea-mn j-flag auto-1560676702419-parent">
-																	<div class="u-scrollbar auto-1560676702419 m-scrollbar"
-																		id="auto-id-1560676702602" style="visibility: hidden;">
-																		<span class="thumb" id="auto-id-1560676702616"
-																			style="height: 78px; top: 0px;">&nbsp;</span>
-																	</div>
-																</div>
-															</div>
+													<!--  发送消息框  -->
+															<textarea id="sendToServerId" name="sendToServer" style="margin-top:10px;height: 72px; width: 100%;font-size: 18px;" ></textarea>
 															<ul
 																class="m-associationques-list j-associationques u-status-robot"
 																style="display: none;">
 																<!--Regular list-->
 															</ul>
-															<button type="submit"
+															<button
 																class="u-btn u-btn-send j-flag u-btn-disabled"
-																id="auto-id-1560676702535" disabled="">发送</button>
-															<form class="form j-flag" id="auto-id-1560676702529"
-																data-id="1560676702528">
-																<div class="auto-1560676702418 "
-																	id="auto-id-1560676702530">
-																	<input type="file" accept="image/*"
-																		contenteditable="false" id="1560676702528-0">
-																</div>
-															</form>
+																id="auto-id-1560676702535" onclick="sendToServerFunction()" >发送</button>
 															<div class="disabled"></div>
 														</div>
 													</div>
@@ -865,7 +819,7 @@ display: none;
 												<div class="chat_logo j-qiyuInfo" data-action="toqiyu">
 													<img class="taillogo"
 														src="https://qiyukf.nosdn.127.net/sdk/res/img/tailLogo@2x_51a85b19099da606135ca68d814c5d6e.png"
-														alt="网易七鱼提供服务支持">
+														alt="heiwu闲鱼提供服务支持">
 												</div>
 											</div>
 										</div>
@@ -874,9 +828,6 @@ display: none;
 												<div class="bd_right j-companyinfo-right j-flag"
 													id="auto-id-1560676702579">
 													<div class="m-announce j-announceinfo ">
-														<h1 class="announce_tlt">微专业新课上线公告</h1>
-														<p class="announce_cnt" data-action="richContentDelegate">
-															新媒体运营微专业上线啦！</p>
 														<div class="announce_pic">
 															<a data-action="pictureHref"
 																data-href="http://mooc.study.163.com/smartSpec/detail/1001268002.htm"
@@ -893,22 +844,18 @@ display: none;
 																<li class="itm" data-id="1300090">
 																	<h2 class="title j-question" data-action="questionlist"
 																		id="auto-id-1560676702580">
-																		微专业是什么意思？<i class="j-icon u-icon-infodown"> </i>
+																		好看的小说？<i class="j-icon u-icon-infodown"> </i>
 																	</h2>
 																	<p class="answer f-dn"
-																		data-action="richContentDelegate">网易云课堂微专业课程旨在于用5-10门核心的课程教授学员掌握某一岗位上的核心技能，通过三个月的学习-作业-考试，学员学完可以胜任相关岗位的工作。
-
-																		其中互联网+微专业课程体系内容
-																		由网易杭州研究院或各行业大牛自主研发，制作课程并提供相应教学辅导；课程体系包括互联网公司各岗位技能，如前后端开发技术，产品运营，设计等。</p>
+																		data-action="richContentDelegate">网易技术，产品运营，设计等。</p>
 																</li>
 																<li class="itm" data-id="1300091">
 																	<h2 class="title j-question" data-action="questionlist"
 																		id="auto-id-1560676702581">
-																		课程是录播还是直播的呢？<i class="j-icon u-icon-infodown"></i>
+																		怎么还不更新啊！<i class="j-icon u-icon-infodown"></i>
 																	</h2>
 																	<p class="answer f-dn"
-																		data-action="richContentDelegate">你好，我们的课程是采取在线录播视频+直播答疑+线上作业考试的形式。
-																		教学视频是录播的，我们会按照课程安排时间更新，视频更新后您可以自由安排时间进行学习，只要在规定的时间节点前提交作业和参加考试即可；学习过程中有疑问我们提供24小时论坛答疑，学员群互助答疑，还有老师直播答疑。
+																		data-action="richContentDelegate">会员群互助答疑，还有专家直播答疑。
 																	</p>
 																</li>
 															</ul>
@@ -989,3 +936,12 @@ display: none;
 	</div>
 </body>
 </html>
+
+
+<script>
+	function sendToServerFunction(){
+	    var message=$("#sendToServerId").val();
+	    alert(message);
+	}
+
+</script>
