@@ -151,14 +151,27 @@
 							alert("请求出错");
 						},
 						success : function(data) {
+							var head = ''
 							var result = ''
 							var last = ''
 							var num = ''
+							
+								
+								
+								
+								
+							
+							head+='<th width="5%" class="hidden-xs"><input type="checkbox" id="checkall" name="checkall"  value="checkall" ></th>'
+							head+='<th width="30%">文章名称</th>'	
+							head+='<th width="30%">书签</th>'	
+							head+='<th width="25%"  align="center" class="hidden-xs">操作时间</th>'
+							head+='<th width="7%">操作</th>'
+								
 							last += " <tr><td colspan=\"6\">选中项目<select name=\"newclassid\" id=\"newclassid\" class=\"select\">"
 							last += " <option value=\"-1\" selected=\"selected\">移出书架</option>"
 							last+="<input name=\"btnsubmit\" type=\"submit\" value=\" 确认 \" class=\"btn btn-sm btn-primary\">"
 							$(data).each( function(index, ele) {
-												result += "<tr><td class=\"hidden-xs\"><input type=\"checkbox\" id=\"checkid["+index+"]\" name=\"checkid[]\" value=\"33449\"></td>"
+												result += "<tr><td class=\"hidden-xs\"><input type=\"checkbox\" id=\"checkid["+index+"]\" name=\"checkid[]\" value="+ ele.coid +"></td>"
 												result += "<td class=\"even\"><a href=\"http://localhost/novel/introduction.html?nid=" + ele.nid +url+ "\" target=\"_blank\">"
 														+ ele.searchHistoryNovel.novelName
 														+ "</a> <span class=\"text-red fs-12\">New</span></td>"
@@ -176,6 +189,52 @@
 							$("#num").append(num);
 							$("#collect").append(result);
 							$("#collect").append(last);
+							$("#collectCenter").append(head);
+							
+							
+							$("#checkall").on('click',function(){
+								var checkObj=$("input[name ^= 'checkid'");
+								var flag=$("input[name = 'checkall']").prop('checked');
+								
+								for(var i=0;i<checkObj.size();i++){
+									checkObj.eq(i).prop('checked',flag);
+								}
+							})
+							
+							var coid=''
+							
+							$("input[name='btnsubmit']").on('click',function(){
+								var checkObj=$("input[name ^= 'checkid'");
+								for(var i=0;i<checkObj.size();i++){
+									if(checkObj.eq(i).prop('checked')){
+										coid+=checkObj.eq(i).val()+'&';
+									}
+								}
+								
+								var data = {
+									uid: uid,
+									coid: coid
+								}
+								
+								$.ajax({
+									url: 'deleteColl.u',
+									type: 'post',
+									data: data,
+									cache: false,
+									success: function(result){
+										
+										if(result.code == 1){
+											alert(result.msg);		
+											window.location.reload();
+										}else{
+											alert('系统繁忙,请稍后再试');
+										}
+									}
+								})
+								
+								
+							})
+							
 						},
 						type : "POST"
 					});
@@ -265,14 +324,14 @@
 				<div class="panel panel-default" id="num"></div>
 				<table class="table" id="collect">
 					<tbody>
-						<tr align="center">
-							<th width="5%" class="hidden-xs"><input type="checkbox"
+						<tr align="center"  id="collectCenter">
+							<!-- <th width="5%" class="hidden-xs"><input type="checkbox"
 								id="checkall" name="checkall" value="checkall"
 								onclick="javascript: for (var i=0;i<this.form.elements.length;i++){ if (this.form.elements[i].name != 'checkkall') this.form.elements[i].checked = form.checkall.checked; }"></th>
 							<th width="30%">文章名称</th>
 							<th width="30%">书签</th>
 							<th width="25%"  align="center" class="hidden-xs">操作时间</th>
-							<th width="7%">操作</th>
+							<th width="7%">操作</th> -->
 						</tr>
 
 					</tbody>

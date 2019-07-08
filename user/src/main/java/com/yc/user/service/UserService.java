@@ -50,4 +50,9 @@ public interface UserService {
 	 */
 	User selUserByUid(long uid);
 
+
+	boolean findUserByName(String username);
+
+	void deleteColl(long uid, String coid);
+
 }

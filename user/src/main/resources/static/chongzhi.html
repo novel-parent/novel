@@ -320,9 +320,14 @@ $("#cz").on("click",function(){
 	
 	var money = null;
 	
-	
+	var username=$("input[name='username']").val();
 	
 	var uid = localUrl.substring(5,6);
+	
+	if(username == '' || username == null){
+		alert('请输入用户名！');
+		return;
+	}
 	
 	if(flag_0){
 		var type = 'vip';
@@ -338,6 +343,7 @@ $("#cz").on("click",function(){
 		var data={
 			uid: uid,
 			money: money,
+			username: username,
 			type : type
 		}
 		
@@ -349,6 +355,8 @@ $("#cz").on("click",function(){
 			success: function(data){
 				if(data.code == 1){
 					document.write(data.obj);
+				}else{
+					alert(data.msg);
 				}
 			}
 		})
