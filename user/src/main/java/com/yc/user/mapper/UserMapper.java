@@ -38,4 +38,8 @@ public interface UserMapper {
 
 	User selUserByUid(@Param("uid") long uid);
 
+	User findUserByUsername(String username);
+
+	void deleteColl( Long[] tmp);
+
 }

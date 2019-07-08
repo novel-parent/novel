@@ -40,6 +40,17 @@
             WHERE
             uid=#{uid}
     </update>
+    
+    <delete id="deleteColl">
+    	delete from collect where coid in
+    	<foreach collection="array" index="index" close=")" separator="," item="item" open="(">
+    		#{item}
+    	</foreach>
+    </delete>
+    
+    <select id="findUserByUsername" resultType="com.yc.user.bean.User">
+    	select * from user where username = #{username}
+    </select>
 
 
     <select id="findUserById" resultType="com.yc.user.bean.User">

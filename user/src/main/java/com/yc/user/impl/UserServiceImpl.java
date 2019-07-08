@@ -222,5 +222,30 @@ public class UserServiceImpl implements UserService {
 		return userMapper.UpdateUsersVip(uid,endTime);
 	}
 
+	@Override
+	public boolean findUserByName(String username) {
+		if(userMapper.findUserByUsername(username) == null) {
+			return false;
+		}
+		return true;
+	}
+
+	@Override
+	public void deleteColl(long uid, String coid) {
+		
+		String[] coidArr=coid.substring(0,coid.length()-1).split("&");
+		
+		Long[] tmp=new Long[coidArr.length];
+		
+		for(int i=0;i<coidArr.length;i++) {
+			tmp[i]=Long.valueOf(coidArr[i]);
+		}
+		
+		userMapper.deleteColl(tmp);
+		
+	}
+
+	
+
 
 }

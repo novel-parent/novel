@@ -222,24 +222,28 @@ public class UserController {
 	
 	@RequestMapping("chongzhi.u")
 	@ResponseBody
-	public Object chongZhin(long uid , int money , String type) throws AlipayApiException {
+	public Object chongZhin(long uid , int money , String type,String username) throws AlipayApiException {
 		
 		
 		JsonModel jm=new JsonModel();
 		
-		jedis.set("money:"+uid,money+"");
+		boolean thisUserIsExist= userService.findUserByName(username);
 		
+		if(thisUserIsExist) {
+			
+			jedis.set("money:"+uid,money+"");
+			
+			 request.setBizContent("{\"out_trade_no\":\"" +uid+":"+type+":" +UUID.randomUUID() + "\","
+		                + "\"total_amount\":\"" + money + "\","
+		                + "\"subject\":\"" + ""+type + "\","
+		                + "\"product_code\":\"FAST_INSTANT_TRADE_PAY\"}");
+		        String result = client.pageExecute(request).getBody();
+		        
+		        jm.setObj(result).setCode(1);
+		}else {
+			 jm.setCode(-1).setMsg("该用户不存在！");
+		}
 		
-		
-		 request.setBizContent("{\"out_trade_no\":\"" +uid+":"+type+":" +UUID.randomUUID() + "\","
-	                + "\"total_amount\":\"" + money + "\","
-	                + "\"subject\":\"" + ""+type + "\","
-	                + "\"product_code\":\"FAST_INSTANT_TRADE_PAY\"}");
-	        String result = client.pageExecute(request).getBody();
-	        
-	        
-	        jm.setObj(result).setCode(1);
-	        
 		return jm;
 	}
 	
@@ -317,6 +321,19 @@ public class UserController {
 		}
 
 		return user;
+	}
+	
+	
+	@ResponseBody
+	@RequestMapping("deleteColl.u")
+	public Object deleteColl(long uid,String coid) {
+		JsonModel jm=new JsonModel();
+		
+		userService.deleteColl(uid,coid);
+		
+		jm.setCode(1).setMsg("删除成功!");
+		
+		return jm;
 	}
 
 }
