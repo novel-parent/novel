@@ -52,7 +52,6 @@ public class LoginRegesterController {
 			
 			User user = userService.selForLogin(username, password);
 			
-			System.out.println("登录后的user"+user+"=========================================");
 
 			// 登录成功设置的key
 			String key = "uid:" + user.getUid();
@@ -65,14 +64,13 @@ public class LoginRegesterController {
 			
 			if(jedis.exists(key)){
 				
-				if(jedis.exists(ipkey)) {
+				if(! jedis.exists(ipkey)) {
 					jm.setCode(-1).setMsg("该用户已在别的设备登录");
 				}else {
 					jm.setCode(-1).setMsg("您已登录，无需再登录");
 				}
 				
 			} else {
-				
 				
 				//设置cookie
 				if(flag) {
@@ -172,6 +170,15 @@ public class LoginRegesterController {
 					cookie.setPassword(c.getValue());
 				}
 			}
+			
+			User user=userService.findUser(new User().setUsername(cookie.getUsername()));
+			
+			if(user != null) {
+				if(jedis.exists("uid:"+user.getUid())) {
+					cookie.setCode(1);
+				}
+			}
+			
 		}else{
 			cookie.setUsername("").setPassword("");
 		}
