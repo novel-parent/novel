@@ -136,6 +136,29 @@
                         alert("系统繁忙，请稍后再试！");
                     }
                 });
+
+                $.ajax({
+                    type: 'GET',
+                    url: 'http://localhost:60/getSearchHistory.r',
+                    success: function (data) {
+                        if (data == null || data == '') {
+                            return;
+                        }
+
+                        result = ''
+                        $(data).each(function (index, ele) {
+                            var tName = ele;
+                            result += "<li ><a style='color:red' href='/search.html?page=1&key=" +tName+ "&uid="+1+"'>" + tName + "</a></li>"
+                        })
+
+                        var historySearch = $('#historySearch')
+                        historySearch.append(result)
+                        historySearch.css('list-style-type', 'none')
+                    },
+                    error: function () {
+                        alert("系统繁忙，请稍后再试！");
+                    }
+                });
             }
 
             $('#titleLi').append(result)

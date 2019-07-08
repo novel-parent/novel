@@ -51,6 +51,8 @@ public class LoginRegesterController {
 		try {
 			
 			User user = userService.selForLogin(username, password);
+			
+			System.out.println("登录后的user"+user+"=========================================");
 
 			// 登录成功设置的key
 			String key = "uid:" + user.getUid();
@@ -61,13 +63,13 @@ public class LoginRegesterController {
 			//获取登录用户的ip地址
 			String ip= request.getRemoteAddr();
 			
-			if(jedis.exists(ipkey)) {
+			if(jedis.exists(key)){
 				
-				jm.setCode(-1).setMsg("该用户已在别的设备登录");
-				
-			}else if(jedis.exists(key)){
-				
-				jm.setCode(-1).setMsg("您已登录，无需再登录");
+				if(jedis.exists(ipkey)) {
+					jm.setCode(-1).setMsg("该用户已在别的设备登录");
+				}else {
+					jm.setCode(-1).setMsg("您已登录，无需再登录");
+				}
 				
 			} else {
 				

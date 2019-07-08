@@ -5,7 +5,7 @@
 <mapper namespace="com.yc.user.mapper.HistoryMapper">
 
     <select id="selForHistorySearch" resultType="com.yc.user.bean.HistorySearch">
-        SELECT DISTINCT (historySearchName) FROM historysearch WHERE uid = #{uid}
+        SELECT DISTINCT (historySearchName) FROM historysearch WHERE uid = #{uid} order by sid desc limit 0,6
     </select>
 
     <select id="selHistoryByKey" resultType="com.yc.user.bean.HistorySearch">
