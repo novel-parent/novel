@@ -3,6 +3,7 @@ package com.yc.user.config;
 import com.yc.user.flter.UserFilter;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
 /**
  *
@@ -10,7 +11,7 @@ import org.springframework.context.annotation.Bean;
  * @author LX
  * @date 2019/6/18 - 21:02
  */
-
+@Configuration
 public class ServerConfig {
 
     @Bean

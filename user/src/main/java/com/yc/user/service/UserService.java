@@ -26,6 +26,14 @@ public interface UserService {
 
 	PageBean SerachPage(Integer uid, String page);
 
+	/**
+	 * 发送消息给管理员(uid:1)
+	 * 连续发送2次，禁止发送10分钟
+	 * redis保存为：(usertomanager，x)
+	 * @param title
+	 * @param content
+	 * @throws MyException
+	 */
     void sendToManager(String title,String content) throws MyException;
 
 	Map<String, String> getUserMap(User user) throws Exception;

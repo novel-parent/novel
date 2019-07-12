@@ -21,6 +21,7 @@ import java.util.Map;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -311,7 +312,9 @@ public class UserController {
 
 	@ResponseBody
 	@RequestMapping("/userInfo.u")
-	public User getUserInfo(long uid){
+	public User getUserInfo(long uid, HttpServletResponse resp){
+		// 跨域请求
+		resp.setHeader("Access-Control-Allow-Origin","*");
 		User user = null;
 
 		user = userService.selUserByUid(uid);

@@ -33,11 +33,9 @@ public class UserTest {
         redis.clients.jedis.Jedis jd=new Jedis("106.14.162.109",6379,50000);
         jd.auth("lsx666");
 
-        jd.set("xxx","lisi");
-        if(jd.exists("xxx")){
-            System.out.println(jd.get("xxx"));
-            jd.del("xxx");
-        }
+        String s = jd.get("uid:4");
+
+        System.out.println(s);
     }
 
     @Test
