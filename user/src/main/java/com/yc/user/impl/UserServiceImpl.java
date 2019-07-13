@@ -36,11 +36,17 @@ public class UserServiceImpl implements UserService {
 	@Autowired
 	private MessageMapper messageMapper;
 
-	//判断邮箱是否合法的方法
+	/**
+	 *     判断邮箱是否合法的方法
+	 * @param email
+	 * @return
+	 */
 	private boolean isTrue(String email) {
 		boolean bl = true;
-		int x = email.indexOf("@");//记录@第一次出现的下标
-		int y = email.indexOf(".");//记录.最后出现的下标
+		//记录@第一次出现的下标
+		int x = email.indexOf("@");
+		//记录.最后出现的下标
+		int y = email.indexOf(".");
 		if (0 == email.indexOf("@") || email.length() - 1 == email.lastIndexOf(".") || y - x < 2) {
 			bl = false;
 		}
@@ -61,14 +67,11 @@ public class UserServiceImpl implements UserService {
 		userMapper.changeUserEdit(uid, email, sex, qq);
 	}
 
-	/**
-	 * 发送消息给管理员(uid:1)
-	 * 连续发送2次，禁止发送10分钟
-	 * redis保存为：(usertomanager，x)
-	 */
+
 	@Override
 	public void sendToManager(String title, String content) throws MyException{
-		int uid=2;////////暂时为2 测试
+		////////暂时为2 测试
+		int uid=2;
 		//判空
 		if(title.isEmpty() || title==null ||content.isEmpty()||content==null ){
 			throw new MyException();
@@ -97,11 +100,6 @@ public class UserServiceImpl implements UserService {
 		if (user == null) {
 			throw new LoginException("登录失败");
 		}
-
-		Jedis jedis = new Jedis("106.14.162.109", 6379);
-		jedis.auth("lsx666");
-
-		jedis.set("user:" + user.getUid(), "" + user.getUid());
 
 		Map<String, String> umap = new HashMap<String, String>();
 		umap.put("uid", "" + user.getUid());
@@ -197,7 +195,6 @@ public class UserServiceImpl implements UserService {
 		return userMapper.findUserIsOrNotVip(uid);
 	}
 
-	@Cacheable(cacheNames = "userInfo",key = "#uid")
 	@Override
 	public User selUserByUid(long uid) {
 		return userMapper.selUserByUid(uid);

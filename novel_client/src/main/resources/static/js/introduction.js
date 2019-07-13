@@ -40,7 +40,6 @@ if(userIndex>=0){
         url = '&uid='+uid
         introductionUrlMapping='/userNovelChapters.n'+tUrl
     }
-
 }else{
     // 游客登录
 }
@@ -77,6 +76,42 @@ $(function(){
     $('#titleLi').append(result)
 
     // var params1 = urlParams[1].split('=')
+
+    if(uid !=''){
+        $.ajax({
+            url : "http://localhost:100/userInfo.u?uid="+uid,
+            type : 'GET',
+            success : function(data) {
+                alert(data)
+                if(data =='-1' ){
+                    alert("该用户还没登录,或者用户信息过期,请重新登陆")
+                    window.location.href = "/login.html"
+                    return
+                }else if( data =='' || data ==null){
+                    alert("该用户信息异常,请重新登陆")
+                    window.location.href = "/login.html"
+                    return
+                }
+
+                /**
+                 * result+="<li><a href='/userbooks.html?'"+url.substring(1)+">我的书架</a></li>"
+                 result+="<li><a href='/userinfo.html?'"+url.substring(1)+">"+data.username+"</a></li>"
+                 * @type {string}
+                 */
+                var result = ''
+                result+="<li><a href='/userBooks.html?"+url.substring(1)+"' title='我的书架'><i class='fa fa-book fa-fw'></i>我的书架</a></li>"
+                result+="<li class='dropdown'><a class='dropdown-toggle'"
+                result+="data-toggle='dropdown'><i class='fa fa-user fa-fw'></i>"+data.username+"<span"
+                result+="class='caret'></span></a>"
+                $('#userInfo').append(result)
+            }
+        });
+    }else{
+        var result =''
+        result+="<li><a href='/login.html'>登录</a></li>"
+        result+="<li><a href='/register.html'>免费注册</a></li>"
+        $('#userInfo').append(result)
+    }
 
 
     $.ajax({

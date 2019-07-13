@@ -69,6 +69,7 @@ public class LoginFilter implements Filter {
             	jedis.del(loginNum);
             	
         }
+        jedis.close();
         response.setCharacterEncoding("utf-8");
         response.getWriter().write(JSON.toJSONString("您已登录失败5次请"+jedis.ttl(lock)+"秒后再来"));
         

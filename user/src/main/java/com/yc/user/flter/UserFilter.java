@@ -26,15 +26,14 @@ public class UserFilter implements Filter {
 
         Jedis jedis = RedisPoolUtil.getJedis();
 
-        if(uid == null || jedis.get( "user:"+uid ) == null ){
+        if(uid == null || jedis.get( "uid:"+uid ) == null){
             response.getWriter().write("-1");
 
             jedis.close();
 
-            System.out.println(System.currentTimeMillis()-start);
             return;
         }
-        jedis.expire("user:"+uid, 30*60);
+        jedis.expire("uid:"+uid, 30*60);
 
         jedis.close();
         System.out.println(System.currentTimeMillis()-start);
