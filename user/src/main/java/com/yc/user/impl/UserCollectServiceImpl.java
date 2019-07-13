@@ -6,7 +6,7 @@ import com.yc.user.myexception.CollectException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.yc.user.service.UserCollectService;
-import util.DateUtil;
+import com.yc.novelclient.util.DateUtil;
 
 import java.util.List;
 

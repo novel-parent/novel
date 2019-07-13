@@ -1,8 +1,5 @@
 import org.junit.Test;
-import util.RedisPoolUtil;
-
-import javax.sound.midi.Soundbank;
-import java.util.Date;
+import com.yc.novelclient.util.RedisPoolUtil;
 
 /**
  * @author LX

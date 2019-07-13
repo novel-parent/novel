@@ -1,4 +1,4 @@
-package util;
+package com.yc.novelclient.util;
 
 import com.yc.user.bean.User;
 

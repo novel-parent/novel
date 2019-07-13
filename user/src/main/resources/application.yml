@@ -1,9 +1,9 @@
 spring:
   datasource:
     username: root
-    password: a
+    password: 12345678
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/novel?useSSL=true
+    url: jdbc:mysql://localhost:3306/novel?useUnicode=true&characterEncoding=UTF-8&useSSL=true
   redis:
     host: 106.14.162.109
     port: 6379

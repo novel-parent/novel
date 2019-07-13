@@ -1,7 +1,6 @@
-package util;
+package com.yc.novelclient.util;
 
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
 import java.util.Date;
 
 /**

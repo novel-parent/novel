@@ -17,7 +17,7 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import com.yc.novelclient.service.VisitorNovelService;
-import util.NovelClientUtil;
+import com.yc.novelclient.util.NovelClientUtil;
 
 /**
  * @author LX

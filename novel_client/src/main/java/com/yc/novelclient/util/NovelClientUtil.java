@@ -1,4 +1,4 @@
-package util;
+package com.yc.novelclient.util;
 
 import com.yc.bean.ReadNovel;
 import com.yc.thrift.client.NovelThriftClient;

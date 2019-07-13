@@ -14,9 +14,8 @@ import org.apache.thrift.TException;
 import org.apache.thrift.transport.TTransportException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
-import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
-import util.NovelClientUtil;
+import com.yc.novelclient.util.NovelClientUtil;
 
 /**
  * @author LX

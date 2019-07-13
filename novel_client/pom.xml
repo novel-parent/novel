@@ -94,7 +94,7 @@
 
         <dependency>
             <groupId>com.google.protobuf</groupId>
-            <artifactId>protobuf-java-util</artifactId>
+            <artifactId>protobuf-java-com.yc.novelclient.util</artifactId>
             <version>${protobuf-version}</version>
         </dependency>
 

@@ -10,7 +10,7 @@ import org.apache.thrift.TException;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
-import util.NovelClientUtil;
+import com.yc.novelclient.util.NovelClientUtil;
 
 /**
  * @author LX

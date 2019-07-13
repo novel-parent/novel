@@ -1,7 +1,7 @@
 package com.yc.novelclient.filter;
 
 import redis.clients.jedis.Jedis;
-import util.RedisPoolUtil;
+import com.yc.novelclient.util.RedisPoolUtil;
 
 import javax.servlet.*;
 import java.io.IOException;

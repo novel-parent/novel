@@ -15,8 +15,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import com.yc.novelclient.service.VipNovelService;
-import util.NovelClientUtil;
-import util.ThreadPollUtil;
+import com.yc.novelclient.util.NovelClientUtil;
+import com.yc.novelclient.util.ThreadPollUtil;
 
 import java.util.concurrent.ExecutorService;
 
