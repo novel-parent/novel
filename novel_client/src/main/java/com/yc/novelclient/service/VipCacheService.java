@@ -19,10 +19,9 @@ import util.NovelClientUtil;
 @Service
 public class VipCacheService {
 
-
     @Async
     @Cacheable(cacheNames = "chapterContext" , key = "#cid",cacheManager = "novelChaptersRedisCacheManager",sync = true)
-    public void getVipNextReadDiv(IntroductionNovel introductionNovel,String cid, String url){
+    public ReadDiv getNovelChapterContext(IntroductionNovel introductionNovel,String cid, String url){
 
         ReadDiv readDiv = null;
 
@@ -66,6 +65,6 @@ public class VipCacheService {
             e.printStackTrace();
         }
         System.out.println(readDiv.getReadNovel().getNovelChapterName());
-        return ;
+        return readDiv;
     }
 }
