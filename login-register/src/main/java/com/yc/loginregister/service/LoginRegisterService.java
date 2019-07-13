@@ -23,4 +23,6 @@ public interface LoginRegisterService {
 	int addUser(User user);
 
 	User findUser(User user);
+
+	User findCookieUser(String setUsername);
 }

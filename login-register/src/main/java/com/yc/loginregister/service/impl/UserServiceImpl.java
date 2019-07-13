@@ -63,7 +63,14 @@ public class UserServiceImpl implements LoginRegisterService {
 	@Override
 	public int addUser(User user) {
 		user.setTitle("");
+		user.setLevel("普通用户");
 		return userMapper.addUser(user);
+	}
+
+	@Override
+	public User findCookieUser(String username) {
+		
+		return userMapper.findCookieUser(username);
 	}
 
 }

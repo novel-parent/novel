@@ -8,6 +8,10 @@
         <id column="uid" property="uid"></id>
 		<collection property="vip" column="uid" select="com.yc.loginregister.mapper.VipMapper.findVipByUid"></collection>
 	</resultMap>
+	
+	<select id="findCookieUser"  resultType="com.yc.loginregister.bean.User">
+		select * from user where username = #{username,jdbcType=VARCHAR}
+	</select>
 
     <select id="selByLogin" resultMap="loginUserMap">
 
@@ -18,17 +22,16 @@
     
     <insert id="addUser">
     	insert into user(username,password,sex,email,title,level) values(#{username,jdbcType=VARCHAR},#{password,jdbcType=VARCHAR},#{sex,jdbcType=VARCHAR},
-    	#{email,jdbcType=VARCHAR},#{title,jdbcType=VARCHAR},普通用户)
+    	#{email,jdbcType=VARCHAR},#{title,jdbcType=VARCHAR},#{level,jdbcType=VARCHAR})
     </insert>
     
     <select id="findUser" resultType="com.yc.loginregister.bean.User"  parameterType="String">
     	select * from user where username = #{username}  
     </select>
     
-    <select id="findUserById">
+    <select id="findUserById" resultType="com.yc.loginregister.bean.User">
     	select * from user where uid = #{uid}
     </select>
     
-   
 
 </mapper>
