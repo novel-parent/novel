@@ -24,6 +24,8 @@ public interface UserMapper {
 
 	User findUserById(Integer uid);
 
+	User findCookieUser(String username);
+
 
 	
 }

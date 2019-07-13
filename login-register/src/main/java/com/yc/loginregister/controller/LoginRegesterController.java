@@ -9,8 +9,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
 import redis.clients.jedis.Jedis;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -64,10 +72,10 @@ public class LoginRegesterController {
 			
 			if(jedis.exists(key)){
 				
-				if(! jedis.exists(ipkey)) {
+				if(!ip.equals(jedis.get(ipkey))) {
 					jm.setCode(-1).setMsg("该用户已在别的设备登录");
 				}else {
-					jm.setCode(-1).setMsg("您已登录，无需再登录");
+					jm.setCode(Integer.valueOf(key.substring(4))).setMsg("登录成功");
 				}
 				
 			} else {
@@ -75,23 +83,35 @@ public class LoginRegesterController {
 				//设置cookie
 				if(flag) {
 					//在创建cookie之前判断是否之前有设置过cookie
-					Cookie[] cookies=request.getCookies();
-
-					if(cookies != null){
-						for(Cookie c:cookies) {
-							if(!username.equals(String.valueOf(c.getValue()))) {
-
+				
+								Cookie[] cookies=request.getCookies();
+								
+								if(cookies != null) {
+									for(Cookie c :cookies) {
+										if("uname".equals(c)) {
+											c.setMaxAge(0);
+											c.setPath("/");
+											response.addCookie(c);
+										}
+										if("upwd".equals(c)) {
+											c.setMaxAge(0);
+											c.setPath("/");
+											response.addCookie(c);
+										}
+									}
+								}
+					
 								Cookie usernamecookie=new Cookie("uname",username);
 								Cookie userpwdcookie=new Cookie("upwd",password);
 								//设置cookie过期时间为7天
 								usernamecookie.setMaxAge(CookieTime);
 								userpwdcookie.setMaxAge(CookieTime);
+								
+								System.out.println("Join Cookie ======================================");
 
 								response.addCookie(userpwdcookie);
 								response.addCookie(usernamecookie);
-							}
-						}
-					}
+						
 				}else {
 					//如果未选择记住登陆状态则判断该用户之前是否有设置cookie，如果有则删除该cookie
 					Cookie[] cookies= request.getCookies();
@@ -121,7 +141,6 @@ public class LoginRegesterController {
 				jedis.expire(key, LoginSessionTime);
 				jedis.expire(ipkey, LoginSessionTime);
 
-				System.out.println(user);
 				jm.setCode((int) user.getUid()).setMsg("登录成功");
 			}
 			
@@ -164,6 +183,7 @@ public class LoginRegesterController {
 
 		if(cookies != null){
 			for(Cookie c: cookies) {
+				System.out.println("Cookie :               "+c.getValue());
 				if("uname".equals(c.getName())) {
 					cookie.setUsername(c.getValue());
 				}
@@ -172,18 +192,11 @@ public class LoginRegesterController {
 				}
 			}
 			
-			User user=userService.findUser(new User().setUsername(cookie.getUsername()));
-			
-			if(user != null) {
-				if(jedis.exists("uid:"+user.getUid())) {
-					cookie.setCode(1);
-				}
-			}
-			
 		}else{
 			cookie.setUsername("").setPassword("");
 		}
-
+		
 		return cookie;
 	}
+	
 }
