@@ -29,4 +29,4 @@ mybatis:
 #     给mapper  返回的  bean 取一个别名
 #  type-aliases-package: com.yc.bean
 server:
-  port: 90
+  port: 8080
