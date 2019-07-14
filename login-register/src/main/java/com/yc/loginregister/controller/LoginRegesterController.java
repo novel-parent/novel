@@ -199,4 +199,15 @@ public class LoginRegesterController {
 		return cookie;
 	}
 	
+	@RequestMapping("recordUpload.l")
+	@ResponseBody
+	public String FileUpload(@RequestParam("audioData") MultipartFile file) {
+		JsonModel jm = new JsonModel();
+		
+		System.out.println("MultipartFile:=="+file.getOriginalFilename());
+		
+		
+		return "ok";
+	}
+	
 }
