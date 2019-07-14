@@ -69,7 +69,7 @@ public class VipNovelController {
 
             String url = readDiv.getIntroductionNovel().getUrl() + readDiv.getReadNovel().getNextChapter() + ".html";
 
-            vipCacheService.getVipNextReadDiv(readDiv.getIntroductionNovel(),  readDiv.getReadNovel().getNextChapter(), url);
+            vipCacheService.getNovelChapterContext(readDiv.getIntroductionNovel(),  readDiv.getReadNovel().getNextChapter(), url);
         }
         return readDiv;
     }

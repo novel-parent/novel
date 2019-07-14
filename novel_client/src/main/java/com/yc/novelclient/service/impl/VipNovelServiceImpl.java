@@ -36,6 +36,7 @@ public class VipNovelServiceImpl implements VipNovelService{
     @Override
     public ReadDiv getNovelChapterContext(long nid, String cid, String uid) throws ReadNovelChapterContextException {
 
+        System.out.println("小说章节      "+cid);
         ReadDiv readDiv = null;
 
         IntroductionNovel introductionNovel = novelMapper.selNovelByNid(nid);
