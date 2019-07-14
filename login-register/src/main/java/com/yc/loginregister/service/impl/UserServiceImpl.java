@@ -2,6 +2,8 @@ package com.yc.loginregister.service.impl;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -24,8 +26,10 @@ public class UserServiceImpl implements LoginRegisterService {
 	private UserMapper userMapper;
 
 	public User selForLogin(String username, String password) throws LoginException {
+		
 
 		User user = userMapper.selByLogin(username, password);
+		
 
 		if (user == null) {
 			throw new LoginException("登录失败");
@@ -64,6 +68,10 @@ public class UserServiceImpl implements LoginRegisterService {
 	public int addUser(User user) {
 		user.setTitle("");
 		user.setLevel("普通用户");
+		Date date=new Date();
+		SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
+		user.setRegtime(sdf.format(date));
+		
 		return userMapper.addUser(user);
 	}
 

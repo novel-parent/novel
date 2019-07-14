@@ -255,6 +255,8 @@ public class UserController {
 		
 		JsonModel jm=new JsonModel();
 		
+		int code = 0;
+		
 		Map<String,String> params = new HashMap<String,String>();
 		Map<String,String[]> requestParams = request.getParameterMap();
 		for (Iterator<String> iter = requestParams.keySet().iterator(); iter.hasNext();) {
@@ -272,12 +274,12 @@ public class UserController {
 		boolean signVerified = AlipaySignature.rsaCheckV1(params, AlipayConfig.alipay_public_key, AlipayConfig.charset, AlipayConfig.sign_type); //调用SDK验证签名
 
 		
-		
+		String uid = null;
 		if(signVerified) {
 			
 			String tradeno = new String(request.getParameter("out_trade_no").getBytes("ISO-8859-1"),"UTF-8");
 			
-			String uid=tradeno.split(":")[0];
+			uid =tradeno.split(":")[0];
 			String type=tradeno.split(":")[1];
 			//支付宝交易号
 /*			String subject = new String(request.getParameter("subject").getBytes("ISO-8859-1"),"UTF-8");*/
@@ -299,15 +301,13 @@ public class UserController {
 					userService.UpdateUsersVip(Long.parseLong(uid.substring(0, 1)), Integer.parseInt(money.substring(0, 1)),vip);
 				}
 				
-				
+				code =1;
 				
 			}else {
 			}
 		}
 		
-		
-		
-		return "redirect:chongzhi.html?uid="+2+"&code="+1;
+		return "redirect:zhongjie.html?uid="+uid+"&code="+code;
 	}
 
 	@ResponseBody
