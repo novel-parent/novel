@@ -14,7 +14,7 @@
 
         <p>
 
-            <audio autoplay></audio>
+            <audio autoplay style="display:none;"></audio>
 
             <input onclick="startRecording()" type="button" value="录音" />
 
@@ -60,7 +60,7 @@
 
                 recorder.stop();
 
-                var blob = recorder.getBlob();
+                  var blob = recorder.getBlob();
 
                 var url = URL.createObjectURL(blob);
 
@@ -75,6 +75,7 @@
                 au.src = url;
 
                 hf.href = url;
+                
 
                 hf.download = new Date().toISOString() + '.wav';
 
@@ -85,7 +86,7 @@
                 p.appendChild(hf);
 
                 recordingslist.appendChild(p);
-
+  
             }
 
             function playRecording() {
@@ -96,37 +97,13 @@
 
             function uploadAudio() {
 
-                recorder.upload("Handler1.ashx", function(state, e) {
+                recorder.upload("User.u", function(state, e) {
 
-                    switch(state) {
-
-                        case 'uploading':
-
-                            //var percentComplete = Math.round(e.loaded * 100 / e.total) + '%';
-
-                            break;
-
-                        case 'ok':
-
-//                          alert(e.target.responseText);
-
-                            alert("上传成功");
-
-                            break;
-
-                        case 'error':
-
-                            alert("上传失败");
-
-                            break;
-
-                        case 'cancel':
-
-                            alert("上传被取消");
-
-                            break;
-
-                    }
+                   if(state.code == 1){
+                	   alert("上传成功");
+                   }else{
+                	   alert("上传失败");
+                   }
 
                 });
 
