@@ -3,7 +3,8 @@ spring:
     username: root
     password: a
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/novel?useSSL=true
+    url: jdbc:mysql://47.106.110.16:3306/novel?useUnicode=true&characterEncoding=UTF-8&useSSL=true
+
   redis:
     host: 106.14.162.109
     port: 6379
@@ -12,4 +13,4 @@ mybatis:
   config-location: classpath:mybatis/mybatis-config.xml
   mapper-locations: classpath:mybatis/mapper/*.xml
 server:
-  port: 60
+  port: 80

@@ -8,7 +8,6 @@
   <modules>
     <module>novel_client</module>
     <module>netty_py_client</module>
-    <module>novel_backstage</module>
     <module>netty_webSocket_server</module>
     <module>jedis</module>
       <module>user</module>
@@ -42,5 +41,13 @@
   </properties>
 
   <name>Maven</name>
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-maven-plugin</artifactId>
+      </plugin>
+    </plugins>
+  </build>
 
 </project>
