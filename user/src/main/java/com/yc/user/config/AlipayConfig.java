@@ -25,10 +25,10 @@ public class AlipayConfig {
 	// 支付宝公钥,查看地址：https://openhome.alipay.com/platform/keyManage.htm 对应APPID下的支付宝公钥。
     public static String alipay_public_key = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAynxt0EUXPBc6jfDok9RxMuRJ+y6Manqdv3qE8nBNjhlGsr5jabw1PoClEMNLt8M9hvzUfjKGPBAWn8j8knVjPcg/MolqxsWLhhcN/FXBx+Xl0n3OBXGpvTBbaj+xhLY/EADO+gZdCpQrxvpPYRHrIYLcvE93fmGFX9q+7ureFAbiQnGM0MKAsF/FVOAT1gQrX53RcM9b3ecVUmQ1bta3zJgcIgK7gSTeV4yy2vAM9rrMNQgQWnGCPhrjEO5Vl//5kLNKmVMmpQ1x+q0nTKtNRTccxxOHZjrlG46tjif2n0H8ZaMYQbVbLbqSziLrBXTKftwAVH610x+9fUwdu+DXYwIDAQAB";
 	// 服务器异步通知页面路径  需http://格式的完整路径，不能加?id=123这类自定义参数，必须外网可以正常访问
-	public static String notify_url = "http://127.0.0.1:100/chongzhihou.u";
+	public static String notify_url = "106.14.162.109:8080/chongzhihou.u";
 
 	// 页面跳转同步通知页面路径 需http://格式的完整路径，不能加?id=123这类自定义参数，必须外网可以正常访问
-	public static String return_url = "http://127.0.0.1:100/chongzhihou.u";
+	public static String return_url = "106.14.162.109:8080/chongzhihou.u";
 
 	// 签名方式
 	public static String sign_type = "RSA2";
