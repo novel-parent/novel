@@ -21,8 +21,8 @@
     </select>
     
     <insert id="addUser">
-    	insert into user(username,password,sex,email,title,level) values(#{username,jdbcType=VARCHAR},#{password,jdbcType=VARCHAR},#{sex,jdbcType=VARCHAR},
-    	#{email,jdbcType=VARCHAR},#{title,jdbcType=VARCHAR},#{level,jdbcType=VARCHAR})
+    	insert into user(username,password,sex,email,title,level,regtime,integral) values(#{username,jdbcType=VARCHAR},#{password,jdbcType=VARCHAR},#{sex,jdbcType=VARCHAR},
+    	#{email,jdbcType=VARCHAR},#{title,jdbcType=VARCHAR},#{level,jdbcType=VARCHAR},#{regtime,jdbcType=VARCHAR},#{integral,jdbcType=VARCHAR})
     </insert>
     
     <select id="findUser" resultType="com.yc.loginregister.bean.User"  parameterType="String">

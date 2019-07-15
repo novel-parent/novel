@@ -66,11 +66,13 @@ public class UserServiceImpl implements LoginRegisterService {
 
 	@Override
 	public int addUser(User user) {
-		user.setTitle("");
+		user.setTitle("烟雨游友");
 		user.setLevel("普通用户");
 		Date date=new Date();
 		SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
 		user.setRegtime(sdf.format(date));
+		user.setIntegral(0);
+		user.setEmail("暂未绑定邮箱");
 		
 		return userMapper.addUser(user);
 	}

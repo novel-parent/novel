@@ -255,7 +255,7 @@ public class UserController {
 		
 		JsonModel jm=new JsonModel();
 		
-		int code = 0;
+		int code = 8;
 		
 		Map<String,String> params = new HashMap<String,String>();
 		Map<String,String[]> requestParams = request.getParameterMap();
