@@ -1,4 +1,4 @@
-package com.yc.novelclient.mapper;
+package com.yc.user.mapper;
 
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Param;
