@@ -1,7 +1,9 @@
 package com.yc.user.mapper;
 
 import com.yc.user.bean.Collect;
+import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Update;
 
 import java.util.List;
 
@@ -11,6 +13,31 @@ import java.util.List;
  */
 public interface UserCollectMapper {
 
+    /**
+     *      更新 collectNumber
+     * @param nid
+     * @return
+     */
+    @Update("UPDATE collectNumber SET number = number +1 WHERE nid = #{nid}")
+    int updCollectNumber(long nid);
+
+    /**
+     *        插入 collectNumber
+     * @param nid
+     * @return
+     */
+    @Insert("INSERT INTO collectNumber(nid,number) VALUE(#{nid} ,1)")
+    int insCollectNumber(@Param("nid") long nid);
+
+    /**
+     *       更新 收藏表
+     * @param uid
+     * @param nid
+     * @param cid
+     * @param novelChapterName
+     * @param cTimes
+     * @return
+     */
     int updCollectByUidAndNid(@Param("uid") long uid,@Param("nid") long nid,@Param("cid") long cid,@Param("novelChapterName") String novelChapterName,@Param("cTimes") String cTimes);
     /**
      *       查询 收藏表是否存在该用户已经  投了票的

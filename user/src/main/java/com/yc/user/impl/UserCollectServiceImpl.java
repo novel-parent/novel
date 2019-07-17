@@ -65,6 +65,10 @@ public class UserCollectServiceImpl implements UserCollectService {
             if(collect ==null){
 
                 index = userCollectMapper.insCollectNovelChapter(uid, nid, cid, novelChapterName,DateUtil.getDate());
+
+
+
+                userCollectMapper.insCollectNumber(nid);
             }else {
 
                 if(collect.getCid()==cid){
@@ -81,5 +85,8 @@ public class UserCollectServiceImpl implements UserCollectService {
         }
 
         return index;
+    }
+
+    public void updCollectNumber(long nid){
     }
 }

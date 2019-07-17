@@ -2,6 +2,7 @@ package com.yc.novelclient.mapper;
 
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Update;
 
 /**
  * @author LX
@@ -14,14 +15,16 @@ public interface VoteMapper {
      * @param nid
      * @return
      */
-    int insReadNumber(long nid);
+    @Insert("INSERT INTO readnumber(nid,number) VALUE(#{nid},1)")
+    int insReadNumber(@Param("nid") long nid);
 
     /**
      *      更新 阅读数
      * @param nid
      * @return
      */
-    int updReadNumber(long nid);
+    @Update("UPDATE readnumber SET number = number +1 WHERE nid = #{nid}")
+    int updReadNumber(@Param("nid") long nid);
 
 
     /**
@@ -29,7 +32,7 @@ public interface VoteMapper {
      * @param nid
      * @return
      */
-    @Insert("INSERT INTO votenumber")
+    @Insert("INSERT INTO votenumber(nid,number) VALUE(#{nid} ,1)")
     int insVoteNumber(@Param("nid") long nid);
 
     /**
@@ -37,5 +40,6 @@ public interface VoteMapper {
      * @param nid
      * @return
      */
-    int updVoteNumber(long nid);
+    @Update("UPDATE votenumber SET number = number+1 WHERE nid = #{nid}")
+    int updVoteNumber(@Param("nid") long nid);
 }
