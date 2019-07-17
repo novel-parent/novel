@@ -26,7 +26,8 @@ public class UserCollectController {
     @RequestMapping("/vote.u")
     public int voteNovel(@RequestParam("uid") long uid ,@RequestParam("nid") long nid){
 
-        return 0;
+        int i = userCollectService.voteVoteNovel(nid);
+        return i;
     }
 
     @ResponseBody

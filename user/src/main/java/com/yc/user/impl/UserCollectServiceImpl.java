@@ -27,9 +27,9 @@ public class UserCollectServiceImpl implements UserCollectService {
     @Override
     public int voteVoteNovel(long nid) {
 
-        updVoteNumber(nid);
+        int i = updVoteNumber(nid);
 
-        return 0;
+        return i;
     }
 
     @Override
@@ -101,23 +101,28 @@ public class UserCollectServiceImpl implements UserCollectService {
         Long aLong = voteMapper.selVoteNumber(nid);
 
         if(aLong!=null){
-            voteMapper.updVoteNumber(nid);
+
+            userCollectMapper.updCollectNumber(nid);
         }else{
-            voteMapper.insVoteNumber(nid);
+            userCollectMapper.insCollectNumber(nid);
         }
 
 
     }
 
-    public void updVoteNumber(long nid){
+    public int updVoteNumber(long nid){
 
         Long tNid = voteMapper.selVoteNumber(nid);
 
+        int i = -1;
+
         if( tNid!= null ){
 
-            voteMapper.updVoteNumber(nid);
+            i = voteMapper.updVoteNumber(nid);
+
         }else{
-            voteMapper.insVoteNumber(nid);
+            i= voteMapper.insVoteNumber(nid);
         }
+        return i;
     }
 }
