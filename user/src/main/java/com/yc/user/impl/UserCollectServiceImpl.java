@@ -98,21 +98,23 @@ public class UserCollectServiceImpl implements UserCollectService {
 
     public void updCollectNumber(long nid){
 
-        int i = userCollectMapper.insCollectNumber(nid);
+        Long aLong = voteMapper.selVoteNumber(nid);
 
-        if(i>0){
-            userCollectMapper.updCollectNumber(nid);
-        }else {
-            userCollectMapper.insCollectNumber(nid);
+        if(aLong!=null){
+            voteMapper.updVoteNumber(nid);
+        }else{
+            voteMapper.insVoteNumber(nid);
         }
+
 
     }
 
     public void updVoteNumber(long nid){
 
-        int i = voteMapper.selVoteNumber(nid);
+        Long tNid = voteMapper.selVoteNumber(nid);
 
-        if(i>0){
+        if( tNid!= null ){
+
             voteMapper.updVoteNumber(nid);
         }else{
             voteMapper.insVoteNumber(nid);

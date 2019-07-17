@@ -44,9 +44,9 @@ public class ChapterContextAfterAdvice {
 
     public void updReadNumber(long nid){
 
-        int i = readMapper.selReadNumber(nid);
+        Long aLong = readMapper.selReadNumber(nid);
 
-        if(i>0){
+        if( aLong!=null ){
 
             readMapper.updReadNumber(nid);
         }else{

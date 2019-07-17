@@ -17,7 +17,7 @@ public interface ReadMapper {
      * @return
      */
     @Select("SELECT nid FROM readnumber where nid =#{nid} ")
-    int selReadNumber(@Param("nid") long nid);
+    Long selReadNumber(@Param("nid") long nid);
     /**
      *            插入 阅读数
      * @param nid

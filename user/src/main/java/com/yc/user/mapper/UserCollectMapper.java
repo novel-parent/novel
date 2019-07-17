@@ -19,7 +19,7 @@ public interface UserCollectMapper {
      * @param nid
      */
     @Select("SELECT nid FROM collectNumber WHERE nid = #{nid}")
-    int selCollectNumberByNid(@Param("nid") long nid);
+    Long selCollectNumberByNid(@Param("nid") long nid);
     /**
      *      更新 collectNumber
      * @param nid
