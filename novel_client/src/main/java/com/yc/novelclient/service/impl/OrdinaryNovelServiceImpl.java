@@ -38,8 +38,6 @@ public class OrdinaryNovelServiceImpl implements OrdinaryNovelService {
         ReadNovel chapterContext = null;
         try {
 
-//            NovelThriftClient client = new NovelThriftClient();
-
             NovelThriftClient thriftClient = NovelQueue.novelThriftClientQueue.take();
 
             chapterContext = thriftClient.getNovelChapterContextByChapterUrl(novelChapterUrl);
@@ -79,14 +77,12 @@ public class OrdinaryNovelServiceImpl implements OrdinaryNovelService {
 
         IntroductionDiv introductionDiv = null;
 
-        System.out.println("普通用户访问:  "+nid+"  小说章节");
         IntroductionNovel introductionNovel = novelMapper.selNovelByNid(nid);
 
         String novelUrl = introductionNovel.getUrl();
 
         String chapters = null;
         try {
-//            NovelThriftClient client = new NovelThriftClient();
             NovelThriftClient thriftClient = NovelQueue.novelThriftClientQueue.take();
 
             chapters = thriftClient.getNovelChapterListByNovelUrl(novelUrl);

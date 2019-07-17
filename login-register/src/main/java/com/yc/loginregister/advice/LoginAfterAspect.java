@@ -24,14 +24,14 @@ public class LoginAfterAspect {
 	@Autowired
 	private StringRedisTemplate stringRedisTemplate;
 
-	@Pointcut("execution(* com.yc.loginregister.service.impl..*.selForLogin(..))")
+	@Pointcut("execution(* com.yc.loginregister.service.impl.UserServiceImpl.selForLogin(..))")
 	public void executeService() {
 
 	}
 
 	@Async
 	@AfterReturning(value = "executeService()", returning = "result")
-	public void doBeforeAdvice(JoinPoint jp, Object result) {
+	public void doAfterAdvice(JoinPoint jp, Object result) {
 
 		// 用户已登录
 		if (result != null) {
