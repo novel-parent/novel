@@ -24,7 +24,7 @@ public class LoginAfterAspect {
 	@Autowired
 	private StringRedisTemplate stringRedisTemplate;
 
-	@Pointcut("execution(* com.yc.loginregister.service.impl..*.selForLogin(..))")
+	@Pointcut("execution(* com.yc.loginregister.service.impl.UserServiceImpl.selForLogin(..))")
 	public void executeService() {
 
 	}
