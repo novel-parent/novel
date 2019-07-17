@@ -307,7 +307,7 @@ public class UserController {
 			}
 		}
 		
-		return "redirect:zhongjie.html?uid="+uid+"&code="+code;
+		return "zhongjie.html?uid="+uid+"&code="+code;
 	}
 
 	@ResponseBody
