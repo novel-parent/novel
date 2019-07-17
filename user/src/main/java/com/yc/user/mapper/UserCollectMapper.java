@@ -11,6 +11,7 @@ import java.util.List;
  */
 public interface UserCollectMapper {
 
+    int updCollectByUidAndNid(@Param("uid") long uid,@Param("nid") long nid,@Param("cid") long cid,@Param("novelChapterName") String novelChapterName,@Param("cTimes") String cTimes);
     /**
      *       查询 收藏表是否存在该用户已经  投了票的
      * @param uid

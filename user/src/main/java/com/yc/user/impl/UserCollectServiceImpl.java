@@ -30,6 +30,7 @@ public class UserCollectServiceImpl implements UserCollectService {
             Collect collect = userCollectMapper.selByUidNid(uid, nid);
 
             if(collect!=null){
+
                 return -1;
             }
 
@@ -56,8 +57,24 @@ public class UserCollectServiceImpl implements UserCollectService {
     public int insCollectNovelChapter(long uid, long nid, long cid, String novelChapterName) throws CollectException {
 
         int index = 0;
+
         try {
-            index = userCollectMapper.insCollectNovelChapter(uid, nid, cid, novelChapterName,DateUtil.getDate());
+
+            Collect collect = userCollectMapper.selByUidNid(uid, nid);
+
+            if(collect ==null){
+
+                index = userCollectMapper.insCollectNovelChapter(uid, nid, cid, novelChapterName,DateUtil.getDate());
+            }else {
+
+                if(collect.getCid()==cid){
+
+                    return -1;
+                }
+
+                index = userCollectMapper.updCollectByUidAndNid(uid, nid, cid,
+                        novelChapterName, DateUtil.getDate());
+            }
         } catch (Exception e) {
             e.printStackTrace();
             throw new CollectException("用户插入小说章节  收藏表失败  数据库异常");
