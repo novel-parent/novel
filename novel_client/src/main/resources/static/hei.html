@@ -471,8 +471,8 @@ display: none;
 																id="3776735583#5623ab14ffc64525a16b4b9341dafc8a1560676702405"
 																class="msg msg_left f-cb">
 																<div class="msg_main ">
-																	<i class="u-icon-avater"> <img
-																		src="https://ysf.nosdn.127.net/B726658D1C8976CF8C9ACAEB2C1F9854?imageView&amp;type=png|imageView&amp;thumbnail=76y76&amp;axis=5"
+																	<i class="u-icon-avater"> <img width="40px" width="40px"
+																		src="image/f9e52d0583926bfeefae57f38359b971.png"
 																		alt="在线客服头像">
 																	</i>
 																	<div class="rich msg_bubble    ">
@@ -540,6 +540,7 @@ display: none;
 															class="u-conpanyLogo"><img
 															src="https://www.800txt.net/files/article/image/110/110869/110869s.jpg"
 															alt=""> </a>
+															<audio autoplay id="audio" style="display:none;"></audio>
 													</div>
 												</div>
 												<div class="m-comquestions j-comquestions"
@@ -638,9 +639,6 @@ display: none;
 			<i class="iconfont icon-close"></i>
 		</div>
 	</div>
-
-
-
 </body>
 
 <script type="text/javascript">
@@ -674,8 +672,8 @@ display: none;
 	    		 <!-- 机器人回复消息 -->
 	    	        $("#auto-id-1560676702507").append("<div class=\"msg msg_left f-cb\">\n" +
 	    	            "<div class=\"msg_main \">\n" +
-	    	            "<i class=\"u-icon-avater\"> <img\n" +
-	    	            "src=\"https://ysf.nosdn.127.net/B726658D1C8976CF8C9ACAEB2C1F9854?imageView&amp;type=png|imageView&amp;thumbnail=76y76&amp;axis=5\"\n" +
+	    	            "<i class=\"u-icon-avater\"> <img\n width=\"40px\" height=\"40px\" " +
+	    	            "src=\"image/f9e52d0583926bfeefae57f38359b971.png\"\n" +
 	    	            "alt=\"在线客服头像\">\n" +
 	    	            "</i>\n" +
 	    	            "<div class=\"qa msg_bubble    \">\n" +
@@ -690,17 +688,13 @@ display: none;
 	    	}
 	    })
  }
-      
-  	
  	
 
-    //  var audio = document.querySelector('audio');
+      var audio = document.querySelector('audio');
 
     var recorder;
     
       function startRecording() {
-    	  
-    	 
 
           HZRecorder.get(function(rec) {
 
@@ -732,7 +726,7 @@ display: none;
 
  		recorder.stop();
          
- 		 $("#auto-id-1560676702507").append("<b><div \n" +
+ 		$("#auto-id-1560676702507").append("<b><div \n" +
                  "class=\"msg msg_right f-cb\">\n" +
                  "<div class=\"msg_main \">\n" +
                  "<i class=\"u-icon-avater\"> <img\n" +
@@ -741,11 +735,10 @@ display: none;
                  "</i>\n" +
                  "<div class=\"text msg_bubble    \">\n" +
                  "<div class=\"arrow\"></div>\n" +
-                 "<p><a>"+'发送了语音消息'+"</a></p>\n" +
+                 "<p><a onclick=\"playRecording()\" style=\"text-decoration:none;\">"+'发送了语音消息'+"</a></p>\n" +
                  "</div>\n" +
                  "</div>\n" +
                  "</div></b>");        
- 		
  		
  		 recorder.upload("recordUpload.l", function(data, e) {
 
@@ -754,27 +747,22 @@ display: none;
 
             case 'ok':
 
-//              alert(e.target.responseText);
-
                 break;
 
             case 'error':
 
-                alert("上传失败");
+                alert("系统繁忙!");
 
                 break;
-
-
         }
 
           });
  		
      }
-
  	
  	 function playRecording() {
 
-       //   recorder.play(audio);
+          recorder.play(audio);
 
       }
  	
