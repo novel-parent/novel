@@ -40,11 +40,13 @@ public class UserCollectServiceImpl implements UserCollectService {
         try {
             Collect collect = userCollectMapper.selByUidNid(uid, nid);
 
+
             if(collect!=null){
 
                 return -1;
             }
             index = userCollectMapper.insCollectNovel(uid, nid, DateUtil.getDate());
+
             updCollectNumber(nid);
         } catch (Exception e) {
             //  数据库异常
@@ -87,6 +89,7 @@ public class UserCollectServiceImpl implements UserCollectService {
 
                 index = userCollectMapper.updCollectByUidAndNid(uid, nid, cid,
                         novelChapterName, DateUtil.getDate());
+                updCollectNumber(nid);
             }
         } catch (Exception e) {
             e.printStackTrace();
