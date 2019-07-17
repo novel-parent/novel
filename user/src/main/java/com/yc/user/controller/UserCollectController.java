@@ -23,6 +23,13 @@ public class UserCollectController {
     private UserCollectService userCollectService;
 
     @ResponseBody
+    @RequestMapping("/vote.u")
+    public int voteNovel(@RequestParam("uid") long uid ,@RequestParam("nid") long nid){
+
+        return 0;
+    }
+
+    @ResponseBody
     @RequestMapping("userCollectNovel.u")
     public int collectNovel(@RequestParam("uid") long uid, @RequestParam("nid") long nid, HttpServletResponse resp){
 

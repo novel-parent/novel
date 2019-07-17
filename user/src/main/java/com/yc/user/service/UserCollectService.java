@@ -12,6 +12,12 @@ import java.util.List;
 public interface UserCollectService {
 
     /**
+     *     用户投票
+     * @param nid
+     * @return
+     */
+    int voteVoteNovel(long nid);
+    /**
      *     用户收藏   小说名字
      * @param uid
      * @param nid

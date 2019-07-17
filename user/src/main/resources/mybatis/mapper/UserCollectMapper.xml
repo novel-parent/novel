@@ -27,4 +27,15 @@
         SELECT * FROM collect WHERE uid = #{uid}
 
     </select>
+    <select id="selByUidNid" resultType="com.yc.user.bean.Collect">
+
+        SELECT * FROM collect WHERE uid = #{uid} AND nid =#{nid}
+
+    </select>
+
+    <select id="updCollectByUidAndNid" resultType="java.lang.Integer">
+        UPDATE collect set chapterName = #{novelChapterName} ,cid = #{cid} , cTimes= #{cTimes}
+        WHERE nid = #{nid} AND uid = #{uid}
+
+    </select>
 </mapper>
