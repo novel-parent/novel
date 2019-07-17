@@ -33,6 +33,7 @@ public class VisitorNovelServiceImpl implements VisitorNovelService {
     @Autowired
     private NovelMapper novelMapper;
 
+    @Cacheable(cacheNames = "chapterContext" , key = "#cid",cacheManager = "novelChaptersRedisCacheManager")
     @Override
     public ReadDiv getNovelChapterContext(long nid, long cid) throws ReadNovelChapterContextException {
 
@@ -83,7 +84,6 @@ public class VisitorNovelServiceImpl implements VisitorNovelService {
     @Override
     public IntroductionDiv getIntroductionNovelChapters(long nid) throws IntroductionNovelChaptersException {
 
-        System.out.println("游客访问:  "+nid+"  小说章节");
         IntroductionNovel introductionNovel = novelMapper.selNovelByNid(nid);
 
         String novelUrl = introductionNovel.getUrl();
@@ -92,12 +92,9 @@ public class VisitorNovelServiceImpl implements VisitorNovelService {
 
         String chapters = null;
         try {
-//            NovelThriftClient client = new NovelThriftClient();
             NovelThriftClient thriftClient = NovelQueue.novelThriftClientQueue.take();
 
             chapters = thriftClient.getNovelChapterListByNovelUrl(novelUrl);
-
-            System.out.println(chapters);
 
             introductionDiv = new IntroductionDiv();
 
@@ -115,8 +112,8 @@ public class VisitorNovelServiceImpl implements VisitorNovelService {
             //  当 队列没了   手动创建  连接
             try {
 
-
                 chapters = NovelClientUtil.getNovelChapters(novelUrl);
+
                 introductionDiv = new IntroductionDiv();
 
                 introductionDiv.setIntroductionNovel(introductionNovel);

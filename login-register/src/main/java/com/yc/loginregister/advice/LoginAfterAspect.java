@@ -31,7 +31,7 @@ public class LoginAfterAspect {
 
 	@Async
 	@AfterReturning(value = "executeService()", returning = "result")
-	public void doBeforeAdvice(JoinPoint jp, Object result) {
+	public void doAfterAdvice(JoinPoint jp, Object result) {
 
 		// 用户已登录
 		if (result != null) {

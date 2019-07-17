@@ -17,8 +17,8 @@ public interface VoteMapper {
      * @param nid
      * @return
      */
-    @Select("SELECT * FROM votenumber WHERE nid = #{nid}")
-    int selVoteNumber(@Param("nid") long nid);
+    @Select("SELECT nid FROM votenumber WHERE nid = #{nid}")
+    Long selVoteNumber(@Param("nid") long nid);
 
     /**
      *        插入

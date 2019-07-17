@@ -28,6 +28,7 @@ public class OrdinaryNovelServiceImpl implements OrdinaryNovelService {
     private NovelMapper novelMapper;
 
 
+    @Cacheable(cacheNames = "chapterContext" , key = "#cid",cacheManager = "novelChaptersRedisCacheManager")
     @Override
     public ReadDiv getNovelChapterContext(long nid, long cid, String uid) throws TException, InterruptedException, ReadNovelChapterContextException {
 
@@ -37,8 +38,6 @@ public class OrdinaryNovelServiceImpl implements OrdinaryNovelService {
         String novelChapterUrl = introductionNovel.getUrl()+cid+".html";
         ReadNovel chapterContext = null;
         try {
-
-//            NovelThriftClient client = new NovelThriftClient();
 
             NovelThriftClient thriftClient = NovelQueue.novelThriftClientQueue.take();
 
@@ -79,14 +78,12 @@ public class OrdinaryNovelServiceImpl implements OrdinaryNovelService {
 
         IntroductionDiv introductionDiv = null;
 
-        System.out.println("普通用户访问:  "+nid+"  小说章节");
         IntroductionNovel introductionNovel = novelMapper.selNovelByNid(nid);
 
         String novelUrl = introductionNovel.getUrl();
 
         String chapters = null;
         try {
-//            NovelThriftClient client = new NovelThriftClient();
             NovelThriftClient thriftClient = NovelQueue.novelThriftClientQueue.take();
 
             chapters = thriftClient.getNovelChapterListByNovelUrl(novelUrl);
