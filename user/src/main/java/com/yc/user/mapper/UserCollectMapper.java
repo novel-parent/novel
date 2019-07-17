@@ -3,6 +3,7 @@ package com.yc.user.mapper;
 import com.yc.user.bean.Collect;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
 import java.util.List;
@@ -13,6 +14,12 @@ import java.util.List;
  */
 public interface UserCollectMapper {
 
+    /**
+     *       查询 collectNumber   是否有记录
+     * @param nid
+     */
+    @Select("SELECT nid FROM collectNumber WHERE nid = #{nid}")
+    int selCollectNumberByNid(@Param("nid") long nid);
     /**
      *      更新 collectNumber
      * @param nid

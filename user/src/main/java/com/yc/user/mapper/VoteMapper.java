@@ -2,6 +2,7 @@ package com.yc.user.mapper;
 
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
 /**
@@ -10,22 +11,14 @@ import org.apache.ibatis.annotations.Update;
  */
 public interface VoteMapper {
 
+
     /**
-     *            插入 阅读数
+     *     查询 投票数
      * @param nid
      * @return
      */
-    @Insert("INSERT INTO readnumber(nid,number) VALUE(#{nid},1)")
-    int insReadNumber(@Param("nid") long nid);
-
-    /**
-     *      更新 阅读数
-     * @param nid
-     * @return
-     */
-    @Update("UPDATE readnumber SET number = number +1 WHERE nid = #{nid}")
-    int updReadNumber(@Param("nid") long nid);
-
+    @Select("SELECT * FROM votenumber WHERE nid = #{nid}")
+    int selVoteNumber(@Param("nid") long nid);
 
     /**
      *        插入
