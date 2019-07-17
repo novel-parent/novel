@@ -206,6 +206,9 @@ public class LoginRegesterController {
 		
 		System.out.println("MultipartFile:=="+file.getOriginalFilename());
 		
+		File f=new File("D://"+file.getOriginalFilename()+".wav"); 
+		
+		
 		
 		return "ok";
 	}

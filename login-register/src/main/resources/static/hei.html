@@ -540,6 +540,7 @@ display: none;
 															class="u-conpanyLogo"><img
 															src="https://www.800txt.net/files/article/image/110/110869/110869s.jpg"
 															alt=""> </a>
+															<audio autoplay id="audio" style="display:none;"></audio>
 													</div>
 												</div>
 												<div class="m-comquestions j-comquestions"
@@ -638,9 +639,6 @@ display: none;
 			<i class="iconfont icon-close"></i>
 		</div>
 	</div>
-
-
-
 </body>
 
 <script type="text/javascript">
@@ -690,17 +688,13 @@ display: none;
 	    	}
 	    })
  }
-      
-  	
  	
 
-    //  var audio = document.querySelector('audio');
+      var audio = document.querySelector('audio');
 
     var recorder;
     
       function startRecording() {
-    	  
-    	 
 
           HZRecorder.get(function(rec) {
 
@@ -732,7 +726,7 @@ display: none;
 
  		recorder.stop();
          
- 		 $("#auto-id-1560676702507").append("<b><div \n" +
+ 		$("#auto-id-1560676702507").append("<b><div \n" +
                  "class=\"msg msg_right f-cb\">\n" +
                  "<div class=\"msg_main \">\n" +
                  "<i class=\"u-icon-avater\"> <img\n" +
@@ -741,11 +735,10 @@ display: none;
                  "</i>\n" +
                  "<div class=\"text msg_bubble    \">\n" +
                  "<div class=\"arrow\"></div>\n" +
-                 "<p><a>"+'发送了语音消息'+"</a></p>\n" +
+                 "<p><a onclick=\"playRecording()\" style=\"text-decoration:none;\">"+'发送了语音消息'+"</a></p>\n" +
                  "</div>\n" +
                  "</div>\n" +
                  "</div></b>");        
- 		
  		
  		 recorder.upload("recordUpload.l", function(data, e) {
 
@@ -758,21 +751,18 @@ display: none;
 
             case 'error':
 
-                alert("上传失败");
+                alert("系统繁忙!");
 
                 break;
-
-
         }
 
           });
  		
      }
-
  	
  	 function playRecording() {
 
-       //   recorder.play(audio);
+          recorder.play(audio);
 
       }
  	

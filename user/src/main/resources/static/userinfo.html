@@ -29,8 +29,6 @@
 <!--[if lt IE 9]><script src="/noveluser/js/respond.min.js"></script><![endif]-->
 <script type="text/javascript">
 
-    
-
 	var localUrl = window.location.search;
 
 	var url = '';
@@ -47,9 +45,6 @@
 		url = '&' + url
 	}
 
-	
-	
-	
 	var result = ''
 	result += "<li><a href='/type.html?page=1&type=玄幻魔法" + url
 			+ "' title='玄幻魔法'>玄幻魔法</a></li>"
@@ -79,8 +74,6 @@
 	result += "<li><a href='/type.html?page=1&state=complete" + url
 			+ "' title='完本小说'>完本小说</a></li>";
 			
-			
-			
 			 var html='';
             html+='<a class="list-group-item" href="userinfo.html?'+notUrl+'"><i class="fa fa-user fa-fw"></i>会员信息</a>';
             html+=' <a class="list-group-item" href="userbooks.html?'+notUrl+'"><i class="fa fa-book fa-fw"></i>我的书架</a>';
@@ -91,7 +84,6 @@
             html+=' <a class="list-group-item" href="chongzhi.html?'+notUrl+'"><i class="fa fa-book fa-fw"></i>充值中心</a>';
             html+='<a class="list-group-item" href="#" onclick="exitLogin()"><i class="fa fa-power-off fa-fw"></i>退出登录</a>';
 
-			
 	$(function() {
 
 		$('#titleLi').append(result);
@@ -99,6 +91,21 @@
 		$("#headerContent").append(html);
 		
 	})
+	
+		function exitLogin(){
+			 $.ajax({
+			    	url:"exitlogin.u",
+					type:"post",
+					data:uid,
+					success: function(data){
+						if(data.code == 1){
+							window.location.href='http://47.106.110.16:80/login.html';
+						}
+					}
+			 })
+		}
+
+	
 
 	function indexUrl() {
 		if (url == '') {
@@ -106,7 +113,6 @@
 		} else {
 			window.location.href = '/index.html?' + url.substring(1)
 		}
-
 	}
 	
 	$.ajax({
@@ -121,6 +127,9 @@
     		        alert("该用户信息异常,请重新登陆")
     		        window.location.href = "/login.html"
     		    }
+    		    
+    			
+    			
 
     		    var result = ''
 
@@ -133,14 +142,27 @@
                 result+="title='个人资料'><i class='fa fa-info fa-fw'></i>个人资料</a></li>"
                 result+="<li><a href='/userboxes.html?"+url+"'"
                 result+="title='站内消息'><i class='fa fa-envelope fa-fw'></i>站内消息</a></li>"
-                result+="<li><a href='#' title='退出登录'><i"
-                result+="class='fa fa-power-off fa-fw'></i>退出登录</a></li>"
+                result+="<li><a href='#' title='退出登录' id=\"exit\"><i"
+                result+="class='fa fa-power-off fa-fw' ></i>退出登录</a></li>"
                 result+="</ul></li>"
-                $('#userInfo').append(result)
+                
+                
+                $('#userInfo').append(result);
+                
+                
+                
+    		    
     		}
     	});
 	
 	
+	
+
+   
+	
+	
+	
+	//初始化页面，从后台获取用户信息
 	$.ajax({
 		url : "getuser.u",
 		data : rowurl,
@@ -177,39 +199,39 @@
 				}
 			}
 		}
-	});
+	})
 	
 	
 	
 	
-function changeuserinfo(){
-	var sexvalue='';
-	 var sexobj=$("input[name^='sex']");
-	 for(var i=0;i<sexobj.size();i++){
-		if(sexobj.eq(i).prop('checked')){
-			sexvalue=sexobj.eq(i).val();
-		}
-	 }
+		function changeuserinfo(){
+			var sexvalue='';
+			 var sexobj=$("input[name^='sex']");
+			 for(var i=0;i<sexobj.size();i++){
+				if(sexobj.eq(i).prop('checked')){
+					sexvalue=sexobj.eq(i).val();
+				}
+			 }
 	
 	
-	 var data={
-		username:$("#un").html(),
-		email:$("#em").val(),
-		sex:sexvalue
-	 } 
+		 var data={
+			username:$("#un").html(),
+			email:$("#em").val(),
+			sex:sexvalue
+		 } 
 
 
-	$.ajax({
-		url:'updateuser.u',
-		type:'post',
-		data:data,
-		success: function(result){
-			if(result.code==1){
-				alert(result.msg);
-				window.location.reload();
+		$.ajax({
+			url:'updateuser.u',
+			type:'post',
+			data:data,
+			success: function(result){
+				if(result.code==1){
+					alert(result.msg);
+					window.location.reload();
+				}
 			}
-		}
-	})  
+		})  
 }
 	
 	
@@ -368,20 +390,7 @@ function changeuserinfo(){
 
 	</div>
 	<script type="text/javascript">
-		function exitLogin(){
-			var uid=window.location.search.substring(5,6);
-			
-			$ajax({
-				url:"exitlogin.u",
-				type:"post",
-				data:uid,
-				success: function(data){
-					if(data.code == 1){
-						window.location.href="login.html";
-					}
-				}
-			})
-		}
+		
 	</script>
 
 </body>
