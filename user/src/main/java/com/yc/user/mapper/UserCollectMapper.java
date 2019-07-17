@@ -12,6 +12,14 @@ import java.util.List;
 public interface UserCollectMapper {
 
     /**
+     *       查询 收藏表是否存在该用户已经  投了票的
+     * @param uid
+     * @param nid
+     * @return
+     */
+    Collect selByUidNid(@Param("uid") long uid , @Param("nid") long nid);
+
+    /**
      *          插入 nid
      * @param uid
      * @param nid

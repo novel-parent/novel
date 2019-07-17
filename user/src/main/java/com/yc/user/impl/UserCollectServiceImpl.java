@@ -27,6 +27,12 @@ public class UserCollectServiceImpl implements UserCollectService {
         int index = 0 ;
 
         try {
+            Collect collect = userCollectMapper.selByUidNid(uid, nid);
+
+            if(collect!=null){
+                return -1;
+            }
+
             index = userCollectMapper.insCollectNovel(uid, nid, DateUtil.getDate());
         } catch (Exception e) {
             //  数据库异常

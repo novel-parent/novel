@@ -27,4 +27,9 @@
         SELECT * FROM collect WHERE uid = #{uid}
 
     </select>
+    <select id="selByUidNid" resultType="com.yc.user.bean.Collect">
+
+        SELECT * FROM collect WHERE uid = #{uid} AND nid =#{nid}
+
+    </select>
 </mapper>
