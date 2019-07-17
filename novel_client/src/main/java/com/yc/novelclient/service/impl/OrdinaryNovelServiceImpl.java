@@ -28,6 +28,7 @@ public class OrdinaryNovelServiceImpl implements OrdinaryNovelService {
     private NovelMapper novelMapper;
 
 
+    @Cacheable(cacheNames = "chapterContext" , key = "#cid",cacheManager = "novelChaptersRedisCacheManager")
     @Override
     public ReadDiv getNovelChapterContext(long nid, long cid, String uid) throws TException, InterruptedException, ReadNovelChapterContextException {
 

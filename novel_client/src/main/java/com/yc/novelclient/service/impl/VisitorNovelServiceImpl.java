@@ -33,6 +33,7 @@ public class VisitorNovelServiceImpl implements VisitorNovelService {
     @Autowired
     private NovelMapper novelMapper;
 
+    @Cacheable(cacheNames = "chapterContext" , key = "#cid",cacheManager = "novelChaptersRedisCacheManager")
     @Override
     public ReadDiv getNovelChapterContext(long nid, long cid) throws ReadNovelChapterContextException {
 
