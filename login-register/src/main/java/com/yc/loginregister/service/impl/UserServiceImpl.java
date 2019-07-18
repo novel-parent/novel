@@ -7,6 +7,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.yc.loginregister.service.VoiceToCharacters;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,6 +26,19 @@ public class UserServiceImpl implements LoginRegisterService {
 	@Autowired
 	private UserMapper userMapper;
 
+	@Autowired
+	private VoiceToCharacters voiceToCharacters;
+
+	@Override
+	public String getVoice(String path) {
+
+
+		String start = voiceToCharacters.start(path);
+
+		return start;
+	}
+
+	@Override
 	public User selForLogin(String username, String password) throws LoginException {
 		
 
