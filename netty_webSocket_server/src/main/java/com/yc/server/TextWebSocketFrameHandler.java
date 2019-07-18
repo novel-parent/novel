@@ -1,5 +1,6 @@
 package com.yc.server;
 
+import com.yc.service.HandleService;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
@@ -14,15 +15,19 @@ import java.time.LocalDateTime;
  */
 public class TextWebSocketFrameHandler extends SimpleChannelInboundHandler<TextWebSocketFrame> {
 
-
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, TextWebSocketFrame msg) throws Exception {
+
+
+        // 收到的消息
+        String text = msg.text();
+
 
         System.out.println("收到消息: "+ msg.text());
 
         Channel channel = ctx.channel();
 
-        channel.writeAndFlush(new TextWebSocketFrame("服务器已收到"));
+        channel.writeAndFlush(new TextWebSocketFrame(new HandleService().distribution(text)));
     }
 
     @Override

@@ -30,7 +30,7 @@ public class MyServer {
                     .childHandler(new MyServerInitializer());
 
             //            sync  加了 代表 會在一直等待
-            ChannelFuture channelFuture = bootstrap.bind(new InetSocketAddress(8899)).sync();
+            ChannelFuture channelFuture = bootstrap.bind(new InetSocketAddress(8989)).sync();
 
             channelFuture.channel().closeFuture().sync();
         } catch (InterruptedException e) {
