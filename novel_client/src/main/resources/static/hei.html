@@ -663,6 +663,10 @@ display: none;
 	    
 	    $("#sendToServerId").val("");
 	    
+	    window.scrollTo(0,document.body.scrollHeight);
+	    
+	    document.getElementByIdx_x('textarea').scrollTop = document.getElementByIdx_x('textarea').scrollHeight;
+	    
 	    $.ajax({
 	    	url:'sendMessage',
 	    	type:'post',
@@ -692,7 +696,7 @@ display: none;
 
       var audio = document.querySelector('audio');
 
-    var recorder;
+      var recorder;
     
       function startRecording() {
 
