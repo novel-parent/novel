@@ -643,16 +643,38 @@ display: none;
 
 <script type="text/javascript">
 
+var url = window.location.search
+
+
  var socket;
 
     if(window.WebSocket){
 
-        socket = new WebSocket("ws://localhost:8899/ws");
+        socket = new WebSocket("ws://localhost:8989/ws");
 
         socket.onmessage = function (event) {
 
             //   event.data   服务器返回来的数据
-            setRootSession(event.data)
+
+            var data = event.data;
+
+            if(data == "null"){
+
+                setRootSession("小嘿! 目前还没有回答主人的问题  ")
+                return
+            }
+            if(data.indexOf(":")>=0){
+
+                if(url!=null){
+                    url = "&"+url.substring(1)
+                }
+                var param = data.split(':')
+                setRootSession("<a href='"+param[1]+url+" ' target='_blank'>当前最新章节为:  "+param[0]+"</a>")
+                return
+            }
+
+            setRootSession("<a href='"+data+url+" ' target='_blank'>点击进入")
+            window.open(data,'_blank')
 
         }
 

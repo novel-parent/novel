@@ -1,9 +1,4 @@
-package com.yc.loginregister.util;
-
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+package com.yc.util;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.NameValuePair;
@@ -20,10 +15,15 @@ import org.apache.http.impl.client.HttpClients;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
 public class HttpUtil {
 	
 	
-	public static int Post(String url,HashMap<String,String> paramMap) throws ClientProtocolException, IOException {
+	public  int Post(String url,HashMap<String,String> paramMap) throws ClientProtocolException, IOException {
 		
 		HttpUtil httpUtil=new HttpUtil();
 		
@@ -34,7 +34,7 @@ public class HttpUtil {
 	}
 
 
-	public static CloseableHttpResponse Get(String url) throws ClientProtocolException, IOException {
+	public  CloseableHttpResponse Get(String url) throws ClientProtocolException, IOException {
 		
 		HttpUtil httpUtil=new HttpUtil();
 		
