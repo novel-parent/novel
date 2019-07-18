@@ -438,7 +438,7 @@ display: none;
 										</div>
 										<div class="j-flag-tlt left">
 											<div class="u-bd-title">
-												<span class="name">heiwu小说网-客服</span>
+												<span class="name">智能回复</span>
 											</div>
 										</div>
 									</div>
@@ -515,7 +515,7 @@ display: none;
 
 														<button class="u-btn u-btn-send j-flag u-btn-disabled"
 															style="margin-right: 90px;" id="luyin"
-															onmousedown="startRecording()" onmouseup="stopRecording()">录入语音</button>
+															onmousedown="startRecording()" onmouseup="stopRecording()">点击说话</button>
 
 														<div class="disabled"></div>
 													</div>
@@ -532,8 +532,8 @@ display: none;
 									<div class="j-flag g-tab j-tab">
 										<div class="tab_info j-flag">
 											<div class="bd_right j-companyinfo-right j-flag"
-												id="auto-id-1560676702579">
-												<div class="m-announce j-announceinfo ">
+												id="auto-id-1560676702579" >
+												<!-- <div class="m-announce j-announceinfo ">
 													<div class="announce_pic">
 														<a data-action="pictureHref"
 															data-href="http://mooc.study.163.com/smartSpec/detail/1001268002.htm"
@@ -542,8 +542,8 @@ display: none;
 															alt=""> </a>
 															<audio autoplay id="audio" style="display:none;"></audio>
 													</div>
-												</div>
-												<div class="m-comquestions j-comquestions"
+												</div> -->
+												<!-- <div class="m-comquestions j-comquestions"
 													style="height: 491px;">
 													<h1>常见问题</h1>
 													<div>
@@ -565,7 +565,7 @@ display: none;
 															</li>
 														</ul>
 													</div>
-												</div>
+												</div> -->
 											</div>
 										</div>
 									</div>
@@ -742,10 +742,29 @@ display: none;
  		
  		 recorder.upload("recordUpload.l", function(data, e) {
 
- 			switch(data) {
+ 			
+ 			 switch(data) {
 
 
             case 'ok':
+            	
+            	 var message=$("#sendToServerId").val("");
+	    		 <!-- 机器人回复消息 -->
+	    	        $("#auto-id-1560676702507").append("<div class=\"msg msg_left f-cb\">\n" +
+	    	            "<div class=\"msg_main \">\n" +
+	    	            "<i class=\"u-icon-avater\"> <img\n width=\"40px\" height=\"40px\" " +
+	    	            "src=\"image/295e41986d26b0da237cc7311fcc1a4a.jpg\"\n" +
+	    	            "alt=\"在线客服头像\">\n" +
+	    	            "</i>\n" +
+	    	            "<div class=\"qa msg_bubble    \">\n" +
+	    	            "<div class=\"arrow\"></div>\n" +
+	    	            "<div class=\"p\">\n" +
+	    	            "<div class=\"qa_label\"\n" +
+	    	            "data-action=\"richContentDelegate\">"+result.msg+"</div>\n" +
+	    	            "</div>\n" +
+	    	            "</div>\n" +
+	    	            "</div>\n" +
+	    	            "</div>");
 
                 break;
 
@@ -754,7 +773,7 @@ display: none;
                 alert("系统繁忙!");
 
                 break;
-        }
+        } 
 
           });
  		
