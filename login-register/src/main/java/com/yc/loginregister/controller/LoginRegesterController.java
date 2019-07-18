@@ -205,6 +205,8 @@ public class LoginRegesterController {
 	public String FileUpload(@RequestParam("audioData") MultipartFile file) {
 		JsonModel jm = new JsonModel();
 		
+		String msg = "-1";
+		
 		System.out.println("MultipartFile:=="+file.getOriginalFilename());
 		
 		String path = "D://"+file.getOriginalFilename()+System.currentTimeMillis()+".wav";
@@ -214,13 +216,14 @@ public class LoginRegesterController {
 		try {
 			
 			file.transferTo(f);
+			msg = userService.getVoice(path);
 			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		
 		
-		return "ok";
+		return msg;
 	}
 	
 }
