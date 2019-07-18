@@ -17,6 +17,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.Date;
 
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.Cookie;
@@ -206,8 +207,15 @@ public class LoginRegesterController {
 		
 		System.out.println("MultipartFile:=="+file.getOriginalFilename());
 		
-		File f=new File("D://"+file.getOriginalFilename()+".wav"); 
+		File f=new File("D://"+file.getOriginalFilename()+System.currentTimeMillis()+".wav"); 
 		
+		try {
+			
+			file.transferTo(f);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		
 		
 		return "ok";
