@@ -206,10 +206,10 @@ public class LoginRegesterController {
 		
 		System.out.println("MultipartFile:=="+file.getOriginalFilename());
 		
-		File f=new File("D://"+file.getOriginalFilename()+".wav"); 
-		
-		
-		
+		File f=new File("/usr/local/tmp/boot/file/"+file.getOriginalFilename()+".wav");
+
+
+
 		return "ok";
 	}
 	

@@ -1,4 +1,4 @@
-package com.yc;
+package com.yc.loginregister;
 
 import com.baidu.aip.speech.AipSpeech;
 import org.json.JSONObject;
@@ -11,11 +11,11 @@ public class VoiceToCharacters {
 
 
     //设置APPID/AK/SK
-    public static final String APP_ID = "16736316";
-    public static final String API_KEY = "qo6vRb2k1Wkh9BhGhNdaLc6v";
-    public static final String SECRET_KEY = "lwGxeyVszaolNSlXbqAbDup89tZ2fiWS";
+    public  final String APP_ID = "16736316";
+    public  final String API_KEY = "qo6vRb2k1Wkh9BhGhNdaLc6v";
+    public  final String SECRET_KEY = "lwGxeyVszaolNSlXbqAbDup89tZ2fiWS";
 
-    public static void main(String[] args) {
+    public void start(){
         // 初始化一个AipSpeech
         AipSpeech client = new AipSpeech(APP_ID, API_KEY, SECRET_KEY);
 
@@ -32,8 +32,14 @@ public class VoiceToCharacters {
         System.setProperty("aip.log4j.conf", "path/to/your/log4j.properties");
 
             // 调用接口
-        JSONObject res = client.asr("netty_webSocket_server/16k.wav", "wav", 16000, null);
-        System.out.println(res.toString(2));
+        JSONObject res = client.asr("login-register/16k.wav", "wav", 16000, null);
+        System.out.println(res.toString());
 
+    }
+
+    public static void main(String[] args) {
+
+
+        new VoiceToCharacters().start();
     }
 }
