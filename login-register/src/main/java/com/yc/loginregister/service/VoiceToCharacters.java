@@ -1,12 +1,14 @@
-package com.yc.loginregister;
+package com.yc.loginregister.service;
 
 import com.baidu.aip.speech.AipSpeech;
 import org.json.JSONObject;
+import org.springframework.stereotype.Service;
 
 /**
  * @author LX
  * @date 2019/7/8 - 20:52
  */
+@Service
 public class VoiceToCharacters {
 
 
@@ -15,7 +17,7 @@ public class VoiceToCharacters {
     public  final String API_KEY = "qo6vRb2k1Wkh9BhGhNdaLc6v";
     public  final String SECRET_KEY = "lwGxeyVszaolNSlXbqAbDup89tZ2fiWS";
 
-    public void start(){
+    public String start(String path){
         // 初始化一个AipSpeech
         AipSpeech client = new AipSpeech(APP_ID, API_KEY, SECRET_KEY);
 
@@ -32,14 +34,8 @@ public class VoiceToCharacters {
         System.setProperty("aip.log4j.conf", "path/to/your/log4j.properties");
 
             // 调用接口
-        JSONObject res = client.asr("login-register/16k.wav", "wav", 16000, null);
-        System.out.println(res.toString());
+        JSONObject res = client.asr(path, "wav", 16000, null);
+        return res.toString();
 
-    }
-
-    public static void main(String[] args) {
-
-
-        new VoiceToCharacters().start();
     }
 }
