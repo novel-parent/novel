@@ -28,10 +28,10 @@ public class Solr {
 
         System.out.println("----------------------------");
 
-        solrQuery.set("q", "*:*");
+        solrQuery.set("q", "novel_name:斗罗大陆");
 
         // 过滤条件
-        solrQuery.set("fq","novel_name:斗罗");
+//        solrQuery.set("fq","novel_name:斗罗");
 
         solrQuery.setStart(0);//设置起始位置
 
