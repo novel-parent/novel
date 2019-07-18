@@ -2,7 +2,7 @@
 <html id="auto-id-1560676702649">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>在线客服</title>
+<title>嘿!污 在线客服</title>
 
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="description" content="访客系统 - 在线客服">
@@ -463,7 +463,7 @@ display: none;
 															<!-- 消息入口 -->
 															<!-- 评价选择begin -->
 															<div class="sys-info" id="15606767026281560676702405">
-																<h3>&nbsp;云妞为您服务</h3>
+																<h3>&nbsp;小嘿 ! 为您服务</h3>
 															</div>
 															<!-- 评价选择begin -->
 															<!-- 消息展示 判断是否需要分多条展示 -->
@@ -478,8 +478,8 @@ display: none;
 																	<div class="rich msg_bubble    ">
 																		<div class="arrow"></div>
 																		<div class="p" data-action="richContentDelegate">
-																			<p>您好，我是云妞，请问有什么可以帮助您的？</p>
-																			<p>您也可以发送问题的关键词，如“忘记账号”等，云妞会尽全力帮您解答哦~</p>
+																			<p>您好，我是 小嘿 !，请问有什么可以帮助您的？</p>
+																			<p>您也可以发送问题的关键词，如“搜索斗罗大陆”等，小嘿! 会尽全力帮您解答哦~</p>
 																		</div>
 																	</div>
 																</div>
@@ -643,52 +643,93 @@ display: none;
 
 <script type="text/javascript">
 
+ var socket;
+
+    if(window.WebSocket){
+
+        socket = new WebSocket("ws://localhost:8899/ws");
+
+        socket.onmessage = function (event) {
+
+            //   event.data   服务器返回来的数据
+            setRootSession(event.data)
+
+        }
+
+        socket.onopen = function (ev) {
+
+            //  webSocket  开启
+        }
+        socket.onclose = function (ev) {
+
+            //  webSocket  关闭
+
+        }
+    }else {
+        alert('浏览器不支持WebSocket');
+    }
+
+    function send(message) {
+
+            if(!window.socket){
+                return ;
+            }
+
+            /*   发送消息    */
+            if(socket.readyState == WebSocket.OPEN){
+
+                socket.send(message);
+            }else{
+                alert("连接尚未开启! ");
+            }
+      }
+
+
     <!-- 发送消息 -->
 	function sendToServerFunction(){
 	    var message=$("#sendToServerId").val();
 	    <!-- 用户发送消息，内容写入P标签内 -->
-	    $("#auto-id-1560676702507").append("<b><div \n" +
-            "class=\"msg msg_right f-cb\">\n" +
-            "<div class=\"msg_main \">\n" +
-            "<i class=\"u-icon-avater\"> <img\n" +
-            "src=\"https://qiyukf.com/sdk/res/skin/default/ico-kefu@2x.png?imageView&amp;type=png|imageView&amp;thumbnail=76y76&amp;axis=5\"\n" +
-            "alt=\"\">\n" +
-            "</i>\n" +
-            "<div class=\"text msg_bubble    \">\n" +
-            "<div class=\"arrow\"></div>\n" +
-            "<p>"+message+"</p>\n" +
-            "</div>\n" +
-            "</div>\n" +
-            "</div></b>");
+
+        userSession(message)
+        send(message)
 	    
 	    $("#sendToServerId").val("");
-	    
-	    $.ajax({
-	    	url:'sendMessage',
-	    	type:'post',
-	    	data:'msg='+message,
-	    	success: function(result){
-	    		 var message=$("#sendToServerId").val("");
-	    		 <!-- 机器人回复消息 -->
-	    	        $("#auto-id-1560676702507").append("<div class=\"msg msg_left f-cb\">\n" +
-	    	            "<div class=\"msg_main \">\n" +
-	    	            "<i class=\"u-icon-avater\"> <img\n width=\"40px\" height=\"40px\" " +
-	    	            "src=\"image/295e41986d26b0da237cc7311fcc1a4a.jpg\"\n" +
-	    	            "alt=\"在线客服头像\">\n" +
-	    	            "</i>\n" +
-	    	            "<div class=\"qa msg_bubble    \">\n" +
-	    	            "<div class=\"arrow\"></div>\n" +
-	    	            "<div class=\"p\">\n" +
-	    	            "<div class=\"qa_label\"\n" +
-	    	            "data-action=\"richContentDelegate\">"+result.msg+"</div>\n" +
-	    	            "</div>\n" +
-	    	            "</div>\n" +
-	    	            "</div>\n" +
-	    	            "</div>");
-	    	}
-	    })
  }
- 	
+
+ function userSession(msg) {
+   $("#auto-id-1560676702507").append("<b><div \n" +
+               "class=\"msg msg_right f-cb\">\n" +
+               "<div class=\"msg_main \">\n" +
+               "<i class=\"u-icon-avater\"> <img\n" +
+               "src=\"https://qiyukf.com/sdk/res/skin/default/ico-kefu@2x.png?imageView&amp;type=png|imageView&amp;thumbnail=76y76&amp;axis=5\"\n" +
+               "alt=\"\">\n" +
+               "</i>\n" +
+               "<div class=\"text msg_bubble    \">\n" +
+               "<div class=\"arrow\"></div>\n" +
+               "<p>"+msg+"</p>\n" +
+               "</div>\n" +
+               "</div>\n" +
+               "</div></b>");
+ }
+
+ function setRootSession(msg) {
+
+        $("#auto-id-1560676702507").append("<div class=\"msg msg_left f-cb\">\n" +
+        	    	            "<div class=\"msg_main \">\n" +
+        	    	            "<i class=\"u-icon-avater\"> <img\n width=\"40px\" height=\"40px\" " +
+        	    	            "src=\"image/295e41986d26b0da237cc7311fcc1a4a.jpg\"\n" +
+        	    	            "alt=\"在线客服头像\">\n" +
+        	    	            "</i>\n" +
+        	    	            "<div class=\"qa msg_bubble    \">\n" +
+        	    	            "<div class=\"arrow\"></div>\n" +
+        	    	            "<div class=\"p\">\n" +
+        	    	            "<div class=\"qa_label\"\n" +
+        	    	            "data-action=\"richContentDelegate\">"+msg+"</div>\n" +
+        	    	            "</div>\n" +
+        	    	            "</div>\n" +
+        	    	            "</div>\n" +
+        	    	            "</div>");
+ }
 
       var audio = document.querySelector('audio');
 
@@ -726,45 +767,19 @@ display: none;
 
  		recorder.stop();
          
- 		$("#auto-id-1560676702507").append("<b><div \n" +
-                 "class=\"msg msg_right f-cb\">\n" +
-                 "<div class=\"msg_main \">\n" +
-                 "<i class=\"u-icon-avater\"> <img\n" +
-                 "src=\"https://qiyukf.com/sdk/res/skin/default/ico-kefu@2x.png?imageView&amp;type=png|imageView&amp;thumbnail=76y76&amp;axis=5\"\n" +
-                 "alt=\"\">\n" +
-                 "</i>\n" +
-                 "<div class=\"text msg_bubble    \">\n" +
-                 "<div class=\"arrow\"></div>\n" +
-                 "<p><a onclick=\"playRecording()\" style=\"text-decoration:none;\">"+'发送了语音消息'+"</a></p>\n" +
-                 "</div>\n" +
-                 "</div>\n" +
-                 "</div></b>");        
- 		
  		 recorder.upload("recordUpload.l", function(data, e) {
 
- 			
  			 switch(data) {
 
-
             case 'ok':
-            	
+
             	 var message=$("#sendToServerId").val("");
 	    		 <!-- 机器人回复消息 -->
-	    	        $("#auto-id-1560676702507").append("<div class=\"msg msg_left f-cb\">\n" +
-	    	            "<div class=\"msg_main \">\n" +
-	    	            "<i class=\"u-icon-avater\"> <img\n width=\"40px\" height=\"40px\" " +
-	    	            "src=\"image/295e41986d26b0da237cc7311fcc1a4a.jpg\"\n" +
-	    	            "alt=\"在线客服头像\">\n" +
-	    	            "</i>\n" +
-	    	            "<div class=\"qa msg_bubble    \">\n" +
-	    	            "<div class=\"arrow\"></div>\n" +
-	    	            "<div class=\"p\">\n" +
-	    	            "<div class=\"qa_label\"\n" +
-	    	            "data-action=\"richContentDelegate\">"+result.msg+"</div>\n" +
-	    	            "</div>\n" +
-	    	            "</div>\n" +
-	    	            "</div>\n" +
-	    	            "</div>");
+	    		 var t = e.explicitOriginalTarget.responseText
+
+	    		 message = eval(eval("("+t+")").result)[0]
+
+	    		 userSession(message)
 
                 break;
 
@@ -773,7 +788,7 @@ display: none;
                 alert("系统繁忙!");
 
                 break;
-        } 
+        }
 
           });
  		
